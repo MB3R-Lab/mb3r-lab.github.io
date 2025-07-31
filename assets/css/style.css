@@ -181,7 +181,7 @@ ul {
 /* What We Do Section */
 .what-we-do {
     background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)),
-                url("../img/home.jpg") center/cover no-repeat;
+                url("../img/what-we-do.jpg") center/cover no-repeat;
 }
 
 .what-we-do ul {

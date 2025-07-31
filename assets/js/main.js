@@ -2,8 +2,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggleButton = document.getElementById('theme-toggle');
     const currentTheme = localStorage.getItem('theme');
 
+    // Set dark theme by default
     if (currentTheme) {
         document.documentElement.setAttribute('data-theme', currentTheme);
+    } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
     }
 
     themeToggleButton.addEventListener('click', () => {

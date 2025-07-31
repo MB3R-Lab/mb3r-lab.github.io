@@ -1,0 +1,21 @@
+{
+    "name": "MB3R Lab",
+    "short_name": "MB3R Lab",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#007bff",
+    "description": "MB3R Lab is a research group focused on model discovery, simulation-based what-if analysis, and causal resilience for distributed systems.",
+    "icons": [
+        {
+            "src": "assets/img/apple-touch-icon.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "assets/img/apple-touch-icon.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

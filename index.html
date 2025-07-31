@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MB3R Lab — Model-Based Robustness, Reliability & Resilience</title>
+    <meta name="description" content="MB3R Lab is a research group focused on model discovery, simulation-based what-if analysis, and causal resilience for distributed systems.">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script>document.documentElement.classList.remove('no-js');</script>
+    <meta property="og:title" content="MB3R Lab — Model-Based Robustness, Reliability & Resilience">
+    <meta property="og:description" content="Research & Development in model discovery, simulation-based what-if analysis, and causal resilience.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mb3r-lab.github.io/">
+    <meta property="og:image" content="https://mb3r-lab.github.io/assets/img/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="MB3R Lab — Model-Based Robustness, Reliability & Resilience">
+    <meta name="twitter:description" content="Research & Development in model discovery, simulation-based what-if analysis, and causal resilience.">
+    <meta name="twitter:image" content="https://mb3r-lab.github.io/assets/img/og-image.png">
+    <link rel="icon" href="assets/img/favicon.ico" sizes="any">
+    <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+    <link rel="manifest" href="manifest.webmanifest">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "MB3R Lab",
+        "url": "https://mb3r-lab.github.io/",
+        "logo": "https://mb3r-lab.github.io/assets/img/logo.svg",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "email": "contact@mb3rlab.org",
+            "contactType": "customer support"
+        }
+    }
+    </script>
+</head>
+<body>
+    <header id="header" class="header">
+        <nav class="nav">
+            <a href="#home" class="nav-logo">
+                <img src="assets/img/logo.svg" alt="MB3R Lab Logo" width="48" height="48">
+                <span>MB3R Lab</span>
+            </a>
+            <div class="nav-menu">
+                <ul class="nav-list">
+                    <li><a href="#what-we-do" class="nav-link">What we do</a></li>
+                    <li><a href="#projects" class="nav-link">Projects</a></li>
+                    <li><a href="#publications" class="nav-link">Publications</a></li>
+                    <li><a href="#updates" class="nav-link">Updates</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+            </div>
+            <div class="nav-toggle">
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle light and dark mode">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main">
+        <section id="home" class="home section">
+            <div class="container">
+                <h1 class="home-title">MB3R Lab</h1>
+                <p class="home-subtitle">Model-Based Robustness, Reliability & Resilience</p>
+                <p class="home-description">Research & Development in model discovery, simulation-based what-if analysis, and causal resilience.</p>
+                <div class="home-buttons">
+                    <a href="https://www.linkedin.com/company/mb3rlab" class="button" target="_blank" rel="noopener noreferrer">Follow on LinkedIn</a>
+                    <a href="https://github.com/MB3R-Lab" class="button button-secondary" target="_blank" rel="noopener noreferrer">Explore code on GitHub</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="what-we-do" class="what-we-do section">
+            <div class="container">
+                <h2 class="section-title">What we do</h2>
+                <p>MB3R Lab is an R&D group working on automatic model discovery and simulation-driven resilience analysis for distributed systems (e.g., microservices).</p>
+                <ul>
+                    <li><strong>Model Discovery</strong> — synthesize system dependency models from configuration, traces, and telemetry.</li>
+                    <li><strong>What-if Simulation</strong> — run Monte-Carlo failure scenarios on the discovered model without touching production.</li>
+                    <li><strong>Causal Resilience</strong> — sheaf-theoretic analysis and Effective Information (EI) to identify macro-structures that improve predictability and control.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="projects" class="projects section">
+            <div class="container">
+                <h2 class="section-title">Projects</h2>
+                <div class="project-cards">
+                    <div class="card">
+                        <h3>Bering — Model Discovery</h3>
+                        <p>Automatically derive a live dependency model of your information system from configs and traces; run what-if failure simulations offline.</p>
+                        <div class="card-links">
+                            <a href="https://github.com/MB3R-Lab/bering" target="_blank" rel="noopener noreferrer">Repo: Private / coming soon</a>
+                            <a href="https://www.alphaxiv.org/abs/2506.11176" target="_blank" rel="noopener noreferrer">Paper</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>Sheaft — Simulation-based chaos engineering & causal analysis</h3>
+                        <p>Run simulation-first chaos experiments and quantify causal emergence with sheaf-theoretic EI to find resilient macro-structures.</p>
+                        <div class="card-links">
+                            <a href="https://github.com/MB3R-Lab/sheaft" target="_blank" rel="noopener noreferrer">Repo: Private / coming soon</a>
+                            <a href="https://www.alphaxiv.org/abs/2503.14104" target="_blank" rel="noopener noreferrer">Theory article</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="publications" class="publications section">
+            <div class="container">
+                <h2 class="section-title">Publications</h2>
+                <ul>
+                    <li>
+                        <a href="https://www.alphaxiv.org/abs/2506.11176" target="_blank" rel="noopener noreferrer">Model Discovery and Graph Simulation: A Lightweight Alternative to Chaos Engineering</a>
+                        <p>Offline resilience estimation from a dependency graph; compares simulations to live failure injection on a microservice benchmark.</p>
+                    </li>
+                    <li>
+                        <a href="https://www.alphaxiv.org/abs/2503.14104" target="_blank" rel="noopener noreferrer">Sheaf-Theoretic Causal Emergence for Resilience Analysis in Distributed Systems</a>
+                        <p>Unifies sheaves, flow simulation, and EI for multi-level causal analysis.</p>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="updates" class="updates section">
+            <div class="container">
+                <h2 class="section-title">Updates</h2>
+                <ul>
+                    <li>[July 2024] Initial public landing launched.</li>
+                    <li>[June 2024] Bering: early experiments reproduced on a microservice benchmark.</li>
+                    <li>[May 2024] Sheaft: first EI-based macro-aggregation results on sample graph.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="contact" class="contact section">
+            <div class="container">
+                <h2 class="section-title">Contact</h2>
+                <ul>
+                    <li><a href="https://github.com/MB3R-Lab" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                    <li><a href="https://www.linkedin.com/company/mb3rlab" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+                    <li><a href="mailto:contact@mb3rlab.org">contact@mb3rlab.org</a></li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="container">
+            <p>© 2024 MB3R Lab. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

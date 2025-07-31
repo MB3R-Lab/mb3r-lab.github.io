@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://mb3r-lab.github.io/sitemap.xml

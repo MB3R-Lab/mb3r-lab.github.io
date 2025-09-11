@@ -175,7 +175,11 @@ ul {
 }
 
 .button-secondary {
-    background-color: var(--secondary-color);
+    background-color: #000;
+}
+
+.button-secondary:hover {
+    background-color: #000;
 }
 
 /* What We Do Section */

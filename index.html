@@ -53,7 +53,7 @@
             </div>
             <div class="nav-actions">
                 <button type="button" class="button button-ghost" data-modal-target="pilot-modal">
-                    Пилотное внедрение
+                    Request a pilot
                 </button>
                 <button id="theme-toggle" class="theme-toggle" aria-label="Toggle light and dark mode">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
@@ -71,7 +71,7 @@
                 <p class="home-description">Research & Development in model discovery, simulation-based "what-if" analysis, and formal causal inference.</p>
                 <div class="home-buttons">
                     <button type="button" class="button button-cta" data-modal-target="pilot-modal">
-                        Оставить заявку на пилот
+                        Request pilot access
                     </button>
                     <a href="https://www.linkedin.com/company/mb3rlab" class="button" target="_blank" rel="noopener noreferrer">Follow on LinkedIn</a>
                     <a href="https://github.com/MB3R-Lab" class="button button-secondary" target="_blank" rel="noopener noreferrer">Explore code on GitHub</a>
@@ -168,31 +168,31 @@
     <div class="modal" id="pilot-modal" aria-hidden="true">
         <div class="modal-overlay" data-modal-close></div>
         <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="pilot-modal-title">
-            <button type="button" class="modal-close" data-modal-close aria-label="Закрыть форму">
+            <button type="button" class="modal-close" data-modal-close aria-label="Close form">
                 &times;
             </button>
-            <h3 id="pilot-modal-title">Заявка на пилотное внедрение MB3R Lab</h3>
+            <h3 id="pilot-modal-title">Request a pilot with MB3R Lab</h3>
             <p class="modal-description">
-                Оставьте контакты, чтобы мы могли обсудить сценарий пилотного внедрения и сроки подключения вашей команды.
+                Share your details and we will follow up with pilot onboarding steps and a target integration plan.
             </p>
             <form id="application-form" class="modal-form">
                 <div class="form-group">
-                    <label for="application-email">Электронная почта *</label>
+                    <label for="application-email">Work email *</label>
                     <input type="email" id="application-email" name="email" placeholder="you@company.com" required>
                 </div>
                 <div class="form-group">
-                    <label for="application-company">Компания *</label>
-                    <input type="text" id="application-company" name="company" placeholder="Название компании" required>
+                    <label for="application-company">Company *</label>
+                    <input type="text" id="application-company" name="company" placeholder="Company name" required>
                 </div>
                 <div class="form-group">
-                    <label for="application-comment">Комментарий (опционально)</label>
-                    <textarea id="application-comment" name="comment" rows="3" placeholder="Поделитесь контекстом и целевыми системами"></textarea>
+                    <label for="application-comment">Context (optional)</label>
+                    <textarea id="application-comment" name="comment" rows="3" placeholder="Key systems, desired outcomes, timelines"></textarea>
                 </div>
                 <div class="form-meta">
-                    <small>После отправки вы получите письмо-подтверждение о получении заявки.</small>
+                    <small>We will send a confirmation email after the request is delivered.</small>
                 </div>
                 <button type="submit" class="button button-cta" id="application-submit">
-                    Отправить заявку
+                    Submit request
                 </button>
                 <p class="form-status" id="application-status" role="status" aria-live="polite"></p>
             </form>

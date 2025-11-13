@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         submitButton.disabled = true;
-        setStatus('Отправляем заявку...', '');
+        setStatus('Sending your request...', '');
 
         try {
             const response = await fetch('/api/applications', {
@@ -153,13 +153,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json().catch(() => ({}));
 
             if (!response.ok) {
-                throw new Error(data.message || 'Не удалось отправить заявку.');
+                throw new Error(data.message || 'Unable to submit the request.');
             }
 
             applicationForm.reset();
-            setStatus('Готово! Мы подтвердили получение заявки по email.', 'success');
+            setStatus('All set! We just confirmed via email.', 'success');
         } catch (error) {
-            setStatus(error.message || 'Не удалось отправить заявку.', 'error');
+            setStatus(error.message || 'Unable to submit the request.', 'error');
         } finally {
             submitButton.disabled = false;
         }

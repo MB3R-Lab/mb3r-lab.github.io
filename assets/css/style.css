@@ -345,12 +345,14 @@ body.no-scroll {
     position: relative;
     max-width: 480px;
     width: 100%;
+    max-height: calc(100vh - 3rem);
     background-color: var(--bg-color);
     color: var(--text-color);
     border-radius: 0.75rem;
     padding: 2rem;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
     z-index: 1;
+    overflow-y: auto;
 }
 
 .modal-close {
@@ -370,6 +372,11 @@ body.no-scroll {
     color: var(--secondary-color);
 }
 
+.modal-dialog h3,
+.modal-dialog h2 {
+    margin-bottom: 0.5rem;
+}
+
 .modal-form .form-group {
     display: flex;
     flex-direction: column;
@@ -383,10 +390,12 @@ body.no-scroll {
 
 .modal-form input,
 .modal-form textarea {
+    width: 100%;
     border: 1px solid var(--border-color);
     border-radius: 0.4rem;
     padding: 0.75rem;
     font-size: 1rem;
+    font-family: inherit;
     background-color: var(--card-bg-color);
     color: var(--text-color);
 }
@@ -440,6 +449,7 @@ body.no-scroll {
     align-items: center;
     gap: 1rem;
     margin-bottom: 1rem;
+    flex-wrap: wrap;
 }
 
 .button-text {
@@ -455,6 +465,7 @@ body.no-scroll {
     border: 1px solid var(--border-color);
     border-radius: 0.5rem;
     background-color: var(--card-bg-color);
+    margin-top: 1rem;
 }
 
 .admin-table {

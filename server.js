@@ -58,11 +58,11 @@ app.post('/api/applications', async (req, res, next) => {
         const normalizedComment = comment ? String(comment).trim() : null;
 
         if (!normalizedEmail || !isValidEmail(normalizedEmail)) {
-            return res.status(400).json({ message: 'Укажите корректный email.' });
+            return res.status(400).json({ message: 'Please provide a valid email address.' });
         }
 
         if (!normalizedCompany) {
-            return res.status(400).json({ message: 'Поле "Компания" обязательно.' });
+            return res.status(400).json({ message: 'Company is required.' });
         }
 
         const stmt = db.prepare(`
@@ -75,7 +75,7 @@ app.post('/api/applications', async (req, res, next) => {
 
         return res.status(201).json({
             id: result.lastInsertRowid,
-            message: 'Заявка отправлена.'
+            message: 'Request received.'
         });
     } catch (error) {
         return next(error);
@@ -86,11 +86,11 @@ app.get('/api/applications', (req, res) => {
     const providedPassword = req.header('x-admin-pass');
 
     if (!providedPassword) {
-        return res.status(401).json({ message: 'Требуется пароль администратора.' });
+        return res.status(401).json({ message: 'Administrator password required.' });
     }
 
     if (providedPassword !== ADMIN_PASSWORD) {
-        return res.status(403).json({ message: 'Неверный пароль.' });
+        return res.status(403).json({ message: 'Incorrect password.' });
     }
 
     const rows = db.prepare(`
@@ -103,12 +103,12 @@ app.get('/api/applications', (req, res) => {
 });
 
 app.use((_, res) => {
-    res.status(404).json({ message: 'Не найдено' });
+    res.status(404).json({ message: 'Not found' });
 });
 
 app.use((err, req, res, _next) => {
     console.error(err);
-    res.status(500).json({ message: 'Внутренняя ошибка сервера.' });
+    res.status(500).json({ message: 'Internal server error.' });
 });
 
 app.listen(PORT, () => {

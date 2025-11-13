@@ -21,14 +21,14 @@ class EmailService {
             return null;
         }
 
-        const subject = 'MB3R Lab — заявка на пилотное внедрение получена';
+        const subject = 'MB3R Lab — pilot request received';
         const plainText = [
-            'Здравствуйте!',
+            'Hi there,',
             '',
-            'Мы получили вашу заявку на пилотное внедрение MB3R Lab.',
-            `Компания: ${company || '—'}`,
+            'Thanks for your interest in running a pilot with MB3R Lab.',
+            `Company: ${company || '—'}`,
             '',
-            'Команда свяжется с вами в ближайшее время.',
+            'Our team will follow up shortly with next steps.',
             '',
             '— MB3R Lab'
         ].join('\n');

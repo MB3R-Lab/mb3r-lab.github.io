@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const refreshButton = document.getElementById('refresh-button');
     const resetAuthButton = document.getElementById('reset-auth-button');
     const ADMIN_PASS_STORAGE_KEY = 'mb3r-admin-pass';
+    const userLocale = navigator.language || 'en-US';
     let currentPassword = sessionStorage.getItem(ADMIN_PASS_STORAGE_KEY) || '';
 
     const savedTheme = localStorage.getItem('theme');
@@ -69,14 +70,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (Number.isNaN(parsed.getTime())) {
             return value;
         }
-        return parsed.toLocaleString('ru-RU');
+        return parsed.toLocaleString(userLocale);
     };
 
     const renderTable = (rows) => {
         if (!tableBody) return;
 
         if (!rows.length) {
-            setTableMessage('Еще нет заявок.');
+            setTableMessage('No requests yet.');
             return;
         }
 
@@ -104,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const fetchApplications = async (password) => {
         if (!password) {
-            const error = new Error('Пароль не указан.');
+            const error = new Error('Password is required.');
             error.status = 401;
             throw error;
         }
@@ -116,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = await response.json().catch(() => ({}));
 
         if (!response.ok) {
-            const error = new Error(data.message || 'Не удалось загрузить заявки.');
+            const error = new Error(data.message || 'Unable to load requests.');
             error.status = response.status;
             throw error;
         }
@@ -127,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadApplications = async ({ password = currentPassword, silent = false } = {}) => {
         try {
             if (!silent) {
-                setTableMessage('Обновляем список заявок...');
+                setTableMessage('Refreshing request list...');
             }
             const rows = await fetchApplications(password);
             currentPassword = password;
@@ -141,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 setAuthStatus(error.message, 'error');
                 openModal();
             } else {
-                setTableMessage(error.message || 'Ошибка загрузки заявок.');
+                setTableMessage(error.message || 'Unable to load requests.');
             }
             throw error;
         }
@@ -152,15 +153,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const password = passwordInput?.value.trim();
 
         if (!password) {
-            setAuthStatus('Введите пароль.', 'error');
+            setAuthStatus('Enter the password.', 'error');
             return;
         }
 
-        setAuthStatus('Проверяем...', '');
+        setAuthStatus('Validating...', '');
 
         try {
             await loadApplications({ password });
-            setAuthStatus('Доступ разрешен.', 'success');
+            setAuthStatus('Access granted.', 'success');
         } catch {
             // Error already surfaced in loadApplications
         }

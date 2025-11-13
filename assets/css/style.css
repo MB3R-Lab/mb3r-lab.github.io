@@ -161,6 +161,34 @@ ul {
     display: flex;
     justify-content: center;
     gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    padding: 0.8rem 1.65rem;
+    border-radius: 999px;
+    border: none;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.button-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--link-hover-color));
+    color: #fff;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.button-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
 }
 
 .button-ghost {
@@ -174,43 +202,11 @@ ul {
     background-color: var(--primary-color);
 }
 
-.button-cta {
-    background-color: #ff6b6b;
-}
-
-.button-cta:hover {
-    background-color: #ff4757;
-}
-
 .button:disabled,
 .button[disabled] {
     opacity: 0.6;
     cursor: not-allowed;
-}
-
-.button {
-    display: inline-block;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.25rem;
-    background-color: var(--primary-color);
-    color: #fff;
-    font-weight: bold;
-    text-decoration: none;
-    transition: background-color 0.3s;
-}
-
-.button:hover {
-    background-color: var(--link-hover-color);
-    color: #fff;
-    text-decoration: none;
-}
-
-.button-secondary {
-    background-color: #000;
-}
-
-.button-secondary:hover {
-    background-color: #000;
+    box-shadow: none;
 }
 
 /* What We Do Section */
@@ -284,6 +280,72 @@ ul {
 .publications p {
     margin-top: 0.25rem;
     color: var(--secondary-color);
+}
+
+/* Updates Section */
+.updates {
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)),
+                url("../img/updates.jpg") center/cover no-repeat;
+}
+
+.updates-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+}
+
+.update-card {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #111;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+[data-theme="dark"] .update-card {
+    background-color: rgba(18, 18, 18, 0.9);
+    color: var(--text-color);
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+.update-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.update-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 35px rgba(0, 0, 0, 0.18);
+}
+
+.update-card:hover::after {
+    opacity: 1;
+}
+
+.update-date {
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--secondary-color);
+}
+
+.update-title {
+    font-size: 1.25rem;
+    margin: 0.35rem 0 0.5rem;
+}
+
+.update-text {
+    color: var(--secondary-color);
+    line-height: 1.4;
 }
 
 /* Contact Section */
@@ -461,11 +523,37 @@ body.no-scroll {
 }
 
 .table-wrapper {
+    position: relative;
     overflow-x: auto;
     border: 1px solid var(--border-color);
     border-radius: 0.5rem;
     background-color: var(--card-bg-color);
     margin-top: 1rem;
+}
+
+.table-wrapper[data-locked="true"] {
+    pointer-events: none;
+    min-height: 160px;
+}
+
+.table-wrapper[data-locked="true"] table {
+    filter: blur(2px);
+    opacity: 0.4;
+}
+
+.table-wrapper[data-locked="true"]::after {
+    content: 'Enter the administrator password to view requests.';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.45);
+    color: #fff;
+    border-radius: 0.5rem;
+    font-weight: 600;
 }
 
 .admin-table {

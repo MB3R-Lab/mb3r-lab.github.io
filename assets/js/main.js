@@ -3,6 +3,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const body = document.body;
     const themeToggleButton = document.getElementById('theme-toggle');
     const currentTheme = localStorage.getItem('theme');
+    const storage = window.MB3RStorage;
+
+    const createLocalRecord = (payload, source = 'local') => ({
+        id: `${source}-${Date.now()}`,
+        email: payload.email,
+        company: payload.company,
+        comment: payload.comment || '',
+        created_at: new Date().toISOString(),
+        source
+    });
 
     if (currentTheme) {
         htmlElement.setAttribute('data-theme', currentTheme);
@@ -121,6 +131,38 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    const persistRecord = (record) => {
+        if (!record) return;
+        storage?.save(record);
+    };
+
+    const submitRequest = async (payload) => {
+        const response = await fetch('/api/applications', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        });
+
+        const data = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+            const error = new Error(data.message || 'Unable to submit the request.');
+            error.status = response.status;
+            throw error;
+        }
+
+        return {
+            id: data.id ?? `request-${Date.now()}`,
+            email: payload.email,
+            company: payload.company,
+            comment: payload.comment || '',
+            created_at: data.created_at || new Date().toISOString(),
+            source: 'api'
+        };
+    };
+
     applicationForm?.addEventListener('submit', async (event) => {
         event.preventDefault();
         if (!submitButton) {
@@ -142,24 +184,19 @@ document.addEventListener('DOMContentLoaded', () => {
         setStatus('Sending your request...', '');
 
         try {
-            const response = await fetch('/api/applications', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payload)
-            });
-
-            const data = await response.json().catch(() => ({}));
-
-            if (!response.ok) {
-                throw new Error(data.message || 'Unable to submit the request.');
-            }
-
+            const record = await submitRequest(payload);
+            persistRecord(record);
             applicationForm.reset();
             setStatus('All set! We just confirmed via email.', 'success');
         } catch (error) {
-            setStatus(error.message || 'Unable to submit the request.', 'error');
+            if (!error.status || error.status >= 500) {
+                const localRecord = createLocalRecord(payload);
+                persistRecord(localRecord);
+                applicationForm.reset();
+                setStatus('No backend connection. Saved locally for now.', 'success');
+            } else {
+                setStatus(error.message || 'Unable to submit the request.', 'error');
+            }
         } finally {
             submitButton.disabled = false;
         }

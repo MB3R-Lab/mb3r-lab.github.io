@@ -6,11 +6,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const passwordInput = document.getElementById('admin-password');
     const statusField = document.getElementById('admin-auth-status');
     const tableBody = document.getElementById('applications-body');
+    const tableWrapper = document.querySelector('.table-wrapper');
     const refreshButton = document.getElementById('refresh-button');
     const resetAuthButton = document.getElementById('reset-auth-button');
     const ADMIN_PASS_STORAGE_KEY = 'mb3r-admin-pass';
-    const userLocale = navigator.language || 'en-US';
+    const storage = window.MB3RStorage;
     let currentPassword = sessionStorage.getItem(ADMIN_PASS_STORAGE_KEY) || '';
+    const userLocale = navigator.language || 'en-US';
+
+    const lockTable = () => tableWrapper?.setAttribute('data-locked', 'true');
+    const unlockTable = () => tableWrapper?.removeAttribute('data-locked');
+    lockTable();
 
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
@@ -66,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const formatDate = (value) => {
         if (!value) return '—';
-        const parsed = new Date(`${value.replace(' ', 'T')}Z`);
+        const parsed = new Date(value);
         if (Number.isNaN(parsed.getTime())) {
             return value;
         }
@@ -110,40 +116,76 @@ document.addEventListener('DOMContentLoaded', () => {
             throw error;
         }
 
-        const response = await fetch('/api/applications', {
-            headers: { 'x-admin-pass': password }
-        });
+        try {
+            const response = await fetch('/api/applications', {
+                headers: { 'x-admin-pass': password }
+            });
 
-        const data = await response.json().catch(() => ({}));
+            const data = await response.json().catch(() => ({}));
 
-        if (!response.ok) {
-            const error = new Error(data.message || 'Unable to load requests.');
-            error.status = response.status;
+            if (!response.ok) {
+                if (response.status >= 500) {
+                    const error = new Error('Server error.');
+                    error.offline = true;
+                    throw error;
+                }
+                const error = new Error(data.message || 'Unable to load requests.');
+                error.status = response.status;
+                throw error;
+            }
+
+            return data;
+        } catch (error) {
+            if (!error.status) {
+                const offlineError = new Error('Backend is unreachable.');
+                offlineError.offline = true;
+                throw offlineError;
+            }
             throw error;
         }
-
-        return data;
     };
 
     const loadApplications = async ({ password = currentPassword, silent = false } = {}) => {
+        if (!password) {
+            setAuthStatus('Enter the password.', 'error');
+            return;
+        }
+
+        if (!silent) {
+            setTableMessage('Refreshing request list...');
+        }
+
         try {
-            if (!silent) {
-                setTableMessage('Refreshing request list...');
-            }
             const rows = await fetchApplications(password);
             currentPassword = password;
             sessionStorage.setItem(ADMIN_PASS_STORAGE_KEY, password);
             renderTable(rows);
+            unlockTable();
             closeModal();
+            return;
         } catch (error) {
             if (error.status === 401 || error.status === 403) {
                 sessionStorage.removeItem(ADMIN_PASS_STORAGE_KEY);
                 currentPassword = '';
+                lockTable();
                 setAuthStatus(error.message, 'error');
                 openModal();
-            } else {
-                setTableMessage(error.message || 'Unable to load requests.');
+                throw error;
             }
+
+            if (error.offline) {
+                const cached = storage?.list?.() || [];
+                currentPassword = password;
+                sessionStorage.setItem(ADMIN_PASS_STORAGE_KEY, password);
+                renderTable(cached);
+                unlockTable();
+                closeModal();
+                setAuthStatus('API unavailable. Showing cached requests.', 'error');
+                return;
+            }
+
+            setTableMessage(error.message || 'Unable to load requests.');
+            lockTable();
             throw error;
         }
     };
@@ -163,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
             await loadApplications({ password });
             setAuthStatus('Access granted.', 'success');
         } catch {
-            // Error already surfaced in loadApplications
+            // Errors are surfaced inside loadApplications.
         }
     });
 
@@ -180,6 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
         sessionStorage.removeItem(ADMIN_PASS_STORAGE_KEY);
         currentPassword = '';
         passwordInput.value = '';
+        lockTable();
         openModal();
     });
 

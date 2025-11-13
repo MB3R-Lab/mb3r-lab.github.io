@@ -14,18 +14,18 @@
             Monitor submissions collected on the landing page. Records persist in the local SQLite database.
         </p>
         <div class="admin-actions">
-            <button type="button" class="button button-secondary" id="refresh-button">Refresh</button>
+            <button type="button" class="button button-primary" id="refresh-button">Refresh</button>
             <button type="button" class="button button-text" id="reset-auth-button">Use different password</button>
         </div>
-        <div class="table-wrapper" role="region" aria-live="polite">
+        <div class="table-wrapper" role="region" aria-live="polite" data-locked="true">
             <table class="admin-table">
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Email</th>
-                        <th>Компания</th>
-                        <th>Комментарий</th>
-                        <th>Создано</th>
+                        <th>Company</th>
+                        <th>Context</th>
+                        <th>Created</th>
                     </tr>
                 </thead>
                 <tbody id="applications-body">
@@ -49,12 +49,12 @@
                     <label for="admin-password">Password</label>
                     <input type="password" id="admin-password" name="password" autocomplete="current-password" required>
                 </div>
-                <button type="submit" class="button button-cta">Continue</button>
+                <button type="submit" class="button button-primary">Continue</button>
                 <p class="form-status" id="admin-auth-status" role="status" aria-live="polite"></p>
             </form>
         </div>
     </div>
-
+    <script src="assets/js/storage.js"></script>
     <script src="assets/js/admin.js"></script>
 </body>
 </html>

@@ -70,11 +70,12 @@
                 <p class="home-subtitle">Model-Based Robustness, Reliability & Resilience</p>
                 <p class="home-description">Research & Development in model discovery, simulation-based "what-if" analysis, and formal causal inference.</p>
                 <div class="home-buttons">
-                    <button type="button" class="button button-cta" data-modal-target="pilot-modal">
+                    <button type="button" class="button button-primary" data-modal-target="pilot-modal">
                         Request pilot access
                     </button>
-                    <a href="https://www.linkedin.com/company/mb3rlab" class="button" target="_blank" rel="noopener noreferrer">Follow on LinkedIn</a>
-                    <a href="https://github.com/MB3R-Lab" class="button button-secondary" target="_blank" rel="noopener noreferrer">Explore code on GitHub</a>
+                    <a href="https://www.linkedin.com/company/mb3rlab" class="button button-primary" target="_blank" rel="noopener noreferrer">Follow on LinkedIn</a>
+                    <a href="https://t.me/mb3rlab" class="button button-primary" target="_blank" rel="noopener noreferrer">Follow on Telegram</a>
+                    <a href="https://github.com/MB3R-Lab" class="button button-primary" target="_blank" rel="noopener noreferrer">Explore code on GitHub</a>
                 </div>
             </div>
         </section>
@@ -138,12 +139,28 @@
         <section id="updates" class="updates section">
             <div class="container">
                 <h2 class="section-title">Updates</h2>
-                <ul>
-                    <li>[September 2025] Added publication on Causal AI.</li>
-                    <li>[July 2025] Initial public landing launched.</li>
-                    <li>[June 2025] Bering: early experiments reproduced on a microservice benchmark.</li>
-                    <li>[March 2025] Sheaft: theoretical framework proposed.</li>
-                </ul>
+                <div class="updates-grid">
+                    <article class="update-card">
+                        <span class="update-date">September 2025</span>
+                        <h3 class="update-title">Causal AI publication</h3>
+                        <p class="update-text">Documented Effective-Information metrics for transformer circuits and published the results.</p>
+                    </article>
+                    <article class="update-card">
+                        <span class="update-date">July 2025</span>
+                        <h3 class="update-title">Public landing launched</h3>
+                        <p class="update-text">Released mb3r-lab.github.io with a pilot intake flow and project overview.</p>
+                    </article>
+                    <article class="update-card">
+                        <span class="update-date">June 2025</span>
+                        <h3 class="update-title">Bering benchmark</h3>
+                        <p class="update-text">Reproduced Bering simulations on a microservice benchmark to validate offline chaos runs.</p>
+                    </article>
+                    <article class="update-card">
+                        <span class="update-date">March 2025</span>
+                        <h3 class="update-title">Sheaft framework</h3>
+                        <p class="update-text">Introduced the theoretical foundation for sheaf-based causal analysis in distributed systems.</p>
+                    </article>
+                </div>
             </div>
         </section>
 
@@ -191,14 +208,14 @@
                 <div class="form-meta">
                     <small>We will send a confirmation email after the request is delivered.</small>
                 </div>
-                <button type="submit" class="button button-cta" id="application-submit">
+                <button type="submit" class="button button-primary" id="application-submit">
                     Submit request
                 </button>
                 <p class="form-status" id="application-status" role="status" aria-live="polite"></p>
             </form>
         </div>
     </div>
-
+    <script src="assets/js/storage.js"></script>
     <script src="assets/js/main.js"></script>
 </body>
 </html>

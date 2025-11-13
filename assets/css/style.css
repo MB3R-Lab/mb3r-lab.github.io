@@ -211,8 +211,7 @@ ul {
 
 /* What We Do Section */
 .what-we-do {
-    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)),
-                url("../img/what-we-do.jpg") center/cover no-repeat;
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
 }
 
 .what-we-do ul {
@@ -228,8 +227,7 @@ ul {
 
 /* Projects Section */
 .projects {
-    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)),
-                url("../img/projects.jpg") center/cover no-repeat;
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
 }
 
 .project-cards {
@@ -269,8 +267,7 @@ ul {
 
 /* Publications Section */
 .publications {
-    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)),
-                url("../img/publications.jpg") center/cover no-repeat;
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
 }
 
 .publications ul li {
@@ -284,8 +281,7 @@ ul {
 
 /* Updates Section */
 .updates {
-    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)),
-                url("../img/updates.jpg") center/cover no-repeat;
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
 }
 
 .updates-grid {

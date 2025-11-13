@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const resetAuthButton = document.getElementById('reset-auth-button');
     const ADMIN_PASS_STORAGE_KEY = 'mb3r-admin-pass';
     const storage = window.MB3RStorage;
+    const shouldFallbackToLocal = (status) =>
+        !status || status >= 500 || status === 404 || status === 405;
     let currentPassword = sessionStorage.getItem(ADMIN_PASS_STORAGE_KEY) || '';
     const userLocale = navigator.language || 'en-US';
 
@@ -124,21 +126,26 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json().catch(() => ({}));
 
             if (!response.ok) {
-                if (response.status >= 500) {
-                    const error = new Error('Server error.');
-                    error.offline = true;
-                    throw error;
+                if (response.status === 401 || response.status === 403) {
+                    const authError = new Error(data.message || 'Unable to load requests.');
+                    authError.status = response.status;
+                    throw authError;
                 }
+
                 const error = new Error(data.message || 'Unable to load requests.');
                 error.status = response.status;
+                if (shouldFallbackToLocal(response.status)) {
+                    error.offline = true;
+                }
                 throw error;
             }
 
             return data;
         } catch (error) {
-            if (!error.status) {
-                const offlineError = new Error('Backend is unreachable.');
+            if (!error.status || shouldFallbackToLocal(error.status)) {
+                const offlineError = new Error(error.message || 'Backend is unreachable.');
                 offlineError.offline = true;
+                offlineError.status = error.status;
                 throw offlineError;
             }
             throw error;
@@ -173,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw error;
             }
 
-            if (error.offline) {
+            if (error.offline || shouldFallbackToLocal(error.status)) {
                 const cached = storage?.list?.() || [];
                 currentPassword = password;
                 sessionStorage.setItem(ADMIN_PASS_STORAGE_KEY, password);

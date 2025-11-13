@@ -14,6 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
         source
     });
 
+    const shouldFallbackToLocal = (status) =>
+        !status || status >= 500 || status === 404 || status === 405;
+
     if (currentTheme) {
         htmlElement.setAttribute('data-theme', currentTheme);
     } else {
@@ -189,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
             applicationForm.reset();
             setStatus('All set! We just confirmed via email.', 'success');
         } catch (error) {
-            if (!error.status || error.status >= 500) {
+            if (shouldFallbackToLocal(error.status)) {
                 const localRecord = createLocalRecord(payload);
                 persistRecord(localRecord);
                 applicationForm.reset();

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MB3R Lab — Админка заявок</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script>document.documentElement.classList.remove('no-js');</script>
+</head>
+<body class="admin-body">
+    <main class="admin-main">
+        <h1>Заявки на пилотное внедрение</h1>
+        <p class="admin-description">
+            Здесь отображаются заявки, отправленные с лендинга. Данные хранятся в локальной базе SQLite.
+        </p>
+        <div class="admin-actions">
+            <button type="button" class="button button-secondary" id="refresh-button">Обновить</button>
+            <button type="button" class="button button-text" id="reset-auth-button">Сменить пароль</button>
+        </div>
+        <div class="table-wrapper" role="region" aria-live="polite">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Email</th>
+                        <th>Компания</th>
+                        <th>Комментарий</th>
+                        <th>Создано</th>
+                    </tr>
+                </thead>
+                <tbody id="applications-body">
+                    <tr>
+                        <td colspan="5">Заявки пока не загружены.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <div class="modal" id="admin-auth-modal" aria-hidden="true">
+        <div class="modal-overlay"></div>
+        <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="admin-auth-title">
+            <h2 id="admin-auth-title">Введите пароль администратора</h2>
+            <p class="modal-description">
+                Пароль по умолчанию&nbsp;— <code>123456789@</code>. Задайте свой в файле <code>.env</code>.
+            </p>
+            <form id="admin-auth-form" class="modal-form">
+                <div class="form-group">
+                    <label for="admin-password">Пароль</label>
+                    <input type="password" id="admin-password" name="password" autocomplete="current-password" required>
+                </div>
+                <button type="submit" class="button button-cta">Продолжить</button>
+                <p class="form-status" id="admin-auth-status" role="status" aria-live="polite"></p>
+            </form>
+        </div>
+    </div>
+
+    <script src="assets/js/admin.js"></script>
+</body>
+</html>

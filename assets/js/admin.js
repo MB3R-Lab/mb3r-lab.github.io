@@ -31,7 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         return null;
     };
-    let currentPassword = sessionStorage.getItem(ADMIN_PASS_STORAGE_KEY) || '';
+    sessionStorage.removeItem(ADMIN_PASS_STORAGE_KEY);
+    let currentPassword = '';
     const userLocale = navigator.language || 'en-US';
 
     const lockTable = () => tableWrapper?.setAttribute('data-locked', 'true');

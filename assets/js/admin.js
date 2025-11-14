@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     sessionStorage.removeItem(ADMIN_PASS_STORAGE_KEY);
     let currentPassword = '';
+    let hasRemoteSuccess = false;
     const userLocale = navigator.language || 'en-US';
 
     const lockTable = () => tableWrapper?.setAttribute('data-locked', 'true');
@@ -57,6 +58,11 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             statusField.removeAttribute('data-state');
         }
+    };
+
+    const setOverlayMessage = (message) => {
+        if (!tableWrapper) return;
+        tableWrapper.setAttribute('data-overlay-message', message);
     };
 
     const setTableMessage = (message) => {
@@ -192,6 +198,8 @@ document.addEventListener('DOMContentLoaded', () => {
             renderTable(rows);
             unlockTable();
             closeModal();
+            hasRemoteSuccess = true;
+            setOverlayMessage('Enter the administrator password to view requests.');
             return;
         } catch (error) {
             if (error.status === 401 || error.status === 403) {
@@ -199,26 +207,36 @@ document.addEventListener('DOMContentLoaded', () => {
                 currentPassword = '';
                 lockTable();
                 setAuthStatus(error.message, 'error');
+                 setOverlayMessage('Incorrect password. Try again.');
                 openModal();
                 throw error;
             }
 
             if (error.offline) {
+                if (!hasRemoteSuccess) {
+                    setAuthStatus(
+                        'API unavailable. Unable to load requests right now.',
+                        'error'
+                    );
+                    sessionStorage.removeItem(ADMIN_PASS_STORAGE_KEY);
+                    currentPassword = '';
+                    lockTable();
+                    setOverlayMessage('API unavailable. Try again later.');
+                    openModal();
+                    throw error;
+                }
+
                 const cached = storage?.list?.() || [];
-                currentPassword = password;
-                sessionStorage.setItem(ADMIN_PASS_STORAGE_KEY, password);
                 renderTable(cached);
                 unlockTable();
                 closeModal();
-                const message = isApiConfigured
-                    ? 'API unavailable. Showing cached requests.'
-                    : 'API endpoint missing. Showing cached requests.';
-                setAuthStatus(message, 'error');
+                setAuthStatus('API unavailable. Showing cached requests.', 'error');
                 return;
             }
 
             setTableMessage(error.message || 'Unable to load requests.');
             lockTable();
+            setOverlayMessage('Unable to load requests.');
             throw error;
         }
     };

@@ -538,7 +538,7 @@ body.no-scroll {
 }
 
 .table-wrapper[data-locked="true"]::after {
-    content: 'Enter the administrator password to view requests.';
+    content: attr(data-overlay-message);
     position: absolute;
     inset: 0;
     display: flex;

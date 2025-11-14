@@ -25,7 +25,7 @@ Use `npm run dev` for development with automatic restarts (requires `nodemon` fr
 
 - **CTA + modal form** — visitors leave an email, company, and optional comment for pilot onboarding. Validation happens on the client and the server.
 - **SQLite storage** — submissions are stored in `data/applications.sqlite` (auto-created).
-- **Mail service** — every submission triggers an email written to `data/outbox/*.eml`. Configure the sender via `MAIL_FROM`.
+- **Mail service** — every submission triggers a confirmation email via Mailgun. Configure the sender plus API credentials via `MAIL_FROM`, `MAILGUN_API_KEY`, and `MAILGUN_DOMAIN`.
 - **Admin dashboard** (`/admin`) — shows a table of submissions. Access requires a password entered in a modal (default `123456789@`, override via `ADMIN_PASSWORD`).
 - **API endpoints**
   - `POST /api/applications` — accepts `{ email, company, comment? }` and returns the new `id`.
@@ -36,10 +36,12 @@ Use `npm run dev` for development with automatic restarts (requires `nodemon` fr
 | Name | Default | Description |
 | --- | --- | --- |
 | `PORT` | `3000` | HTTP port |
-| `ADMIN_PASSWORD` | `123456789@` | Password required by `/admin` UI and API header |
-| `DATA_DIR` | `./data` | Folder where SQLite DB and outbox live |
+| `ADMIN_PASSWORD` | — | Password required by `/admin` UI and API header (must be set) |
+| `DATA_DIR` | `./data` | Folder where SQLite DB lives |
 | `MAIL_FROM` | `MB3R Lab <noreply@mb3r-lab.org>` | Sender shown in confirmation emails |
-| `MAIL_OUTBOX_DIR` | `./data/outbox` | Where `.eml` files are written |
+| `MAILGUN_API_KEY` | — | Mailgun private API key (required for email delivery) |
+| `MAILGUN_DOMAIN` | — | Mailgun domain, e.g. `mg.example.com` |
+| `MAILGUN_API_BASE_URL` | `https://api.mailgun.net/v3` | Override for EU region or custom edge |
 
 ## Database schema
 
@@ -55,4 +57,4 @@ Use `npm run dev` for development with automatic restarts (requires `nodemon` fr
 
 ## Email testing
 
-Emails are generated with Nodemailerʼs `streamTransport`, so no SMTP credentials are needed. Each confirmation email lands in `data/outbox/*.eml` and can be opened with any mail client for inspection.
+The backend now calls Mailgun's HTTP API directly. For local development you can keep `MAILGUN_*` variables empty; the server will skip the email send (logging a warning) but still accept submissions. To test delivery end-to-end, provision a Mailgun domain, set the variables, and submit the pilot form — Mailgun should show the event immediately in its dashboard.

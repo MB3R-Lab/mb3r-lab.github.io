@@ -1,23 +1,30 @@
-const fs = require('fs');
-const path = require('path');
-const nodemailer = require('nodemailer');
-
 class EmailService {
-    constructor({ from, outboxDir }) {
+    constructor({ from, apiKey, domain, baseUrl = 'https://api.mailgun.net/v3' }) {
         this.from = from;
-        this.outboxDir = outboxDir;
-        fs.mkdirSync(this.outboxDir, { recursive: true });
+        this.apiKey = apiKey;
+        this.domain = domain;
+        this.baseUrl = baseUrl.replace(/\/$/, '');
+    }
 
-        // streamTransport avoids external SMTP dependency; messages are stored locally
-        this.transporter = nodemailer.createTransport({
-            streamTransport: true,
-            newline: 'unix',
-            buffer: true
-        });
+    get isConfigured() {
+        return Boolean(this.apiKey && this.domain && this.from);
+    }
+
+    buildPayload({ to, subject, text, html }) {
+        const params = new URLSearchParams();
+        params.append('from', this.from);
+        params.append('to', to);
+        params.append('subject', subject);
+        params.append('text', text);
+        params.append('html', html);
+        return params;
     }
 
     async sendConfirmation(to, company) {
-        if (!to) {
+        if (!to || !this.isConfigured) {
+            if (!this.isConfigured) {
+                console.warn('[email] Mailgun is not fully configured. Skipping email send.');
+            }
             return null;
         }
 
@@ -38,22 +45,32 @@ class EmailService {
             .map((line) => (line ? `<p>${line}</p>` : '<br>'))
             .join('');
 
-        const info = await this.transporter.sendMail({
-            from: this.from,
-            to,
-            subject,
-            text: plainText,
-            html
+        const endpoint = `${this.baseUrl}/${this.domain}/messages`;
+        const payload = this.buildPayload({ to, subject, text: plainText, html });
+        const authHeader = `Basic ${Buffer.from(`api:${this.apiKey}`).toString('base64')}`;
+
+        const response = await fetch(endpoint, {
+            method: 'POST',
+            headers: {
+                Authorization: authHeader,
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: payload
         });
 
-        const messageId = info.messageId || `msg-${Date.now()}`;
-        const filePath = path.join(this.outboxDir, `${messageId}.eml`);
-
-        if (info.message) {
-            await fs.promises.writeFile(filePath, info.message);
+        if (!response.ok) {
+            const body = await response.text();
+            const error = new Error(`Mailgun request failed with status ${response.status}`);
+            error.status = response.status;
+            error.body = body;
+            throw error;
         }
 
-        return { messageId, filePath };
+        const result = await response.json().catch(() => ({}));
+        return {
+            messageId: result.id || null,
+            status: result.message || 'queued'
+        };
     }
 }
 

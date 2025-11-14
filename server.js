@@ -9,7 +9,7 @@ const EmailService = require('./server/emailService');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '123456789@';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
 const DATA_DIR = path.resolve(process.env.DATA_DIR || path.join(__dirname, 'data'));
 fs.mkdirSync(DATA_DIR, { recursive: true });
@@ -28,8 +28,15 @@ db.prepare(`
 
 const emailService = new EmailService({
     from: process.env.MAIL_FROM || 'MB3R Lab <noreply@mb3r-lab.org>',
-    outboxDir: path.resolve(process.env.MAIL_OUTBOX_DIR || path.join(DATA_DIR, 'outbox'))
+    apiKey: process.env.MAILGUN_API_KEY,
+    domain: process.env.MAILGUN_DOMAIN,
+    baseUrl: process.env.MAILGUN_API_BASE_URL
 });
+
+if (!ADMIN_PASSWORD) {
+    console.error('ADMIN_PASSWORD environment variable is required. Exiting.');
+    process.exit(1);
+}
 
 const isValidEmail = (value = '') => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
 
@@ -71,7 +78,11 @@ app.post('/api/applications', async (req, res, next) => {
         `);
         const result = stmt.run(normalizedEmail, normalizedCompany, normalizedComment);
 
-        await emailService.sendConfirmation(normalizedEmail, normalizedCompany);
+        try {
+            await emailService.sendConfirmation(normalizedEmail, normalizedCompany);
+        } catch (emailError) {
+            console.error('[email] Unable to send confirmation:', emailError);
+        }
 
         return res.status(201).json({
             id: result.lastInsertRowid,

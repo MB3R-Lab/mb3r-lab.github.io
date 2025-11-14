@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const tableBody = document.getElementById('applications-body');
     const tableWrapper = document.querySelector('.table-wrapper');
     const refreshButton = document.getElementById('refresh-button');
-    const resetAuthButton = document.getElementById('reset-auth-button');
     const ADMIN_PASS_STORAGE_KEY = 'mb3r-admin-pass';
     const storage = window.MB3RStorage;
     const explicitEndpoint =
@@ -20,8 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ? window.__MB3R_API_BASE__.trim().replace(/\/$/, '')
             : '';
     const isApiConfigured = Boolean(explicitEndpoint || apiBaseUrl);
-    const shouldFallbackToLocal = (status) =>
-        !status || status >= 500 || status === 404 || status === 405 || !isApiConfigured;
+    const isOfflineError = (status) => !status || status === 0 || !isApiConfigured;
     const resolveEndpoint = (path) => {
         if (explicitEndpoint) {
             return explicitEndpoint;
@@ -162,15 +160,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const error = new Error(data.message || 'Unable to load requests.');
                 error.status = response.status;
-                if (shouldFallbackToLocal(response.status)) {
-                    error.offline = true;
-                }
                 throw error;
             }
 
             return data;
         } catch (error) {
-            if (!error.status || shouldFallbackToLocal(error.status)) {
+            if (!error.status || isOfflineError(error.status)) {
                 const offlineError = new Error(error.message || 'Backend is unreachable.');
                 offlineError.offline = true;
                 offlineError.status = error.status;
@@ -208,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw error;
             }
 
-            if (error.offline || shouldFallbackToLocal(error.status)) {
+            if (error.offline) {
                 const cached = storage?.list?.() || [];
                 currentPassword = password;
                 sessionStorage.setItem(ADMIN_PASS_STORAGE_KEY, password);
@@ -254,14 +249,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         loadApplications({ silent: true }).catch(() => {});
-    });
-
-    resetAuthButton?.addEventListener('click', () => {
-        sessionStorage.removeItem(ADMIN_PASS_STORAGE_KEY);
-        currentPassword = '';
-        passwordInput.value = '';
-        lockTable();
-        openModal();
     });
 
     if (!isApiConfigured) {

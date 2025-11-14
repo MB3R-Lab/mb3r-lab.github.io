@@ -4,8 +4,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggleButton = document.getElementById('theme-toggle');
     const currentTheme = localStorage.getItem('theme');
     const storage = window.MB3RStorage;
-    const apiBaseUrl = (window.__MB3R_API_BASE__ || '').replace(/\/$/, '');
-    const isApiConfigured = Boolean(apiBaseUrl);
+    const explicitEndpoint =
+        typeof window.__MB3R_API_ENDPOINT__ === 'string'
+            ? window.__MB3R_API_ENDPOINT__.trim().replace(/\/$/, '')
+            : '';
+    const apiBaseUrl =
+        typeof window.__MB3R_API_BASE__ === 'string'
+            ? window.__MB3R_API_BASE__.trim().replace(/\/$/, '')
+            : '';
+    const isApiConfigured = Boolean(explicitEndpoint || apiBaseUrl);
 
     const createLocalRecord = (payload, source = 'local') => ({
         id: `${source}-${Date.now()}`,
@@ -19,11 +26,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const shouldFallbackToLocal = (status) =>
         !status || status >= 500 || status === 404 || status === 405 || !isApiConfigured;
 
-    const buildApiUrl = (path) => (isApiConfigured ? `${apiBaseUrl}${path}` : null);
+    const resolveEndpoint = (path) => {
+        if (explicitEndpoint) {
+            return explicitEndpoint;
+        }
+        if (apiBaseUrl) {
+            return `${apiBaseUrl}${path}`;
+        }
+        return null;
+    };
 
     if (!isApiConfigured) {
         console.warn(
-            '[mb3r] API base URL is not configured. Set window.__MB3R_API_BASE__ in assets/js/config.js.'
+            '[mb3r] API endpoint is not configured. Set window.__MB3R_API_ENDPOINT__ (or __MB3R_API_BASE__).'
         );
     }
 
@@ -150,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const submitRequest = async (payload) => {
-        const endpoint = buildApiUrl('/applications');
+        const endpoint = resolveEndpoint('/applications');
 
         if (!endpoint) {
             const error = new Error('API endpoint is not configured.');

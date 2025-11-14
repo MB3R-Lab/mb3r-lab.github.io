@@ -1,65 +1,91 @@
 # MB3R Lab Landing
 
-Landing page for MB3R Lab with a pilot-request workflow, lightweight backend (Express + Supabase), confirmation emails, and a password-protected admin view.
+Static landing page + Supabase Edge Function backend for pilot onboarding. The UI lives on any static host (GitHub Pages), while a Supabase function receives submissions, stores them in Postgres, and triggers Mailgun emails.
 
-## Quick start
+## Architecture
 
-1. **Install dependencies**
-   ```bash
-   npm install
-   ```
-2. **Configure environment**
-   ```bash
-   cp .env.example .env
-   # then adjust PORT/ADMIN_PASSWORD/etc.
-   ```
-3. **Run the server**
-   ```bash
-   npm start
-   ```
-   The server serves the landing page (`/`), the admin dashboard (`/admin`), and exposes APIs under `/api`.
+```
+Visitor ─► GitHub Pages (index.html, admin.html)
+                │
+        fetch https://<project>.functions.supabase.co/applications
+                │
+         Supabase Edge Function
+                │
+      Postgres (applications table) + Mailgun API
+```
 
-Use `npm run dev` for development with automatic restarts (requires `nodemon` from devDependencies).
+If the function is unreachable, the UI falls back to localStorage so leads are not lost; the admin page can still view those cached entries.
+
+## Setup
+
+### 1. Deploy the Supabase function
+
+1. Install the [Supabase CLI](https://supabase.com/docs/guides/cli) and log in:
+   ```bash
+   supabase login
+   supabase link --project-ref YOUR_PROJECT_REF
+   ```
+2. Configure secrets (service role key, admin password, Mailgun, etc.):
+   ```bash
+   supabase secrets set \
+     ADMIN_PASSWORD="set-a-strong-password" \
+     SUPABASE_URL="https://YOUR_PROJECT.supabase.co" \
+     SUPABASE_SERVICE_ROLE_KEY="service-role-key" \
+     MAIL_FROM="MB3R Lab <noreply@mb3r-lab.org>" \
+     MAILGUN_API_KEY="key-..." \
+     MAILGUN_DOMAIN="mg.example.com"
+   # Optional: MAILGUN_API_BASE_URL=https://api.eu.mailgun.net/v3
+   ```
+3. Deploy the function:
+   ```bash
+   supabase functions deploy applications --project-ref YOUR_PROJECT_REF
+   ```
+   The function ensures the `public.applications` table exists, so no manual migration is required.
+
+### 2. Point the frontend at the function
+
+Edit `assets/js/config.js` and set the function URL (no trailing slash):
+
+```js
+window.__MB3R_API_BASE__ = 'https://YOUR_PROJECT_ID.functions.supabase.co';
+```
+
+Push the static site (e.g., to GitHub Pages). The landing page and `/admin.html` will now send all API calls to the Supabase function.
 
 ## Features
 
-- **CTA + modal form** — visitors leave an email, company, and optional comment for pilot onboarding. Validation happens on the client and the server.
-- **Supabase storage** — submissions are persisted in the `applications` table of your Supabase project (via service-role key).
-- **Mail service** — every submission triggers a confirmation email via Mailgun. Configure the sender plus API credentials via `MAIL_FROM`, `MAILGUN_API_KEY`, and `MAILGUN_DOMAIN`.
-- **Admin dashboard** (`/admin`) — shows a table of submissions. Access requires a password entered in a modal (default `123456789@`, override via `ADMIN_PASSWORD`).
-- **API endpoints**
-  - `POST /api/applications` — accepts `{ email, company, comment? }` and returns the new `id`.
-  - `GET /api/applications` — returns all submissions when the `x-admin-pass` header matches `ADMIN_PASSWORD`.
+- **CTA + modal form** — collects email/company/context and sends the payload to the Supabase function.
+- **Supabase storage** — submissions persist in `public.applications`; schema is autop-created on first call.
+- **Mailgun confirmations** — the function posts to Mailgun so every lead receives an acknowledgement email.
+- **Admin dashboard** — `/admin.html` lists submissions. Access requires the password that you stored in the function secret (`x-admin-pass` header). If the function is offline, the dashboard shows the locally cached leads.
+- **Offline fallback** — when the API is unreachable (or not configured) leads are saved in `localStorage`, so you can later recover them from `/admin`.
 
-## Environment variables
+## Supabase function behavior
 
-| Name | Default | Description |
-| --- | --- | --- |
-| `PORT` | `3000` | HTTP port |
-| `ADMIN_PASSWORD` | — | Password required by `/admin` UI and API header (must be set) |
-| `SUPABASE_URL` | — | Supabase project URL |
-| `SUPABASE_SERVICE_ROLE_KEY` | — | Service-role API key (used by the backend to read/write) |
-| `MAIL_FROM` | `MB3R Lab <noreply@mb3r-lab.org>` | Sender shown in confirmation emails |
-| `MAILGUN_API_KEY` | — | Mailgun private API key (required for email delivery) |
-| `MAILGUN_DOMAIN` | — | Mailgun domain, e.g. `mg.example.com` |
-| `MAILGUN_API_BASE_URL` | `https://api.mailgun.net/v3` | Override for EU region or custom edge |
+The deployed function handles:
 
-## Supabase schema
+- `POST /applications` — validate payload, insert into `applications`, trigger Mailgun email, respond with the created ID.
+- `GET /applications` — require `x-admin-pass` header, return ordered submissions.
+- `OPTIONS` — CORS preflight (`*` origin, `content-type` + `x-admin-pass` headers).
+- **Schema bootstrap** — executes
+  ```sql
+  create table if not exists public.applications (
+    id bigint generated by default as identity primary key,
+    email text not null,
+    company text not null,
+    comment text,
+    created_at timestamptz not null default now()
+  );
+  ```
+  via `rest/v1/rpc/exec_sql` whenever it detects that the table is missing.
 
-When the server boots it automatically checks whether the `applications` table exists and runs the `CREATE TABLE` statement if it doesn’t. The SQL we issue is:
+## Local testing
 
-```sql
-create table if not exists public.applications (
-  id bigint generated by default as identity primary key,
-  email text not null,
-  company text not null,
-  comment text,
-  created_at timestamptz not null default now()
-);
-```
+1. Duplicate your secrets in a local `.env.functions` file (key=value per line).
+2. Run the function locally:
+   ```bash
+   supabase functions serve applications --env-file .env.functions
+   ```
+3. Update `assets/js/config.js` to point at the local URL printed by the CLI (e.g., `http://127.0.0.1:54321/functions/v1`), then open `index.html` directly and test the flow.
 
-That logic uses the Supabase service-role key, so it works even with RLS enabled. If you prefer to manage schema manually, you can keep your own migrations—the auto-provision step is idempotent.
-
-## Email testing
-
-The backend now calls Mailgun's HTTP API directly. For local development you can keep `MAILGUN_*` variables empty; the server will skip the email send (logging a warning) but still accept submissions. To test delivery end-to-end, provision a Mailgun domain, set the variables, and submit the pilot form — Mailgun should show the event immediately in its dashboard.
+Remember to switch `config.js` back to the production URL before committing.

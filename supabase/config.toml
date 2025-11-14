@@ -1,0 +1,3 @@
+[functions]
+  [functions.applications]
+  verify_jwt = false

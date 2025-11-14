@@ -11,8 +11,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const resetAuthButton = document.getElementById('reset-auth-button');
     const ADMIN_PASS_STORAGE_KEY = 'mb3r-admin-pass';
     const storage = window.MB3RStorage;
+    const apiBaseUrl = (window.__MB3R_API_BASE__ || '').replace(/\/$/, '');
+    const isApiConfigured = Boolean(apiBaseUrl);
     const shouldFallbackToLocal = (status) =>
-        !status || status >= 500 || status === 404 || status === 405;
+        !status || status >= 500 || status === 404 || status === 405 || !isApiConfigured;
+    const buildApiUrl = (path) => (isApiConfigured ? `${apiBaseUrl}${path}` : null);
     let currentPassword = sessionStorage.getItem(ADMIN_PASS_STORAGE_KEY) || '';
     const userLocale = navigator.language || 'en-US';
 
@@ -118,8 +121,16 @@ document.addEventListener('DOMContentLoaded', () => {
             throw error;
         }
 
+        const endpoint = buildApiUrl('/applications');
+
+        if (!endpoint) {
+            const configError = new Error('API endpoint is not configured.');
+            configError.offline = true;
+            throw configError;
+        }
+
         try {
-            const response = await fetch('/api/applications', {
+            const response = await fetch(endpoint, {
                 headers: { 'x-admin-pass': password }
             });
 
@@ -187,7 +198,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderTable(cached);
                 unlockTable();
                 closeModal();
-                setAuthStatus('API unavailable. Showing cached requests.', 'error');
+                const message = isApiConfigured
+                    ? 'API unavailable. Showing cached requests.'
+                    : 'API endpoint missing. Showing cached requests.';
+                setAuthStatus(message, 'error');
                 return;
             }
 
@@ -233,7 +247,11 @@ document.addEventListener('DOMContentLoaded', () => {
         openModal();
     });
 
-    if (currentPassword) {
+    if (!isApiConfigured) {
+        setTableMessage('API endpoint is not configured. Update assets/js/config.js.');
+    }
+
+    if (currentPassword && isApiConfigured) {
         loadApplications({ silent: true }).catch(() => {});
     } else {
         openModal();

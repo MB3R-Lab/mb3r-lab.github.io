@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggleButton = document.getElementById('theme-toggle');
     const currentTheme = localStorage.getItem('theme');
     const storage = window.MB3RStorage;
+    const apiBaseUrl = (window.__MB3R_API_BASE__ || '').replace(/\/$/, '');
+    const isApiConfigured = Boolean(apiBaseUrl);
 
     const createLocalRecord = (payload, source = 'local') => ({
         id: `${source}-${Date.now()}`,
@@ -15,7 +17,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const shouldFallbackToLocal = (status) =>
-        !status || status >= 500 || status === 404 || status === 405;
+        !status || status >= 500 || status === 404 || status === 405 || !isApiConfigured;
+
+    const buildApiUrl = (path) => (isApiConfigured ? `${apiBaseUrl}${path}` : null);
+
+    if (!isApiConfigured) {
+        console.warn(
+            '[mb3r] API base URL is not configured. Set window.__MB3R_API_BASE__ in assets/js/config.js.'
+        );
+    }
 
     if (currentTheme) {
         htmlElement.setAttribute('data-theme', currentTheme);
@@ -140,7 +150,15 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const submitRequest = async (payload) => {
-        const response = await fetch('/api/applications', {
+        const endpoint = buildApiUrl('/applications');
+
+        if (!endpoint) {
+            const error = new Error('API endpoint is not configured.');
+            error.status = 0;
+            throw error;
+        }
+
+        const response = await fetch(endpoint, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -196,7 +214,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const localRecord = createLocalRecord(payload);
                 persistRecord(localRecord);
                 applicationForm.reset();
-                setStatus('No backend connection. Saved locally for now.', 'success');
+                const suffix = isApiConfigured
+                    ? 'No backend connection. Saved locally for now.'
+                    : 'API endpoint missing. Saved locally for now.';
+                setStatus(suffix, 'success');
             } else {
                 setStatus(error.message || 'Unable to submit the request.', 'error');
             }

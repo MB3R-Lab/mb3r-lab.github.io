@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tableBody.innerHTML = '';
         const row = document.createElement('tr');
         const cell = document.createElement('td');
-        cell.colSpan = 5;
+        cell.colSpan = 6;
         cell.textContent = message;
         row.appendChild(cell);
         tableBody.appendChild(row);
@@ -116,6 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 row.email,
                 row.company,
                 row.comment || '—',
+                row.country || '—',
                 formatDate(row.created_at)
             ];
 

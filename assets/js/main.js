@@ -69,6 +69,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    const zoomOverlay = document.querySelector('[data-zoom-overlay]');
+    const zoomTarget = zoomOverlay?.querySelector('[data-zoom-target]');
+
     const modal = document.getElementById('pilot-modal');
     const applicationForm = document.getElementById('application-form');
     const statusField = document.getElementById('application-status');
@@ -133,7 +136,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const closeModal = () => {
             modal.classList.remove('is-open');
             modal.setAttribute('aria-hidden', 'true');
-            body.classList.remove('no-scroll');
+            if (!zoomOverlay?.classList.contains('is-open')) {
+                body.classList.remove('no-scroll');
+            }
             document.removeEventListener('keydown', handleKeydown);
             if (lastFocusedElement) {
                 lastFocusedElement.focus();
@@ -144,6 +149,44 @@ document.addEventListener('DOMContentLoaded', () => {
         closeElements.forEach(element => element.addEventListener('click', closeModal));
         overlay?.addEventListener('click', closeModal);
     }
+
+    const zoomSources = document.querySelectorAll('[data-zoom-source]');
+
+    const closeZoom = () => {
+        if (!zoomOverlay) return;
+        zoomOverlay.classList.remove('is-open');
+        zoomOverlay.setAttribute('aria-hidden', 'true');
+        if (zoomTarget) {
+            zoomTarget.src = '';
+        }
+        if (!modal?.classList.contains('is-open')) {
+            body.classList.remove('no-scroll');
+        }
+    };
+
+    const openZoom = (source) => {
+        if (!zoomOverlay || !zoomTarget) return;
+        zoomTarget.src = source.src;
+        zoomTarget.alt = source.alt || 'Zoomed image';
+        zoomOverlay.classList.add('is-open');
+        zoomOverlay.setAttribute('aria-hidden', 'false');
+        body.classList.add('no-scroll');
+    };
+
+    zoomSources.forEach(img => img.addEventListener('click', () => openZoom(img)));
+    zoomOverlay?.addEventListener('click', (event) => {
+        if (event.target === zoomOverlay) {
+            closeZoom();
+        }
+    });
+    zoomOverlay?.querySelectorAll('[data-zoom-close]').forEach(el =>
+        el.addEventListener('click', closeZoom)
+    );
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && zoomOverlay?.classList.contains('is-open')) {
+            closeZoom();
+        }
+    });
 
     const setStatus = (message, state) => {
         if (!statusField) {

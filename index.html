@@ -125,7 +125,7 @@
                         <p>This paper introduces the Effective-Information Consistency Score to quantify uncertainty in Transformer Circuits. This white-box, single-pass metric helps attribute uncertainty to specific mechanisms within LLMs.</p>
                     </li>
                     <li>
-                        <a href="https://www.alphaxiv.org/abs/2506.11176" target="_blank" rel="noopener noreferrer">Model Discovery and Graph Simulation: A Lightweight Alternative to Chaos Engineering</a>
+                        <a href="https://www.alphaxiv.org/abs/2506.11176" target="_blank" rel="noopener noreferrer">Model Discovery and Graph Simulation: A Lightweight Gateway to Chaos Engineering</a>
                         <p>Offline resilience estimation from a dependency graph; compares simulations to live failure injection on a microservice benchmark.</p>
                     </li>
                     <li>
@@ -140,6 +140,11 @@
             <div class="container">
                 <h2 class="section-title">Updates</h2>
                 <div class="updates-grid">
+                    <article class="update-card">
+                        <span class="update-date">December 2025</span>
+                        <h3 class="update-title">ICSE 2026 NIER acceptance</h3>
+                        <p class="update-text">Our paper “Model Discovery and Graph Simulation: A Lightweight Gateway to Chaos Engineering” was accepted to the ICSE 2026 NIER track, which recognizes our commitment to safer, simulation-driven resilience.</p>
+                    </article>
                     <article class="update-card">
                         <span class="update-date">September 2025</span>
                         <h3 class="update-title">Causal AI publication</h3>
@@ -170,27 +175,8 @@
                     <img src="assets/img/roadmap.svg" alt="Roadmap icon" class="section-icon" width="56" height="56">
                     <h2 class="section-title">Roadmap</h2>
                 </div>
-                <div class="roadmap-grid">
-                    <article class="roadmap-card">
-                        <span class="roadmap-phase">Q4 2025</span>
-                        <h3>Design partner pilots</h3>
-                        <p>Guide Bering discovery runs and Sheaft simulations with early adopters to tune the resilience playbook.</p>
-                    </article>
-                    <article class="roadmap-card">
-                        <span class="roadmap-phase">Q1 2026</span>
-                        <h3>Self-serve ingestion</h3>
-                        <p>Ship a secure CLI and UI to import configs, traces, and telemetry, producing live dependency graphs on demand.</p>
-                    </article>
-                    <article class="roadmap-card">
-                        <span class="roadmap-phase">Q2 2026</span>
-                        <h3>Simulation workspace</h3>
-                        <p>Launch a collaborative workspace for Monte-Carlo what-if runs, result sharing, and regression tracking.</p>
-                    </article>
-                    <article class="roadmap-card">
-                        <span class="roadmap-phase">Q3 2026</span>
-                        <h3>Resilience scoring</h3>
-                        <p>Release resilience and causal emergence scores with remediation recommendations for production rollouts.</p>
-                    </article>
+                <div class="roadmap-figure">
+                    <img src="assets/img/roadmap.svg" alt="MB3R Lab roadmap" class="roadmap-image" data-zoom-source>
                 </div>
             </div>
         </section>
@@ -212,6 +198,15 @@
             <p>© 2025 MB3R Lab. All rights reserved.</p>
         </div>
     </footer>
+
+    <div class="image-zoom" data-zoom-overlay aria-hidden="true">
+        <div class="image-zoom-frame">
+            <button type="button" class="image-zoom-close" data-zoom-close aria-label="Close zoomed image">
+                &times;
+            </button>
+            <img src="" alt="" data-zoom-target>
+        </div>
+    </div>
 
     <div class="modal" id="pilot-modal" aria-hidden="true">
         <div class="modal-overlay" data-modal-close></div>

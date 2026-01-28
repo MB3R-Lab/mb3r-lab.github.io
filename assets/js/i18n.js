@@ -1,6 +1,6 @@
 (function () {
     const STORAGE_KEY = 'mb3r-lang';
-    const DEFAULT_LANG = 'ru';
+    const DEFAULT_LANG = 'en';
     const FALLBACK_LANG = 'en';
     const SUPPORTED_LANGS = ['ru', 'en'];
 
@@ -10,11 +10,6 @@
         const saved = normalize(localStorage.getItem(STORAGE_KEY));
         if (SUPPORTED_LANGS.includes(saved)) {
             return saved;
-        }
-
-        const htmlLang = normalize(document.documentElement.lang);
-        if (SUPPORTED_LANGS.includes(htmlLang)) {
-            return htmlLang;
         }
 
         const navigatorLang = normalize(navigator.language || '');

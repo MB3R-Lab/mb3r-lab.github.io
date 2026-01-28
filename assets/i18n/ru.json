@@ -32,6 +32,7 @@
       "whatWeDo": "Что мы делаем",
       "projects": "Проекты",
       "publications": "Публикации",
+      "demo": "Демо-отчёт",
       "updates": "Обновления",
       "roadmap": "Дорожная карта",
       "contact": "Контакты"
@@ -107,12 +108,17 @@
     }
   },
   "demo": {
-    "title": "Демо-отчёт",
+    "title": "Демо-отчёт (Как это может выглядеть)",
     "imageAlt": "Скрин отчёта Sheaft"
   },
   "updates": {
     "title": "Обновления",
     "items": {
+      "aina": {
+        "date": "Январь 2026",
+        "title": "Refining Resilience Model Discovery: A Case Study on the Limited Role of Asynchronous Edges in the OpenTelemetry Demo",
+        "text": "Инкрементальная статья принята на конференцию AINA 2026 (CORE B)."
+      },
       "asyncResilience": {
         "date": "Декабрь 2025",
         "title": "Async resilience preprint",

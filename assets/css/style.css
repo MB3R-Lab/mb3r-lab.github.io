@@ -370,6 +370,32 @@ ul {
     line-height: 1.4;
 }
 
+/* Demo Section */
+.demo {
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+}
+
+.demo-media {
+    display: flex;
+    justify-content: center;
+}
+
+.demo-image {
+    width: 100%;
+    max-width: 960px;
+    border-radius: 0.75rem;
+    border: 1px solid var(--border-color);
+    background-color: var(--card-bg-color);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+    cursor: zoom-in;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.demo-image:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 22px 48px rgba(0, 0, 0, 0.16);
+}
+
 /* Roadmap Section */
 .roadmap {
     background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));

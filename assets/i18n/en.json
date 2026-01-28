@@ -1,11 +1,11 @@
 {
   "meta": {
     "title": "MB3R Lab — Model-Based Robustness, Reliability & Resilience",
-    "description": "MB3R Lab is a research group focused on model discovery, simulation-based what-if analysis, and causal resilience for distributed systems.",
+    "description": "MB3R Lab is a research group focused on model discovery, simulation-based what‑if analysis, and causal resilience for distributed systems.",
     "ogTitle": "MB3R Lab — Model-Based Robustness, Reliability & Resilience",
-    "ogDescription": "Research & Development in model discovery, simulation-based what-if analysis, and causal resilience.",
+    "ogDescription": "Research & Development in model discovery, simulation-based what‑if analysis, and causal resilience.",
     "twitterTitle": "MB3R Lab — Model-Based Robustness, Reliability & Resilience",
-    "twitterDescription": "Research & Development in model discovery, simulation-based what-if analysis, and causal resilience.",
+    "twitterDescription": "Research & Development in model discovery, simulation-based what‑if analysis, and causal resilience.",
     "locale": "en-US"
   },
   "schema": {
@@ -43,7 +43,7 @@
   },
   "home": {
     "subtitle": "Model-Based Robustness, Reliability & Resilience",
-    "description": "Research & Development in model discovery, simulation-based “what-if” analysis, and formal causal inference.",
+    "description": "Research & Development in model discovery, simulation-based “what‑if” analysis, and formal causal inference.",
     "cta": "Request pilot access",
     "followLinkedIn": "Follow on LinkedIn",
     "followTelegram": "Follow on Telegram",
@@ -58,7 +58,7 @@
         "text": "synthesize system dependency models from configuration, traces, and telemetry."
       },
       "whatIf": {
-        "title": "What-if Simulation",
+        "title": "What‑if Simulation",
         "text": "run Monte-Carlo failure scenarios on the discovered model without touching production."
       },
       "causalResilience": {
@@ -72,7 +72,7 @@
     "cards": {
       "bering": {
         "title": "Bering — Model Discovery",
-        "text": "Automatically derive a live dependency model of your information system from configs and traces; run what-if failure simulations offline."
+        "text": "Automatically derive a live dependency model of your information system from configs and traces; run what‑if failure simulations offline."
       },
       "sheaft": {
         "title": "Sheaft — Simulation-based chaos engineering & causal analysis",

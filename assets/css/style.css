@@ -145,6 +145,13 @@ ul {
 [data-theme="dark"] .theme-toggle .feather-sun { display: block; }
 [data-theme="dark"] .theme-toggle .feather-moon { display: none; }
 
+.lang-toggle {
+    padding: 0.45rem 0.85rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
 
 /* Home Section */
 .home {

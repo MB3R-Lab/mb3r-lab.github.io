@@ -1,0 +1,231 @@
+{
+  "meta": {
+    "title": "MB3R Lab — Model-Based Robustness, Reliability & Resilience",
+    "description": "MB3R Lab is a research group focused on model discovery, simulation-based what-if analysis, and causal resilience for distributed systems.",
+    "ogTitle": "MB3R Lab — Model-Based Robustness, Reliability & Resilience",
+    "ogDescription": "Research & Development in model discovery, simulation-based what-if analysis, and causal resilience.",
+    "twitterTitle": "MB3R Lab — Model-Based Robustness, Reliability & Resilience",
+    "twitterDescription": "Research & Development in model discovery, simulation-based what-if analysis, and causal resilience.",
+    "locale": "en-US"
+  },
+  "schema": {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "MB3R Lab",
+    "url": "https://mb3r-lab.github.io/",
+    "logo": "https://mb3r-lab.github.io/assets/img/logo.svg",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "email": "contact@mb3r-lab.org",
+      "contactType": "customer support"
+    }
+  },
+  "brand": {
+    "name": "MB3R Lab"
+  },
+  "common": {
+    "placeholder": "—"
+  },
+  "nav": {
+    "logoAlt": "MB3R Lab Logo",
+    "links": {
+      "whatWeDo": "What we do",
+      "projects": "Projects",
+      "publications": "Publications",
+      "updates": "Updates",
+      "roadmap": "Roadmap",
+      "contact": "Contact"
+    },
+    "requestPilot": "Request a pilot",
+    "themeToggleAria": "Toggle light and dark mode",
+    "langToggleLabel": "RU",
+    "langToggleAria": "Switch to Russian"
+  },
+  "home": {
+    "subtitle": "Model-Based Robustness, Reliability & Resilience",
+    "description": "Research & Development in model discovery, simulation-based “what-if” analysis, and formal causal inference.",
+    "cta": "Request pilot access",
+    "followLinkedIn": "Follow on LinkedIn",
+    "followTelegram": "Follow on Telegram",
+    "exploreGithub": "Explore code on GitHub"
+  },
+  "whatWeDo": {
+    "title": "What we do",
+    "intro": "MB3R Lab is an R&D group working on automatic model discovery and simulation-driven resilience analysis for distributed systems (e.g., microservices).",
+    "items": {
+      "modelDiscovery": {
+        "title": "Model Discovery",
+        "text": "synthesize system dependency models from configuration, traces, and telemetry."
+      },
+      "whatIf": {
+        "title": "What-if Simulation",
+        "text": "run Monte-Carlo failure scenarios on the discovered model without touching production."
+      },
+      "causalResilience": {
+        "title": "Causal Resilience",
+        "text": "sheaf-theoretic analysis and Effective Information (EI) to identify macro-structures that improve predictability and control."
+      }
+    }
+  },
+  "projects": {
+    "title": "Projects",
+    "cards": {
+      "bering": {
+        "title": "Bering — Model Discovery",
+        "text": "Automatically derive a live dependency model of your information system from configs and traces; run what-if failure simulations offline."
+      },
+      "sheaft": {
+        "title": "Sheaft — Simulation-based chaos engineering & causal analysis",
+        "text": "Run simulation-first chaos experiments and quantify causal emergence with sheaf-theoretic EI to find resilient macro-structures."
+      }
+    },
+    "links": {
+      "repoPrivate": "Repo: Private / coming soon",
+      "paper": "Paper",
+      "theory": "Theory article"
+    }
+  },
+  "publications": {
+    "title": "Publications",
+    "items": {
+      "uncertainty": {
+        "title": "Measuring Uncertainty in Transformer Circuits with Effective Information Consistency",
+        "text": "This paper introduces the Effective-Information Consistency Score to quantify uncertainty in Transformer Circuits. This white-box, single-pass metric helps attribute uncertainty to specific mechanisms within LLMs."
+      },
+      "modelDiscovery": {
+        "title": "Model Discovery and Graph Simulation: A Lightweight Gateway to Chaos Engineering",
+        "text": "Offline resilience estimation from a dependency graph; compares simulations to live failure injection on a microservice benchmark."
+      },
+      "sheaf": {
+        "title": "Sheaf-Theoretic Causal Emergence for Resilience Analysis in Distributed Systems",
+        "text": "Unifies sheaves, flow simulation, and EI for multi-level causal analysis."
+      }
+    }
+  },
+  "updates": {
+    "title": "Updates",
+    "items": {
+      "icse": {
+        "date": "December 2025",
+        "title": "ICSE 2026 NIER acceptance",
+        "text": "Our paper “Model Discovery and Graph Simulation: A Lightweight Gateway to Chaos Engineering” was accepted to the ICSE 2026 NIER track, which recognizes our commitment to safer, simulation-driven resilience."
+      },
+      "causalAi": {
+        "date": "September 2025",
+        "title": "Causal AI publication",
+        "text": "Documented Effective-Information metrics for transformer circuits and published the results."
+      },
+      "landing": {
+        "date": "July 2025",
+        "title": "Public landing launched",
+        "text": "Released mb3r-lab.github.io with a pilot intake flow and project overview."
+      },
+      "benchmark": {
+        "date": "June 2025",
+        "title": "Bering benchmark",
+        "text": "Reproduced Bering simulations on a microservice benchmark to validate offline chaos runs."
+      },
+      "sheaft": {
+        "date": "March 2025",
+        "title": "Sheaft framework",
+        "text": "Introduced the theoretical foundation for sheaf-based causal analysis in distributed systems."
+      }
+    }
+  },
+  "roadmap": {
+    "title": "Roadmap",
+    "iconAlt": "Roadmap icon",
+    "imageAlt": "MB3R Lab roadmap"
+  },
+  "contact": {
+    "title": "Contact",
+    "github": "GitHub",
+    "linkedin": "LinkedIn",
+    "email": "contact@mb3r-lab.org"
+  },
+  "footer": {
+    "copyright": "© 2025 MB3R Lab. All rights reserved."
+  },
+  "imageZoom": {
+    "closeAria": "Close zoomed image",
+    "alt": "Zoomed image"
+  },
+  "modal": {
+    "closeAria": "Close form",
+    "title": "Request a pilot with MB3R Lab",
+    "description": "Share your details and we will follow up with pilot onboarding steps and a target integration plan."
+  },
+  "form": {
+    "emailLabel": "Work email *",
+    "emailPlaceholder": "you@company.com",
+    "companyLabel": "Company *",
+    "companyPlaceholder": "Company name",
+    "commentLabel": "Context (optional)",
+    "commentPlaceholder": "Key systems, desired outcomes, timelines",
+    "note": "We will send a confirmation email after the request is delivered.",
+    "submit": "Submit request",
+    "status": {
+      "sending": "Sending your request...",
+      "success": "All set! We just confirmed via email.",
+      "savedOffline": "No backend connection. Saved locally for now.",
+      "savedMissingEndpoint": "API endpoint missing. Saved locally for now.",
+      "submitFailed": "Unable to submit the request."
+    },
+    "errors": {
+      "apiNotConfigured": "API endpoint is not configured.",
+      "submitFailed": "Unable to submit the request."
+    }
+  },
+  "console": {
+    "apiNotConfigured": "[mb3r] API endpoint is not configured. Set window.__MB3R_API_ENDPOINT__ (or __MB3R_API_BASE__)."
+  },
+  "admin": {
+    "pageTitle": "MB3R Lab — Pilot requests",
+    "heading": "Pilot program requests",
+    "description": "Monitor submissions collected on the landing page. Records persist in Supabase (Postgres).",
+    "actions": {
+      "refresh": "Refresh",
+      "home": "Home"
+    },
+    "table": {
+      "overlayLocked": "Enter the administrator password to view requests.",
+      "headers": {
+        "id": "ID",
+        "email": "Email",
+        "company": "Company",
+        "context": "Context",
+        "country": "Country",
+        "created": "Created"
+      },
+      "empty": "Requests are not loaded yet."
+    },
+    "modal": {
+      "title": "Enter administrator password",
+      "description": "Passwords are managed on the server via the ADMIN_PASSWORD environment variable.",
+      "passwordLabel": "Password",
+      "submit": "Continue"
+    },
+    "status": {
+      "noRequests": "No requests yet.",
+      "passwordRequired": "Password is required.",
+      "apiNotConfigured": "API endpoint is not configured.",
+      "loadFailed": "Unable to load requests.",
+      "backendUnreachable": "Backend is unreachable.",
+      "enterPassword": "Enter the password.",
+      "refreshing": "Refreshing request list...",
+      "incorrectPassword": "Incorrect password. Try again.",
+      "apiUnavailable": "API unavailable. Unable to load requests right now.",
+      "apiUnavailableLater": "API unavailable. Try again later.",
+      "showingCached": "API unavailable. Showing cached requests.",
+      "validating": "Validating...",
+      "accessGranted": "Access granted.",
+      "apiNotConfiguredHint": "API endpoint is not configured. Update assets/js/config.js."
+    },
+    "errors": {
+      "passwordRequired": "Password is required.",
+      "apiNotConfigured": "API endpoint is not configured.",
+      "loadFailed": "Unable to load requests.",
+      "backendUnreachable": "Backend is unreachable."
+    }
+  }
+}

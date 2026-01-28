@@ -4,6 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggleButton = document.getElementById('theme-toggle');
     const currentTheme = localStorage.getItem('theme');
     const storage = window.MB3RStorage;
+    const getI18n = () => window.MB3RI18n;
+    const t = (key) => (getI18n()?.t ? getI18n().t(key) : key);
+    const whenI18nReady = () => getI18n()?.ready || Promise.resolve();
     const explicitEndpoint =
         typeof window.__MB3R_API_ENDPOINT__ === 'string'
             ? window.__MB3R_API_ENDPOINT__.trim().replace(/\/$/, '')
@@ -36,11 +39,11 @@ document.addEventListener('DOMContentLoaded', () => {
         return null;
     };
 
-    if (!isApiConfigured) {
-        console.warn(
-            '[mb3r] API endpoint is not configured. Set window.__MB3R_API_ENDPOINT__ (or __MB3R_API_BASE__).'
-        );
-    }
+    whenI18nReady().then(() => {
+        if (!isApiConfigured) {
+            console.warn(t('console.apiNotConfigured'));
+        }
+    });
 
     if (currentTheme) {
         htmlElement.setAttribute('data-theme', currentTheme);
@@ -167,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const openZoom = (source) => {
         if (!zoomOverlay || !zoomTarget) return;
         zoomTarget.src = source.src;
-        zoomTarget.alt = source.alt || 'Zoomed image';
+        zoomTarget.alt = source.alt || t('imageZoom.alt');
         zoomOverlay.classList.add('is-open');
         zoomOverlay.setAttribute('aria-hidden', 'false');
         body.classList.add('no-scroll');
@@ -211,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const endpoint = resolveEndpoint('/applications');
 
         if (!endpoint) {
-            const error = new Error('API endpoint is not configured.');
+            const error = new Error(t('form.errors.apiNotConfigured'));
             error.status = 0;
             throw error;
         }
@@ -227,7 +230,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = await response.json().catch(() => ({}));
 
         if (!response.ok) {
-            const error = new Error(data.message || 'Unable to submit the request.');
+            const error = new Error(data.message || t('form.errors.submitFailed'));
             error.status = response.status;
             throw error;
         }
@@ -244,6 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     applicationForm?.addEventListener('submit', async (event) => {
         event.preventDefault();
+        await whenI18nReady();
         if (!submitButton) {
             return;
         }
@@ -260,24 +264,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         submitButton.disabled = true;
-        setStatus('Sending your request...', '');
+        setStatus(t('form.status.sending'), '');
 
         try {
             const record = await submitRequest(payload);
             persistRecord(record);
             applicationForm.reset();
-            setStatus('All set! We just confirmed via email.', 'success');
+            setStatus(t('form.status.success'), 'success');
         } catch (error) {
             if (shouldFallbackToLocal(error.status)) {
                 const localRecord = createLocalRecord(payload);
                 persistRecord(localRecord);
                 applicationForm.reset();
                 const suffix = isApiConfigured
-                    ? 'No backend connection. Saved locally for now.'
-                    : 'API endpoint missing. Saved locally for now.';
+                    ? t('form.status.savedOffline')
+                    : t('form.status.savedMissingEndpoint');
                 setStatus(suffix, 'success');
             } else {
-                setStatus(error.message || 'Unable to submit the request.', 'error');
+                setStatus(error.message || t('form.errors.submitFailed'), 'error');
             }
         } finally {
             submitButton.disabled = false;

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html lang="ru" class="no-js">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MB3R Lab — Pilot requests</title>
+    <title data-i18n="admin.pageTitle"></title>
     <link rel="icon" href="assets/img/favicon.ico" sizes="any">
     <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
     <link rel="stylesheet" href="assets/css/style.css">
@@ -11,29 +11,27 @@
 </head>
 <body class="admin-body">
     <main class="admin-main">
-        <h1>Pilot program requests</h1>
-        <p class="admin-description">
-            Monitor submissions collected on the landing page. Records persist in Supabase (Postgres).
-        </p>
+        <h1 data-i18n="admin.heading"></h1>
+        <p class="admin-description" data-i18n="admin.description"></p>
         <div class="admin-actions">
-            <button type="button" class="button button-primary" id="refresh-button">Refresh</button>
-            <a class="button button-ghost" href="index.html">Home</a>
+            <button type="button" class="button button-primary" id="refresh-button" data-i18n="admin.actions.refresh"></button>
+            <a class="button button-ghost" href="index.html" data-i18n="admin.actions.home"></a>
         </div>
-        <div class="table-wrapper" role="region" aria-live="polite" data-locked="true" data-overlay-message="Enter the administrator password to view requests.">
+        <div class="table-wrapper" role="region" aria-live="polite" data-locked="true" data-overlay-message="" data-i18n-attr="data-overlay-message:admin.table.overlayLocked">
             <table class="admin-table">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Email</th>
-                        <th>Company</th>
-                        <th>Context</th>
-                        <th>Country</th>
-                        <th>Created</th>
+                        <th data-i18n="admin.table.headers.id"></th>
+                        <th data-i18n="admin.table.headers.email"></th>
+                        <th data-i18n="admin.table.headers.company"></th>
+                        <th data-i18n="admin.table.headers.context"></th>
+                        <th data-i18n="admin.table.headers.country"></th>
+                        <th data-i18n="admin.table.headers.created"></th>
                     </tr>
                 </thead>
                 <tbody id="applications-body">
                     <tr>
-                        <td colspan="6">Requests are not loaded yet.</td>
+                        <td colspan="6" data-i18n="admin.table.empty"></td>
                     </tr>
                 </tbody>
             </table>
@@ -43,20 +41,19 @@
     <div class="modal" id="admin-auth-modal" aria-hidden="true">
         <div class="modal-overlay"></div>
         <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="admin-auth-title">
-            <h2 id="admin-auth-title">Enter administrator password</h2>
-            <p class="modal-description">
-                Passwords are managed on the server via the <code>ADMIN_PASSWORD</code> environment variable.
-            </p>
+            <h2 id="admin-auth-title" data-i18n="admin.modal.title"></h2>
+            <p class="modal-description" data-i18n="admin.modal.description"></p>
             <form id="admin-auth-form" class="modal-form">
                 <div class="form-group">
-                    <label for="admin-password">Password</label>
+                    <label for="admin-password" data-i18n="admin.modal.passwordLabel"></label>
                     <input type="password" id="admin-password" name="password" autocomplete="current-password" required>
                 </div>
-                <button type="submit" class="button button-primary">Continue</button>
+                <button type="submit" class="button button-primary" data-i18n="admin.modal.submit"></button>
                 <p class="form-status" id="admin-auth-status" role="status" aria-live="polite"></p>
             </form>
         </div>
     </div>
+    <script src="assets/js/i18n.js"></script>
     <script src="assets/js/config.js"></script>
     <script src="assets/js/storage.js"></script>
     <script src="assets/js/admin.js"></script>

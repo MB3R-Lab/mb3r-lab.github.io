@@ -10,6 +10,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const refreshButton = document.getElementById('refresh-button');
     const ADMIN_PASS_STORAGE_KEY = 'mb3r-admin-pass';
     const storage = window.MB3RStorage;
+    const getI18n = () => window.MB3RI18n;
+    const t = (key) => (getI18n()?.t ? getI18n().t(key) : key);
+    const whenI18nReady = () => getI18n()?.ready || Promise.resolve();
+    const getLocale = () =>
+        getI18n()?.getLocale
+            ? getI18n().getLocale()
+            : document.documentElement.lang || navigator.language || 'ru-RU';
     const explicitEndpoint =
         typeof window.__MB3R_API_ENDPOINT__ === 'string'
             ? window.__MB3R_API_ENDPOINT__.trim().replace(/\/$/, '')
@@ -32,7 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
     sessionStorage.removeItem(ADMIN_PASS_STORAGE_KEY);
     let currentPassword = '';
     let hasRemoteSuccess = false;
-    const userLocale = navigator.language || 'en-US';
 
     const lockTable = () => tableWrapper?.setAttribute('data-locked', 'true');
     const unlockTable = () => tableWrapper?.removeAttribute('data-locked');
@@ -60,10 +66,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    const setOverlayMessage = (message) => {
+    const setOverlayMessage = (message, messageKey) => {
         if (!tableWrapper) return;
         tableWrapper.setAttribute('data-overlay-message', message);
+        if (messageKey) {
+            tableWrapper.dataset.overlayKey = messageKey;
+        } else {
+            delete tableWrapper.dataset.overlayKey;
+        }
     };
+
+    whenI18nReady().then(() => {
+        if (tableWrapper?.getAttribute('data-locked') === 'true') {
+            setOverlayMessage(t('admin.table.overlayLocked'), 'admin.table.overlayLocked');
+        }
+    });
 
     const setTableMessage = (message) => {
         if (!tableBody) {
@@ -96,19 +113,19 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const formatDate = (value) => {
-        if (!value) return '—';
+        if (!value) return t('common.placeholder');
         const parsed = new Date(value);
         if (Number.isNaN(parsed.getTime())) {
             return value;
         }
-        return parsed.toLocaleString(userLocale);
+        return parsed.toLocaleString(getLocale());
     };
 
     const renderTable = (rows) => {
         if (!tableBody) return;
 
         if (!rows.length) {
-            setTableMessage('No requests yet.');
+            setTableMessage(t('admin.status.noRequests'));
             return;
         }
 
@@ -120,8 +137,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 row.id,
                 row.email,
                 row.company,
-                row.comment || '—',
-                row.country || '—',
+                row.comment || t('common.placeholder'),
+                row.country || t('common.placeholder'),
                 formatDate(row.created_at)
             ];
 
@@ -136,8 +153,10 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const fetchApplications = async (password) => {
+        await whenI18nReady();
+
         if (!password) {
-            const error = new Error('Password is required.');
+            const error = new Error(t('admin.errors.passwordRequired'));
             error.status = 401;
             throw error;
         }
@@ -145,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const endpoint = resolveEndpoint('/applications');
 
         if (!endpoint) {
-            const configError = new Error('API endpoint is not configured.');
+            const configError = new Error(t('admin.errors.apiNotConfigured'));
             configError.offline = true;
             throw configError;
         }
@@ -159,12 +178,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!response.ok) {
                 if (response.status === 401 || response.status === 403) {
-                    const authError = new Error(data.message || 'Unable to load requests.');
+                    const authError = new Error(data.message || t('admin.errors.loadFailed'));
                     authError.status = response.status;
                     throw authError;
                 }
 
-                const error = new Error(data.message || 'Unable to load requests.');
+                const error = new Error(data.message || t('admin.errors.loadFailed'));
                 error.status = response.status;
                 throw error;
             }
@@ -172,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return data;
         } catch (error) {
             if (!error.status || isOfflineError(error.status)) {
-                const offlineError = new Error(error.message || 'Backend is unreachable.');
+                const offlineError = new Error(error.message || t('admin.errors.backendUnreachable'));
                 offlineError.offline = true;
                 offlineError.status = error.status;
                 throw offlineError;
@@ -182,13 +201,15 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const loadApplications = async ({ password = currentPassword, silent = false } = {}) => {
+        await whenI18nReady();
+
         if (!password) {
-            setAuthStatus('Enter the password.', 'error');
+            setAuthStatus(t('admin.status.enterPassword'), 'error');
             return;
         }
 
         if (!silent) {
-            setTableMessage('Refreshing request list...');
+            setTableMessage(t('admin.status.refreshing'));
         }
 
         try {
@@ -199,7 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
             unlockTable();
             closeModal();
             hasRemoteSuccess = true;
-            setOverlayMessage('Enter the administrator password to view requests.');
+            setOverlayMessage(t('admin.table.overlayLocked'), 'admin.table.overlayLocked');
             return;
         } catch (error) {
             if (error.status === 401 || error.status === 403) {
@@ -207,7 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 currentPassword = '';
                 lockTable();
                 setAuthStatus(error.message, 'error');
-                 setOverlayMessage('Incorrect password. Try again.');
+                setOverlayMessage(t('admin.status.incorrectPassword'), 'admin.status.incorrectPassword');
                 openModal();
                 throw error;
             }
@@ -215,13 +236,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (error.offline) {
                 if (!hasRemoteSuccess) {
                     setAuthStatus(
-                        'API unavailable. Unable to load requests right now.',
+                        t('admin.status.apiUnavailable'),
                         'error'
                     );
                     sessionStorage.removeItem(ADMIN_PASS_STORAGE_KEY);
                     currentPassword = '';
                     lockTable();
-                    setOverlayMessage('API unavailable. Try again later.');
+                    setOverlayMessage(t('admin.status.apiUnavailableLater'), 'admin.status.apiUnavailableLater');
                     openModal();
                     throw error;
                 }
@@ -230,31 +251,32 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderTable(cached);
                 unlockTable();
                 closeModal();
-                setAuthStatus('API unavailable. Showing cached requests.', 'error');
+                setAuthStatus(t('admin.status.showingCached'), 'error');
                 return;
             }
 
-            setTableMessage(error.message || 'Unable to load requests.');
+            setTableMessage(error.message || t('admin.errors.loadFailed'));
             lockTable();
-            setOverlayMessage('Unable to load requests.');
+            setOverlayMessage(t('admin.errors.loadFailed'), 'admin.errors.loadFailed');
             throw error;
         }
     };
 
     authForm?.addEventListener('submit', async (event) => {
         event.preventDefault();
+        await whenI18nReady();
         const password = passwordInput?.value.trim();
 
         if (!password) {
-            setAuthStatus('Enter the password.', 'error');
+            setAuthStatus(t('admin.status.enterPassword'), 'error');
             return;
         }
 
-        setAuthStatus('Validating...', '');
+        setAuthStatus(t('admin.status.validating'), '');
 
         try {
             await loadApplications({ password });
-            setAuthStatus('Access granted.', 'success');
+            setAuthStatus(t('admin.status.accessGranted'), 'success');
         } catch {
             // Errors are surfaced inside loadApplications.
         }
@@ -270,7 +292,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (!isApiConfigured) {
-        setTableMessage('API endpoint is not configured. Update assets/js/config.js.');
+        whenI18nReady().then(() => {
+            setTableMessage(t('admin.status.apiNotConfiguredHint'));
+        });
     }
 
     if (currentPassword && isApiConfigured) {

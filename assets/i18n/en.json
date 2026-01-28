@@ -88,6 +88,10 @@
   "publications": {
     "title": "Publications",
     "items": {
+      "asyncSemantics": {
+        "title": "Evaluating Asynchronous Semantics in Trace-Discovered Resilience Models: A Case Study on the OpenTelemetry Demo",
+        "text": "Extends the experimental validation of the model discovery concept to a new system (the OpenTelemetry Demo) and a new grain of complexity (asynchronous semantics), comparing the trace-derived model against live chaos experiments."
+      },
       "uncertainty": {
         "title": "Measuring Uncertainty in Transformer Circuits with Effective Information Consistency",
         "text": "This paper introduces the Effective-Information Consistency Score to quantify uncertainty in Transformer Circuits. This white-box, single-pass metric helps attribute uncertainty to specific mechanisms within LLMs."
@@ -105,6 +109,11 @@
   "updates": {
     "title": "Updates",
     "items": {
+      "asyncResilience": {
+        "date": "December 2025",
+        "title": "Async resilience preprint",
+        "text": "Extended our experimental validation of the model discovery concept to the OpenTelemetry Demo, incorporating asynchronous semantics as an additional complexity grain."
+      },
       "icse": {
         "date": "December 2025",
         "title": "ICSE 2026 NIER acceptance",

@@ -5,7 +5,7 @@
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#007bff",
-    "description": "MB3R Lab — исследовательская группа, фокусирующаяся на выявлении моделей, симуляционном what-if анализе и причинной устойчивости для распределённых систем.",
+    "description": "MB3R Lab — исследовательская группа, фокусирующаяся на разработке методики и инструментов Model Discovery, симуляционном what-if анализе и причинной резилиентности для распределённых систем.",
     "icons": [
         {
             "src": "assets/img/apple-touch-icon.png",

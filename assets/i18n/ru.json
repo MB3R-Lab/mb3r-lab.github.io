@@ -89,6 +89,14 @@
   "publications": {
     "title": "Публикации",
     "items": {
+      "emergenceAsCode": {
+        "title": "Emergence-as-Code for Self-Governing Reliable Systems",
+        "text": "Предлагает концепцию Emergence-as-Code (EmaC), где надёжность пользовательских сценариев задаётся декларативно и управляется через intent, SLO-свидетельства и политики control plane в Git-процессе."
+      },
+      "rasmussenSimplex": {
+        "title": "Toward Operationalizing Rasmussen: Drift Observability on the Simplex for Evolving Systems",
+        "text": "Предлагает наблюдаемость дрейфа на симплексе с геометрией Айтчисона, чтобы инвариантно отслеживать ранние сигналы деградации и близость к границе безопасной работы в эволюционирующих социотехнических системах."
+      },
       "asyncSemantics": {
         "title": "Evaluating Asynchronous Semantics in Trace-Discovered Resilience Models: A Case Study on the OpenTelemetry Demo",
         "text": "Расширяет экспериментальную валидацию концепции Model Discovery на новую систему (OpenTelemetry Demo) и новый уровень сложности (асинхронная семантика), сравнивая модель, полученную из трасс, с живыми хаос-экспериментами."
@@ -114,6 +122,16 @@
   "updates": {
     "title": "Обновления",
     "items": {
+      "emergenceAsCode": {
+        "date": "Февраль 2026",
+        "title": "Препринт Emergence-as-Code",
+        "text": "Опубликовали препринт «Emergence-as-Code for Self-Governing Reliable Systems» (arXiv:2602.05458), где описали модель управления надёжностью пользовательских сценариев."
+      },
+      "rasmussenSimplex": {
+        "date": "Февраль 2026",
+        "title": "Препринт по наблюдаемости дрейфа",
+        "text": "Опубликовали «Toward Operationalizing Rasmussen: Drift Observability on the Simplex for Evolving Systems» (arXiv:2602.05483) с симплексным подходом к мониторингу дрейфа при эволюции архитектуры."
+      },
       "aina": {
         "date": "Январь 2026",
         "title": "Refining Resilience Model Discovery: A Case Study on the Limited Role of Asynchronous Edges in the OpenTelemetry Demo",

@@ -89,6 +89,14 @@
   "publications": {
     "title": "Publications",
     "items": {
+      "emergenceAsCode": {
+        "title": "Emergence-as-Code for Self-Governing Reliable Systems",
+        "text": "Introduces Emergence-as-Code (EmaC), a framework that makes user-journey reliability explicit and governable by connecting journey intent, SLO evidence, and control-plane policies in a Git-based workflow."
+      },
+      "rasmussenSimplex": {
+        "title": "Toward Operationalizing Rasmussen: Drift Observability on the Simplex for Evolving Systems",
+        "text": "Proposes drift observability on the simplex with Aitchison geometry, enabling coordinate-invariant early-warning signals and boundary-proximity tracking for evolving socio-technical systems."
+      },
       "asyncSemantics": {
         "title": "Evaluating Asynchronous Semantics in Trace-Discovered Resilience Models: A Case Study on the OpenTelemetry Demo",
         "text": "Extends the experimental validation of the model discovery concept to a new system (the OpenTelemetry Demo) and a new grain of complexity (asynchronous semantics), comparing the trace-derived model against live chaos experiments."
@@ -114,6 +122,16 @@
   "updates": {
     "title": "Updates",
     "items": {
+      "emergenceAsCode": {
+        "date": "February 2026",
+        "title": "Emergence-as-Code preprint",
+        "text": "Published the preprint “Emergence-as-Code for Self-Governing Reliable Systems” (arXiv:2602.05458), outlining a journey-level reliability governance model."
+      },
+      "rasmussenSimplex": {
+        "date": "February 2026",
+        "title": "Drift observability preprint",
+        "text": "Published “Toward Operationalizing Rasmussen: Drift Observability on the Simplex for Evolving Systems” (arXiv:2602.05483), introducing simplex-based drift monitoring under architectural churn."
+      },
       "aina": {
         "date": "January 2026",
         "title": "Refining Resilience Model Discovery: A Case Study on the Limited Role of Asynchronous Edges in the OpenTelemetry Demo",

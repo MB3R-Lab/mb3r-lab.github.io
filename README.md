@@ -7,7 +7,7 @@ Static landing page + Supabase Edge Function backend for pilot onboarding. The U
 ```
 Visitor ─► GitHub Pages (index.html, admin.html)
                 │
-        fetch https://<project>.functions.supabase.co/functions/v1/applications
+        fetch https://<project>.functions.supabase.co/functions/v1/database-access
                 │
          Supabase Edge Function
                 │
@@ -54,8 +54,12 @@ If the function is unreachable, the UI falls back to localStorage so leads are n
 Edit `assets/js/config.js` and set the function URL (no trailing slash):
 
 ```js
-window.__MB3R_API_BASE__ = 'https://YOUR_PROJECT_ID.functions.supabase.co/functions/v1';
+window.__MB3R_API_ENDPOINT__ =
+  'https://YOUR_PROJECT_ID.functions.supabase.co/functions/v1/database-access';
 ```
+
+Production currently uses the legacy endpoint `database-access`. If you deploy this repo's
+`applications` function name, switch frontend config to `/functions/v1/applications`.
 
 Push the static site (e.g., to GitHub Pages). The landing page and `/admin.html` will now send all API calls to the Supabase function.
 
@@ -71,8 +75,8 @@ Push the static site (e.g., to GitHub Pages). The landing page and `/admin.html`
 
 The deployed function handles:
 
-- `POST /applications` — validate payload, insert into `applications`, trigger Mailgun email, respond with the created ID.
-- `GET /applications` — require `x-admin-pass` header, validate request `Origin` against `ALLOWED_ORIGINS`, apply per-client failed-login throttling (delay + temporary block), return ordered submissions.
+- `POST /database-access` — validate payload, insert into `applications`, trigger Mailgun email, respond with the created ID.
+- `GET /database-access` — require `x-admin-pass` header, validate request `Origin` against `ALLOWED_ORIGINS`, apply per-client failed-login throttling (delay + temporary block), return ordered submissions.
 - `OPTIONS` — CORS preflight for allowlisted origins (`content-type` + `x-admin-pass` headers).
 - **Schema requirement** — create the table once in Supabase (SQL editor):
   ```sql
@@ -94,6 +98,6 @@ The deployed function handles:
    ```bash
    supabase functions serve applications --env-file .env.functions
    ```
-3. Update `assets/js/config.js` to point at the local URL printed by the CLI (e.g., `http://127.0.0.1:54321/functions/v1`), run a local static server (for example `python -m http.server 5500`), and test via `http://localhost:5500/index.html`.
+3. Update `assets/js/config.js` to point at the local URL printed by the CLI (for this repo function name: `http://127.0.0.1:54321/functions/v1/applications`), run a local static server (for example `python -m http.server 5500`), and test via `http://localhost:5500/index.html`.
 
 Remember to switch `config.js` back to the production URL before committing.

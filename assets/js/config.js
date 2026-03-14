@@ -1,4 +1,5 @@
-window.__MB3R_API_ENDPOINT__ = window.__MB3R_API_ENDPOINT__ || '';
-window.__MB3R_API_BASE__ =
-    window.__MB3R_API_BASE__ ||
-    'https://nkphoglftmnfikxzuyqr.supabase.co/functions/v1';
+// Production endpoint (legacy function name kept for compatibility).
+window.__MB3R_API_ENDPOINT__ =
+    window.__MB3R_API_ENDPOINT__ ||
+    'https://nkphoglftmnfikxzuyqr.supabase.co/functions/v1/database-access';
+window.__MB3R_API_BASE__ = window.__MB3R_API_BASE__ || '';

@@ -5,16 +5,36 @@
     const SUPPORTED_LANGS = ['ru', 'en'];
 
     const normalize = (value) => (value || '').toLowerCase().split('-')[0];
+    const isSupported = (lang) => SUPPORTED_LANGS.includes(lang);
+
+    const safeGet = (key) => {
+        try {
+            return window.localStorage.getItem(key);
+        } catch {
+            return null;
+        }
+    };
+
+    const safeSet = (key, value) => {
+        try {
+            window.localStorage.setItem(key, value);
+        } catch {
+            // Ignore storage failures.
+        }
+    };
 
     const getInitialLang = () => {
-        const saved = normalize(localStorage.getItem(STORAGE_KEY));
-        if (SUPPORTED_LANGS.includes(saved)) {
+        const saved = normalize(safeGet(STORAGE_KEY));
+        if (isSupported(saved)) {
             return saved;
         }
 
-        const navigatorLang = normalize(navigator.language || '');
-        if (SUPPORTED_LANGS.includes(navigatorLang)) {
-            return navigatorLang;
+        const browserLang = normalize(
+            navigator.language || (Array.isArray(navigator.languages) ? navigator.languages[0] : '') || ''
+        );
+
+        if (isSupported(browserLang)) {
+            return browserLang;
         }
 
         return DEFAULT_LANG;
@@ -23,7 +43,7 @@
     let currentLang = getInitialLang();
     let translations = {};
     const listeners = new Set();
-    let readyResolve = null;
+    let readyResolve;
     const ready = new Promise((resolve) => {
         readyResolve = resolve;
     });
@@ -37,6 +57,15 @@
             throw new Error('Unable to load translations');
         }
         return response.json();
+    };
+
+    const syncLanguageButtons = (lang) => {
+        document.querySelectorAll('[data-lang-set]').forEach((button) => {
+            const buttonLang = normalize(button.dataset.langSet);
+            const isActive = buttonLang === lang;
+            button.classList.toggle('is-active', isActive);
+            button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
     };
 
     const applyTranslations = (dict) => {
@@ -89,15 +118,16 @@
 
     const setLanguage = async (lang) => {
         const normalized = normalize(lang);
-        const nextLang = SUPPORTED_LANGS.includes(normalized) ? normalized : DEFAULT_LANG;
+        const nextLang = isSupported(normalized) ? normalized : DEFAULT_LANG;
         currentLang = nextLang;
-        localStorage.setItem(STORAGE_KEY, nextLang);
+        safeSet(STORAGE_KEY, nextLang);
         document.documentElement.lang = nextLang;
+        syncLanguageButtons(nextLang);
 
         let dict = {};
         try {
             dict = await loadTranslations(nextLang);
-        } catch (error) {
+        } catch {
             if (nextLang !== FALLBACK_LANG) {
                 try {
                     dict = await loadTranslations(FALLBACK_LANG);
@@ -143,9 +173,16 @@
         return () => listeners.delete(listener);
     };
 
-    const handleToggleClick = (event) => {
-        const target = event.target.closest('[data-lang-toggle]');
-        if (!target) return;
+    const handleLanguageClick = (event) => {
+        const explicitButton = event.target.closest('[data-lang-set]');
+        if (explicitButton) {
+            event.preventDefault();
+            setLanguage(explicitButton.dataset.langSet);
+            return;
+        }
+
+        const toggleButton = event.target.closest('[data-lang-toggle]');
+        if (!toggleButton) return;
         event.preventDefault();
         const next = currentLang === 'ru' ? 'en' : 'ru';
         setLanguage(next);
@@ -157,7 +194,8 @@
                 readyResolve();
             }
         });
-        document.addEventListener('click', handleToggleClick);
+
+        document.addEventListener('click', handleLanguageClick);
     };
 
     window.MB3RI18n = {

@@ -3,252 +3,444 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="meta.title"></title>
-    <meta name="description" content="" data-i18n-attr="content:meta.description">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <script>document.documentElement.classList.remove('no-js');</script>
-    <meta property="og:title" content="" data-i18n-attr="content:meta.ogTitle">
-    <meta property="og:description" content="" data-i18n-attr="content:meta.ogDescription">
+    <title data-i18n="meta.title">MB3R Lab | Model-based resilience from service-topology models</title>
+    <meta
+        name="description"
+        content="Model-based resilience tooling: Bering discovers and publishes topology artifacts; Sheaft simulates scenarios, evaluates policy gates, and monitors resilience posture over time."
+        data-i18n-attr="content:meta.description"
+    >
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://mb3r-lab.github.io/">
+    <meta property="og:site_name" content="MB3R Lab">
+    <meta property="og:title" content="MB3R Lab | Model-based resilience from service-topology models" data-i18n-attr="content:meta.ogTitle">
+    <meta
+        property="og:description"
+        content="Bering discovers and publishes model artifacts. Sheaft consumes those artifacts for resilience simulation, policy evaluation, and posture monitoring."
+        data-i18n-attr="content:meta.ogDescription"
+    >
+    <meta property="og:locale" content="en_US" data-i18n-attr="content:meta.ogLocale">
+    <meta property="og:locale:alternate" content="ru_RU">
     <meta property="og:image" content="https://mb3r-lab.github.io/assets/img/og-image.png">
+    <meta property="og:image:alt" content="MB3R Lab model-based resilience workflow" data-i18n-attr="content:meta.ogImageAlt">
+
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="" data-i18n-attr="content:meta.twitterTitle">
-    <meta name="twitter:description" content="" data-i18n-attr="content:meta.twitterDescription">
+    <meta name="twitter:title" content="MB3R Lab | Model-based resilience from service-topology models" data-i18n-attr="content:meta.twitterTitle">
+    <meta
+        name="twitter:description"
+        content="Model-based resilience for engineering and observability workflows."
+        data-i18n-attr="content:meta.twitterDescription"
+    >
     <meta name="twitter:image" content="https://mb3r-lab.github.io/assets/img/og-image.png">
+    <meta name="twitter:image:alt" content="MB3R Lab model-based resilience workflow" data-i18n-attr="content:meta.twitterImageAlt">
+
+    <link rel="canonical" href="https://mb3r-lab.github.io/">
+    <link rel="alternate" href="https://mb3r-lab.github.io/?lang=en" hreflang="en">
+    <link rel="alternate" href="https://mb3r-lab.github.io/?lang=ru" hreflang="ru">
+    <link rel="alternate" href="https://mb3r-lab.github.io/" hreflang="x-default">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
     <link rel="icon" href="assets/img/favicon.ico" sizes="any">
     <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
     <link rel="manifest" href="manifest.webmanifest">
-    <script type="application/ld+json" data-i18n-json="schema"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script>document.documentElement.classList.remove('no-js');</script>
+    <script type="application/ld+json" data-i18n-json="schema">
+{
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "MB3R Lab",
+    "url": "https://mb3r-lab.github.io/",
+    "description": "Model-based resilience from service-topology models",
+    "inLanguage": "en-US"
+}
+    </script>
 </head>
 <body>
-    <header id="header" class="header">
-        <nav class="nav">
-            <a href="#home" class="nav-logo">
-                <img src="assets/img/logo.svg" alt="" data-i18n-attr="alt:nav.logoAlt" width="48" height="48">
-                <span data-i18n="brand.name"></span>
+    <a class="skip-link" href="#main" data-i18n="a11y.skipToContent">Skip to content</a>
+
+    <header class="site-header" id="top">
+        <nav class="nav container" aria-label="Primary navigation">
+            <a href="#top" class="brand">
+                <img src="assets/img/logo.svg" alt="MB3R Lab logo" data-i18n-attr="alt:nav.logoAlt" width="44" height="44">
+                <div class="brand-text">
+                    <strong data-i18n="brand.name">MB3R Lab</strong>
+                    <span data-i18n="brand.tagline">Model-based resilience</span>
+                </div>
             </a>
-            <div class="nav-menu">
+
+            <button
+                class="nav-toggle"
+                type="button"
+                aria-expanded="false"
+                aria-controls="nav-panel"
+                data-nav-toggle
+                data-i18n-attr="aria-label:nav.mobileToggleAria"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <div class="nav-panel" id="nav-panel" data-nav-panel>
                 <ul class="nav-list">
-                    <li><a href="#what-we-do" class="nav-link" data-i18n="nav.links.whatWeDo"></a></li>
-                    <li><a href="#projects" class="nav-link" data-i18n="nav.links.projects"></a></li>
-                    <li><a href="#publications" class="nav-link" data-i18n="nav.links.publications"></a></li>
-                    <li><a href="#demo" class="nav-link" data-i18n="nav.links.demo"></a></li>
-                    <li><a href="#updates" class="nav-link" data-i18n="nav.links.updates"></a></li>
-                    <li><a href="#roadmap" class="nav-link" data-i18n="nav.links.roadmap"></a></li>
-                    <li><a href="#contact" class="nav-link" data-i18n="nav.links.contact"></a></li>
+                    <li><a href="#how-it-works" class="nav-link" data-i18n="nav.links.howItWorks">How it works</a></li>
+                    <li><a href="#products" class="nav-link" data-i18n="nav.links.products">Products</a></li>
+                    <li><a href="#who-for" class="nav-link" data-i18n="nav.links.whoFor">Who it is for</a></li>
+                    <li><a href="#start" class="nav-link" data-i18n="nav.links.start">Quick start</a></li>
+                    <li><a href="#observability" class="nav-link" data-i18n="nav.links.observability">Observability mode</a></li>
+                    <li><a href="#demo" class="nav-link" data-i18n="nav.links.demo">Demo-report</a></li>
+                    <li><a href="#roadmap" class="nav-link" data-i18n="nav.links.roadmap">Roadmap</a></li>
+                    <li><a href="#research" class="nav-link" data-i18n="nav.links.research">Research base</a></li>
                 </ul>
-            </div>
-            <div class="nav-actions">
-                <button type="button" class="button button-ghost" data-modal-target="pilot-modal" data-i18n="nav.requestPilot"></button>
-                <button
-                    type="button"
-                    class="button button-ghost lang-toggle"
-                    id="lang-toggle"
-                    data-lang-toggle
-                    data-i18n="nav.langToggleLabel"
-                    data-i18n-attr="aria-label:nav.langToggleAria"
-                ></button>
-                <button id="theme-toggle" class="theme-toggle" aria-label="" data-i18n-attr="aria-label:nav.themeToggleAria">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-                </button>
+                <div class="nav-actions">
+                    <button
+                        type="button"
+                        class="button button-secondary button-small"
+                        data-modal-target="pilot-modal"
+                        data-i18n="nav.requestPilot"
+                    >Request a pilot</button>
+                    <a
+                        href="https://github.com/MB3R-Lab"
+                        class="github-icon-link"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        data-i18n-attr="aria-label:nav.github"
+                    >
+                        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                            <path
+                                fill="currentColor"
+                                d="M12 .5a12 12 0 0 0-3.79 23.38c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.42-4.04-1.42-.54-1.37-1.33-1.74-1.33-1.74-1.08-.74.08-.72.08-.72 1.2.08 1.83 1.23 1.83 1.23 1.06 1.83 2.8 1.3 3.48 1 .1-.78.41-1.3.74-1.6-2.67-.3-5.47-1.34-5.47-5.95 0-1.31.47-2.38 1.23-3.22-.12-.3-.53-1.52.12-3.16 0 0 1-.32 3.3 1.23a11.4 11.4 0 0 1 6 0c2.3-1.55 3.3-1.23 3.3-1.23.65 1.64.24 2.86.12 3.16.77.84 1.23 1.91 1.23 3.22 0 4.62-2.8 5.64-5.48 5.95.43.37.82 1.1.82 2.22v3.29c0 .32.22.7.83.58A12 12 0 0 0 12 .5Z"
+                            ></path>
+                        </svg>
+                    </a>
+                    <button
+                        type="button"
+                        class="theme-toggle-switch"
+                        data-theme-toggle
+                        aria-pressed="false"
+                        data-i18n-attr="aria-label:nav.switchToDarkAria"
+                    >
+                        <span class="theme-toggle-track" aria-hidden="true">
+                            <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true">
+                                <circle cx="12" cy="12" r="4"></circle>
+                                <path d="M12 2v2"></path>
+                                <path d="M12 20v2"></path>
+                                <path d="m4.93 4.93 1.41 1.41"></path>
+                                <path d="m17.66 17.66 1.41 1.41"></path>
+                                <path d="M2 12h2"></path>
+                                <path d="M20 12h2"></path>
+                                <path d="m6.34 17.66-1.41 1.41"></path>
+                                <path d="m19.07 4.93-1.41 1.41"></path>
+                            </svg>
+                            <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true">
+                                <path d="M12 3a7.5 7.5 0 0 0 9 9 9 9 0 1 1-9-9z"></path>
+                            </svg>
+                            <span class="theme-toggle-thumb"></span>
+                        </span>
+                    </button>
+                    <div class="lang-switch" role="group" aria-label="Language switcher" data-i18n-attr="aria-label:nav.langGroupAria">
+                        <button
+                            type="button"
+                            class="lang-button"
+                            data-lang-set="en"
+                            data-i18n-attr="aria-label:nav.switchToEnAria"
+                        >EN</button>
+                        <button
+                            type="button"
+                            class="lang-button"
+                            data-lang-set="ru"
+                            data-i18n-attr="aria-label:nav.switchToRuAria"
+                        >RU</button>
+                    </div>
+                </div>
             </div>
         </nav>
     </header>
 
     <main id="main">
-        <section id="home" class="home section">
-            <div class="container">
-                <h1 class="home-title" data-i18n="brand.name"></h1>
-                <p class="home-subtitle" data-i18n="home.subtitle"></p>
-                <p class="home-description" data-i18n="home.description"></p>
-                <div class="home-buttons">
-                    <button type="button" class="button button-primary" data-modal-target="pilot-modal" data-i18n="home.cta"></button>
-                    <a href="https://www.linkedin.com/company/mb3rlab" class="button button-primary" target="_blank" rel="noopener noreferrer" data-i18n="home.followLinkedIn"></a>
-                    <a href="https://t.me/mb3rlab" class="button button-primary" target="_blank" rel="noopener noreferrer" data-i18n="home.followTelegram"></a>
-                    <a href="https://github.com/MB3R-Lab" class="button button-primary" target="_blank" rel="noopener noreferrer" data-i18n="home.exploreGithub"></a>
+        <section class="hero section" aria-labelledby="hero-title">
+            <div class="container hero-layout">
+                <div class="hero-content">
+                    <p class="eyebrow" data-i18n="hero.eyebrow">Model-based resilience</p>
+                    <h1 id="hero-title" data-i18n="hero.title">Model-based resilience from service-topology models</h1>
+                    <p class="hero-lead" data-i18n="hero.lead">
+                        Bering discovers service topology and endpoint contracts, then publishes stable model artifacts.
+                        Sheaft consumes those artifacts to simulate failures, evaluate policy gates, and track posture over time.
+                    </p>
+                    <p class="hero-note" data-i18n="hero.note">
+                        This is a model-based signal: fast, repeatable, and designed to complement live experiments.
+                    </p>
+                    <div class="hero-actions">
+                        <button type="button" class="button button-primary" data-modal-target="pilot-modal" data-i18n="hero.cta.pilot">Request a pilot</button>
+                        <a href="https://github.com/MB3R-Lab/Sheaft" class="button button-primary" target="_blank" rel="noopener noreferrer" data-i18n="hero.cta.github">GitHub</a>
+                        <a href="https://github.com/MB3R-Lab/Sheaft/blob/main/docs/install.md" class="button button-secondary" target="_blank" rel="noopener noreferrer" data-i18n="hero.cta.docs">Docs</a>
+                        <a href="https://github.com/MB3R-Lab/Sheaft/tree/main/examples/ci" class="button button-secondary" target="_blank" rel="noopener noreferrer" data-i18n="hero.cta.example">Try the example</a>
+                        <a href="#how-it-works" class="button button-secondary" data-i18n="hero.cta.learn">How it works</a>
+                    </div>
                 </div>
+                <aside class="hero-panel" aria-label="Product split" data-i18n-attr="aria-label:hero.panelAria">
+                    <article class="hero-panel-item">
+                        <h2 data-i18n="hero.panel.beringTitle">Bering</h2>
+                        <p data-i18n="hero.panel.beringText">Discovery and publishing layer for topology and endpoint contracts.</p>
+                    </article>
+                    <article class="hero-panel-item">
+                        <h2 data-i18n="hero.panel.sheaftTitle">Sheaft</h2>
+                        <p data-i18n="hero.panel.sheaftText">Resilience posture engine for simulation, gating, and continuous monitoring.</p>
+                    </article>
+                </aside>
             </div>
         </section>
 
-        <section id="what-we-do" class="what-we-do section">
+        <section id="how-it-works" class="section" aria-labelledby="how-it-works-title">
             <div class="container">
-                <h2 class="section-title" data-i18n="whatWeDo.title"></h2>
-                <p data-i18n="whatWeDo.intro"></p>
-                <ul>
-                    <li>
-                        <strong data-i18n="whatWeDo.items.modelDiscovery.title"></strong>
-                        — <span data-i18n="whatWeDo.items.modelDiscovery.text"></span>
+                <h2 id="how-it-works-title" class="section-title" data-i18n="how.title">How it works</h2>
+                <p class="section-intro" data-i18n="how.intro">
+                    The workflow is intentionally split: discovery upstream, evaluation downstream.
+                </p>
+                <ol class="pipeline" aria-label="Resilience pipeline" data-i18n-attr="aria-label:how.pipelineAria">
+                    <li class="pipeline-step">
+                        <span class="step-number" aria-hidden="true">1</span>
+                        <h3 data-i18n="how.steps.discover.title">Bering discovers topology and endpoint contracts from traces / OTLP.</h3>
+                        <p data-i18n="how.steps.discover.text">Batch discovery works from trace files or topology inputs. Runtime mode accepts OTLP/HTTP and optional OTLP/gRPC.</p>
                     </li>
-                    <li>
-                        <strong data-i18n="whatWeDo.items.whatIf.title"></strong>
-                        — <span data-i18n="whatWeDo.items.whatIf.text"></span>
+                    <li class="pipeline-step">
+                        <span class="step-number" aria-hidden="true">2</span>
+                        <h3 data-i18n="how.steps.publish.title">Bering publishes stable model and snapshot artifacts.</h3>
+                        <p data-i18n="how.steps.publish.text">Artifacts become explicit handoff contracts for downstream tools and CI workflows.</p>
                     </li>
-                    <li>
-                        <strong data-i18n="whatWeDo.items.causalResilience.title"></strong>
-                        — <span data-i18n="whatWeDo.items.causalResilience.text"></span>
+                    <li class="pipeline-step">
+                        <span class="step-number" aria-hidden="true">3</span>
+                        <h3 data-i18n="how.steps.evaluate.title">Sheaft consumes artifacts, simulates scenarios, evaluates gate policy, and can monitor posture continuously.</h3>
+                        <p data-i18n="how.steps.evaluate.text">Use batch mode for pull requests and release checks, then switch to watch/serve mode for posture tracking.</p>
                     </li>
+                </ol>
+            </div>
+        </section>
+
+        <section id="why-not-chaos-first" class="section section-muted" aria-labelledby="chaos-title">
+            <div class="container narrow">
+                <h2 id="chaos-title" class="section-title" data-i18n="chaos.title">Why not chaos-first</h2>
+                <p class="section-intro" data-i18n="chaos.intro">
+                    Live chaos engineering remains valuable. The point is sequencing, not replacement.
+                </p>
+                <ul class="bullet-list">
+                    <li data-i18n="chaos.points.0">Live experiments are expensive to run frequently across many services and release branches.</li>
+                    <li data-i18n="chaos.points.1">A model-based gate is cheaper and can run regularly before release.</li>
+                    <li data-i18n="chaos.points.2">Use model-based results to narrow and prioritize where live experiments will matter most.</li>
+                    <li data-i18n="chaos.points.3">This adds a pre-release layer; it does not claim to replace production validation.</li>
                 </ul>
             </div>
         </section>
 
-        <section id="projects" class="projects section">
+        <section id="products" class="section" aria-labelledby="products-title">
             <div class="container">
-                <h2 class="section-title" data-i18n="projects.title"></h2>
-                <div class="project-cards">
-                    <div class="card">
-                        <h3 data-i18n="projects.cards.bering.title"></h3>
-                        <p data-i18n="projects.cards.bering.text"></p>
+                <h2 id="products-title" class="section-title" data-i18n="products.title">Two products, two roles</h2>
+                <div class="products-grid">
+                    <article class="product-card" aria-labelledby="bering-title">
+                        <h3 id="bering-title" data-i18n="products.bering.title">Bering: discovery and publishing layer</h3>
+                        <p data-i18n="products.bering.summary">Bering is responsible for producing topology/contracts artifacts and publishing them as stable inputs.</p>
+                        <ul class="bullet-list compact">
+                            <li data-i18n="products.bering.points.0">Discovers service topology from traces, OTLP streams, or explicit topology input.</li>
+                            <li data-i18n="products.bering.points.1">Builds endpoint contract and dependency artifacts for downstream consumers.</li>
+                            <li data-i18n="products.bering.points.2">Supports deterministic batch mode and long-running runtime mode.</li>
+                            <li data-i18n="products.bering.points.3">Does not own simulation, gating policy, or chaos execution.</li>
+                        </ul>
                         <div class="card-links">
-                            <a href="https://github.com/MB3R-Lab/bering" target="_blank" rel="noopener noreferrer" data-i18n="projects.links.repoPrivate"></a>
-                            <a href="https://www.alphaxiv.org/abs/2506.11176" target="_blank" rel="noopener noreferrer" data-i18n="projects.links.paper"></a>
+                            <a href="https://github.com/MB3R-Lab/Bering" target="_blank" rel="noopener noreferrer" data-i18n="products.bering.links.repo">Bering on GitHub</a>
+                            <a href="https://github.com/MB3R-Lab/Bering/blob/main/docs/install.md" target="_blank" rel="noopener noreferrer" data-i18n="products.bering.links.docs">Bering docs</a>
                         </div>
-                    </div>
-                    <div class="card">
-                        <h3 data-i18n="projects.cards.sheaft.title"></h3>
-                        <p data-i18n="projects.cards.sheaft.text"></p>
+                    </article>
+
+                    <article class="product-card" aria-labelledby="sheaft-title">
+                        <h3 id="sheaft-title" data-i18n="products.sheaft.title">Sheaft: simulation, gating, and posture monitoring</h3>
+                        <p data-i18n="products.sheaft.summary">Sheaft stays downstream of discovery and evaluates resilience posture from upstream model artifacts.</p>
+                        <ul class="bullet-list compact">
+                            <li data-i18n="products.sheaft.points.0">Consumes published model/snapshot artifacts from Bering or compatible producers.</li>
+                            <li data-i18n="products.sheaft.points.1">Runs simulation-based resilience analysis across CI/CD and adjacent engineering workflows.</li>
+                            <li data-i18n="products.sheaft.points.2">Evaluates gate policy for release decisions.</li>
+                            <li data-i18n="products.sheaft.points.3">Can run as a long-lived service for posture history, diffs, and metrics.</li>
+                        </ul>
                         <div class="card-links">
-                            <a href="https://github.com/MB3R-Lab/sheaft" target="_blank" rel="noopener noreferrer" data-i18n="projects.links.repoPrivate"></a>
-                            <a href="https://www.alphaxiv.org/abs/2503.14104" target="_blank" rel="noopener noreferrer" data-i18n="projects.links.theory"></a>
+                            <a href="https://github.com/MB3R-Lab/Sheaft" target="_blank" rel="noopener noreferrer" data-i18n="products.sheaft.links.repo">Sheaft on GitHub</a>
+                            <a href="https://github.com/MB3R-Lab/Sheaft/blob/main/docs/ci-gate.md" target="_blank" rel="noopener noreferrer" data-i18n="products.sheaft.links.docs">Sheaft CI gate docs</a>
                         </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="who-for" class="section section-muted" aria-labelledby="who-for-title">
+            <div class="container">
+                <h2 id="who-for-title" class="section-title" data-i18n="audience.title">Who it is for</h2>
+                <p class="section-intro" data-i18n="audience.intro">
+                    Teams that need a practical resilience signal before release, not a once-a-quarter exercise.
+                </p>
+                <div class="audience-grid">
+                    <article class="audience-card">
+                        <h3 data-i18n="audience.cards.core.title">Core fit</h3>
+                        <ul class="bullet-list compact">
+                            <li data-i18n="audience.cards.core.points.0">Platform, SRE, and DevOps teams responsible for delivery risk.</li>
+                            <li data-i18n="audience.cards.core.points.1">Microservice teams already collecting traces/OTLP or topology artifacts.</li>
+                            <li data-i18n="audience.cards.core.points.2">Organizations that want a low-cost pre-release resilience checkpoint.</li>
+                        </ul>
+                    </article>
+                    <article class="audience-card">
+                        <h3 data-i18n="audience.cards.smb.title">SMB / lean teams</h3>
+                        <ul class="bullet-list compact">
+                            <li data-i18n="audience.cards.smb.points.0">A cheaper entry path into resilience practice.</li>
+                            <li data-i18n="audience.cards.smb.points.1">Run small, frequent checks in CI before spending on heavy live tests.</li>
+                        </ul>
+                    </article>
+                    <article class="audience-card">
+                        <h3 data-i18n="audience.cards.enterprise.title">Larger organizations</h3>
+                        <ul class="bullet-list compact">
+                            <li data-i18n="audience.cards.enterprise.points.0">Prioritize where costly live chaos experiments should run first.</li>
+                            <li data-i18n="audience.cards.enterprise.points.1">Standardize artifact handoff between discovery and gate evaluation teams.</li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="start" class="section" aria-labelledby="start-title">
+            <div class="container narrow">
+                <h2 id="start-title" class="section-title" data-i18n="start.title">Start in 5 minutes</h2>
+                <ol class="start-list">
+                    <li>
+                        <h3 data-i18n="start.steps.0.title">Install Bering and generate a first model artifact</h3>
+                        <p>
+                            <span data-i18n="start.steps.0.text">Use the install guide, then run discovery on sample traces or your own input.</span>
+                            <a href="https://github.com/MB3R-Lab/Bering/blob/main/docs/install.md" target="_blank" rel="noopener noreferrer" data-i18n="start.steps.0.linkLabel">Bering install guide</a>
+                        </p>
+                    </li>
+                    <li>
+                        <h3 data-i18n="start.steps.1.title">Publish or export the resulting model/snapshot artifact</h3>
+                        <p>
+                            <span data-i18n="start.steps.1.text">Use sample folders to understand expected artifact shape and handoff format.</span>
+                            <a href="https://github.com/MB3R-Lab/Bering/tree/main/examples" target="_blank" rel="noopener noreferrer" data-i18n="start.steps.1.linkLabel">Bering examples</a>
+                        </p>
+                    </li>
+                    <li>
+                        <h3 data-i18n="start.steps.2.title">Run Sheaft simulation and CI gate on that artifact</h3>
+                        <p>
+                            <span data-i18n="start.steps.2.text">Start with the CI gate doc and the example CI assets.</span>
+                            <a href="https://github.com/MB3R-Lab/Sheaft/tree/main/examples/ci" target="_blank" rel="noopener noreferrer" data-i18n="start.steps.2.linkLabel">Sheaft CI examples</a>
+                        </p>
+                    </li>
+                    <li>
+                        <h3 data-i18n="start.steps.3.title">Move to continuous posture monitoring when needed</h3>
+                        <p>
+                            <span data-i18n="start.steps.3.text">When batch checks are stable, enable long-running posture tracking.</span>
+                            <a href="https://github.com/MB3R-Lab/Sheaft/blob/main/docs/observability-mode.md" target="_blank" rel="noopener noreferrer" data-i18n="start.steps.3.linkLabel">Sheaft observability mode</a>
+                        </p>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <section id="observability" class="section" aria-labelledby="observability-title">
+            <div class="container">
+                <h2 id="observability-title" class="section-title" data-i18n="observability.title">Resilience posture in observability mode</h2>
+                <p class="section-intro" data-i18n="observability.intro">
+                    After CI gate is in place, you can run Sheaft continuously to track posture drift instead of checking only at release time.
+                </p>
+                <ol class="scenario-grid" aria-label="Observability posture scenario" data-i18n-attr="aria-label:observability.scenarioAria">
+                    <li class="scenario-card">
+                        <span class="step-number" aria-hidden="true">1</span>
+                        <h3 data-i18n="observability.steps.0.title">Bering keeps publishing rolling snapshots</h3>
+                        <p data-i18n="observability.steps.0.text">In runtime mode, Bering emits model/snapshot artifacts per time window from OTLP and trace input.</p>
+                    </li>
+                    <li class="scenario-card">
+                        <span class="step-number" aria-hidden="true">2</span>
+                        <h3 data-i18n="observability.steps.1.title">Sheaft serve/watch consumes each new artifact</h3>
+                        <p data-i18n="observability.steps.1.text">Every new artifact is re-evaluated against analysis rules and gate policy without waiting for the next release.</p>
+                    </li>
+                    <li class="scenario-card">
+                        <span class="step-number" aria-hidden="true">3</span>
+                        <h3 data-i18n="observability.steps.2.title">Posture history and diffs show what changed</h3>
+                        <p data-i18n="observability.steps.2.text">Teams can inspect when posture moved, what dependencies shifted, and which policies flipped state.</p>
+                    </li>
+                    <li class="scenario-card">
+                        <span class="step-number" aria-hidden="true">4</span>
+                        <h3 data-i18n="observability.steps.3.title">Use the signal for prioritization</h3>
+                        <p data-i18n="observability.steps.3.text">Prioritize incidents, hardening work, and expensive live chaos runs using the latest posture trend.</p>
+                    </li>
+                </ol>
+                <article class="scenario-output">
+                    <h3 data-i18n="observability.outputs.title">What teams get in practice</h3>
+                    <ul class="bullet-list compact">
+                        <li data-i18n="observability.outputs.points.0">Current posture status and when it last changed.</li>
+                        <li data-i18n="observability.outputs.points.1">Diff/history context for topology and policy outcomes.</li>
+                        <li data-i18n="observability.outputs.points.2">A cheaper continuous resilience signal between live experiments.</li>
+                    </ul>
+                    <div class="card-links">
+                        <a href="https://github.com/MB3R-Lab/Sheaft/blob/main/docs/observability-mode.md" target="_blank" rel="noopener noreferrer" data-i18n="observability.links.docs">Observability mode docs</a>
+                        <a href="https://github.com/MB3R-Lab/Sheaft/tree/main/examples" target="_blank" rel="noopener noreferrer" data-i18n="observability.links.examples">Sheaft examples</a>
                     </div>
+                </article>
+            </div>
+        </section>
+
+        <section id="demo" class="section" aria-labelledby="demo-title">
+            <div class="container">
+                <h2 id="demo-title" class="section-title" data-i18n="demo.title">Demo-report</h2>
+                <div class="report-preview">
+                    <img src="assets/img/sheaft_demo.png" alt="" data-i18n-attr="alt:demo.imageAlt" class="report-preview-image">
                 </div>
             </div>
         </section>
 
-        <section id="publications" class="publications section">
+        <section id="roadmap" class="section section-muted" aria-labelledby="roadmap-title">
             <div class="container">
-                <h2 class="section-title" data-i18n="publications.title"></h2>
-                <ul>
-                    <li>
-                        <a href="https://www.alphaxiv.org/abs/2602.05458" target="_blank" rel="noopener noreferrer" data-i18n="publications.items.emergenceAsCode.title"></a>
-                        <p data-i18n="publications.items.emergenceAsCode.text"></p>
-                    </li>
-                    <li>
-                        <a href="https://www.alphaxiv.org/abs/2602.05483" target="_blank" rel="noopener noreferrer" data-i18n="publications.items.rasmussenSimplex.title"></a>
-                        <p data-i18n="publications.items.rasmussenSimplex.text"></p>
-                    </li>
-                    <li>
-                        <a href="https://www.alphaxiv.org/abs/2512.12314" target="_blank" rel="noopener noreferrer" data-i18n="publications.items.asyncSemantics.title"></a>
-                        <p data-i18n="publications.items.asyncSemantics.text"></p>
-                    </li>
-                    <li>
-                        <a href="https://www.alphaxiv.org/abs/2509.07149" target="_blank" rel="noopener noreferrer" data-i18n="publications.items.uncertainty.title"></a>
-                        <p data-i18n="publications.items.uncertainty.text"></p>
-                    </li>
-                    <li>
-                        <a href="https://www.alphaxiv.org/abs/2506.11176" target="_blank" rel="noopener noreferrer" data-i18n="publications.items.modelDiscovery.title"></a>
-                        <p data-i18n="publications.items.modelDiscovery.text"></p>
-                    </li>
-                    <li>
-                        <a href="https://www.alphaxiv.org/abs/2503.14104" target="_blank" rel="noopener noreferrer" data-i18n="publications.items.sheaf.title"></a>
-                        <p data-i18n="publications.items.sheaf.text"></p>
-                    </li>
-                </ul>
-            </div>
-        </section>
-
-        <section id="demo" class="demo section">
-            <div class="container">
-                <h2 class="section-title" data-i18n="demo.title"></h2>
-                <div class="demo-media">
-                    <img src="assets/img/sheaft_demo.png" alt="" data-i18n-attr="alt:demo.imageAlt" class="demo-image" data-zoom-source>
-                </div>
-            </div>
-        </section>
-
-        <section id="updates" class="updates section">
-            <div class="container">
-                <h2 class="section-title" data-i18n="updates.title"></h2>
-                <div class="updates-grid">
-                    <article class="update-card">
-                        <span class="update-date" data-i18n="updates.items.emergenceAsCode.date"></span>
-                        <h3 class="update-title" data-i18n="updates.items.emergenceAsCode.title"></h3>
-                        <p class="update-text" data-i18n="updates.items.emergenceAsCode.text"></p>
-                    </article>
-                    <article class="update-card">
-                        <span class="update-date" data-i18n="updates.items.rasmussenSimplex.date"></span>
-                        <h3 class="update-title" data-i18n="updates.items.rasmussenSimplex.title"></h3>
-                        <p class="update-text" data-i18n="updates.items.rasmussenSimplex.text"></p>
-                    </article>
-                    <article class="update-card">
-                        <span class="update-date" data-i18n="updates.items.aina.date"></span>
-                        <h3 class="update-title" data-i18n="updates.items.aina.title"></h3>
-                        <p class="update-text" data-i18n="updates.items.aina.text"></p>
-                    </article>
-                    <article class="update-card">
-                        <span class="update-date" data-i18n="updates.items.asyncResilience.date"></span>
-                        <h3 class="update-title" data-i18n="updates.items.asyncResilience.title"></h3>
-                        <p class="update-text" data-i18n="updates.items.asyncResilience.text"></p>
-                    </article>
-                    <article class="update-card">
-                        <span class="update-date" data-i18n="updates.items.icse.date"></span>
-                        <h3 class="update-title" data-i18n="updates.items.icse.title"></h3>
-                        <p class="update-text" data-i18n="updates.items.icse.text"></p>
-                    </article>
-                    <article class="update-card">
-                        <span class="update-date" data-i18n="updates.items.causalAi.date"></span>
-                        <h3 class="update-title" data-i18n="updates.items.causalAi.title"></h3>
-                        <p class="update-text" data-i18n="updates.items.causalAi.text"></p>
-                    </article>
-                    <article class="update-card">
-                        <span class="update-date" data-i18n="updates.items.landing.date"></span>
-                        <h3 class="update-title" data-i18n="updates.items.landing.title"></h3>
-                        <p class="update-text" data-i18n="updates.items.landing.text"></p>
-                    </article>
-                    <article class="update-card">
-                        <span class="update-date" data-i18n="updates.items.benchmark.date"></span>
-                        <h3 class="update-title" data-i18n="updates.items.benchmark.title"></h3>
-                        <p class="update-text" data-i18n="updates.items.benchmark.text"></p>
-                    </article>
-                    <article class="update-card">
-                        <span class="update-date" data-i18n="updates.items.sheaft.date"></span>
-                        <h3 class="update-title" data-i18n="updates.items.sheaft.title"></h3>
-                        <p class="update-text" data-i18n="updates.items.sheaft.text"></p>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <section id="roadmap" class="roadmap section">
-            <div class="container">
-                <div class="section-heading">
-                    <img src="assets/img/roadmap.svg" alt="" data-i18n-attr="alt:roadmap.iconAlt" class="section-icon" width="56" height="56">
-                    <h2 class="section-title" data-i18n="roadmap.title"></h2>
-                </div>
+                <h2 id="roadmap-title" class="section-title" data-i18n="roadmap.title">Roadmap</h2>
+                <p class="section-intro" data-i18n="roadmap.intro">
+                    Planned product milestones and research-to-product transition phases.
+                </p>
                 <div class="roadmap-figure">
-                    <img src="assets/img/roadmap.svg" alt="" data-i18n-attr="alt:roadmap.imageAlt" class="roadmap-image" data-zoom-source>
+                    <a
+                        href="assets/img/roadmap.svg"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="roadmap-link"
+                        data-i18n="roadmap.openFull"
+                    >Open full-size roadmap</a>
+                    <img src="assets/img/roadmap.svg" alt="" data-i18n-attr="alt:roadmap.imageAlt" class="roadmap-image">
                 </div>
             </div>
         </section>
 
-        <section id="contact" class="contact section">
-            <div class="container">
-                <h2 class="section-title" data-i18n="contact.title"></h2>
-                <ul>
-                    <li><a href="https://github.com/MB3R-Lab" target="_blank" rel="noopener noreferrer" data-i18n="contact.github"></a></li>
-                    <li><a href="https://www.linkedin.com/company/mb3rlab" target="_blank" rel="noopener noreferrer" data-i18n="contact.linkedin"></a></li>
-                    <li><a href="mailto:contact@mb3r-lab.org" data-i18n="contact.email"></a></li>
+        <section id="research" class="section section-muted" aria-labelledby="research-title">
+            <div class="container narrow">
+                <h2 id="research-title" class="section-title" data-i18n="research.title">Built from research, packaged for engineering</h2>
+                <p data-i18n="research.text">
+                    The approach is grounded in resilience research, but this site focuses on practical engineering workflow: discover artifacts upstream, gate posture downstream.
+                </p>
+                <ul class="inline-links">
+                    <li>
+                        <a href="https://www.alphaxiv.org/abs/2602.05458" target="_blank" rel="noopener noreferrer" data-i18n="research.links.0">Emergence-as-Code for Self-Governing Reliable Systems</a>
+                    </li>
+                    <li>
+                        <a href="https://www.alphaxiv.org/abs/2602.05483" target="_blank" rel="noopener noreferrer" data-i18n="research.links.1">Toward Operationalizing Rasmussen: Drift Observability on the Simplex for Evolving Systems</a>
+                    </li>
+                    <li>
+                        <a href="https://www.alphaxiv.org/abs/2512.12314" target="_blank" rel="noopener noreferrer" data-i18n="research.links.2">Evaluating Asynchronous Semantics in Trace-Discovered Resilience Models</a>
+                    </li>
+                    <li>
+                        <a href="https://www.alphaxiv.org/abs/2509.07149" target="_blank" rel="noopener noreferrer" data-i18n="research.links.3">Measuring Uncertainty in Transformer Circuits with Effective Information Consistency</a>
+                    </li>
+                    <li>
+                        <a href="https://www.alphaxiv.org/abs/2506.11176" target="_blank" rel="noopener noreferrer" data-i18n="research.links.4">Model Discovery and Graph Simulation: A Lightweight Gateway to Chaos Engineering</a>
+                    </li>
+                    <li>
+                        <a href="https://www.alphaxiv.org/abs/2503.14104" target="_blank" rel="noopener noreferrer" data-i18n="research.links.5">Sheaf-Theoretic Causal Emergence for Resilience Analysis in Distributed Systems</a>
+                    </li>
                 </ul>
             </div>
         </section>
     </main>
-
-    <footer id="footer" class="footer">
-        <div class="container">
-            <p data-i18n="footer.copyright"></p>
-        </div>
-    </footer>
-
-    <div class="image-zoom" data-zoom-overlay aria-hidden="true">
-        <div class="image-zoom-frame">
-            <button type="button" class="image-zoom-close" data-zoom-close aria-label="" data-i18n-attr="aria-label:imageZoom.closeAria">
-                &times;
-            </button>
-            <img src="" alt="" data-zoom-target>
-        </div>
-    </div>
 
     <div class="modal" id="pilot-modal" aria-hidden="true">
         <div class="modal-overlay" data-modal-close></div>
@@ -256,29 +448,47 @@
             <button type="button" class="modal-close" data-modal-close aria-label="" data-i18n-attr="aria-label:modal.closeAria">
                 &times;
             </button>
-            <h3 id="pilot-modal-title" data-i18n="modal.title"></h3>
-            <p class="modal-description" data-i18n="modal.description"></p>
+            <h3 id="pilot-modal-title" data-i18n="modal.title">Request a pilot with MB3R Lab</h3>
+            <p class="modal-description" data-i18n="modal.description">Share your details and we will follow up with pilot onboarding steps and a target integration plan.</p>
             <form id="application-form" class="modal-form">
                 <div class="form-group">
-                    <label for="application-email" data-i18n="form.emailLabel"></label>
+                    <label for="application-email" data-i18n="form.emailLabel">Work email *</label>
                     <input type="email" id="application-email" name="email" placeholder="" data-i18n-attr="placeholder:form.emailPlaceholder" required>
                 </div>
                 <div class="form-group">
-                    <label for="application-company" data-i18n="form.companyLabel"></label>
+                    <label for="application-company" data-i18n="form.companyLabel">Company *</label>
                     <input type="text" id="application-company" name="company" placeholder="" data-i18n-attr="placeholder:form.companyPlaceholder" required>
                 </div>
                 <div class="form-group">
-                    <label for="application-comment" data-i18n="form.commentLabel"></label>
+                    <label for="application-comment" data-i18n="form.commentLabel">Context (optional)</label>
                     <textarea id="application-comment" name="comment" rows="3" placeholder="" data-i18n-attr="placeholder:form.commentPlaceholder"></textarea>
                 </div>
                 <div class="form-meta">
-                    <small data-i18n="form.note"></small>
+                    <small data-i18n="form.note">We will send a confirmation email after the request is delivered.</small>
                 </div>
-                <button type="submit" class="button button-primary" id="application-submit" data-i18n="form.submit"></button>
+                <button type="submit" class="button button-primary" id="application-submit" data-i18n="form.submit">Submit request</button>
                 <p class="form-status" id="application-status" role="status" aria-live="polite"></p>
             </form>
         </div>
     </div>
+
+    <footer class="site-footer">
+        <div class="container footer-layout">
+            <div>
+                <p class="footer-title" data-i18n="footer.title">MB3R Lab</p>
+                <p class="footer-description" data-i18n="footer.description">Research-backed tooling for model-based resilience in software delivery.</p>
+                <p class="footer-copyright">
+                    © <span data-current-year></span> <span data-i18n="footer.copyright">MB3R Lab. All rights reserved.</span>
+                </p>
+            </div>
+            <ul class="footer-links">
+                <li><a href="https://github.com/MB3R-Lab" target="_blank" rel="noopener noreferrer" data-i18n="footer.links.github">GitHub organization</a></li>
+                <li><a href="https://github.com/MB3R-Lab/Bering/blob/main/docs/install.md" target="_blank" rel="noopener noreferrer" data-i18n="footer.links.docs">Docs</a></li>
+                <li><a href="https://github.com/MB3R-Lab/Sheaft/tree/main/examples" target="_blank" rel="noopener noreferrer" data-i18n="footer.links.examples">Examples</a></li>
+            </ul>
+        </div>
+    </footer>
+
     <script src="assets/js/i18n.js"></script>
     <script src="assets/js/config.js"></script>
     <script src="assets/js/storage.js"></script>

@@ -1,191 +1,276 @@
 {
   "meta": {
-    "title": "MB3R Lab — Model-Based Robustness, Reliability & Resilience",
-    "description": "MB3R Lab is a research group focused on model discovery, simulation-based what‑if analysis, and causal resilience for distributed systems.",
-    "ogTitle": "MB3R Lab — Model-Based Robustness, Reliability & Resilience",
-    "ogDescription": "Research & Development in model discovery, simulation-based what‑if analysis, and causal resilience.",
-    "twitterTitle": "MB3R Lab — Model-Based Robustness, Reliability & Resilience",
-    "twitterDescription": "Research & Development in model discovery, simulation-based what‑if analysis, and causal resilience.",
-    "locale": "en-US"
+    "title": "MB3R Lab | Model-based resilience from service-topology models",
+    "description": "Model-based resilience tooling: Bering discovers and publishes topology artifacts; Sheaft simulates failures, evaluates policy gates, and monitors posture over time.",
+    "ogTitle": "MB3R Lab | Model-based resilience from service-topology models",
+    "ogDescription": "Bering discovers and publishes model artifacts. Sheaft consumes them for resilience simulation, policy evaluation, and posture monitoring.",
+    "twitterTitle": "MB3R Lab | Model-based resilience from service-topology models",
+    "twitterDescription": "Model-based resilience for engineering and observability workflows.",
+    "ogImageAlt": "MB3R Lab model-based resilience workflow",
+    "twitterImageAlt": "MB3R Lab model-based resilience workflow",
+    "locale": "en-US",
+    "ogLocale": "en_US"
   },
   "schema": {
     "@context": "https://schema.org",
-    "@type": "Organization",
+    "@type": "WebSite",
     "name": "MB3R Lab",
     "url": "https://mb3r-lab.github.io/",
-    "logo": "https://mb3r-lab.github.io/assets/img/logo.svg",
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "email": "contact@mb3r-lab.org",
-      "contactType": "customer support"
-    }
+    "description": "Model-based resilience from service-topology models",
+    "inLanguage": "en-US"
   },
   "brand": {
-    "name": "MB3R Lab"
+    "name": "MB3R Lab",
+    "tagline": "Model-based resilience"
   },
-  "common": {
-    "placeholder": "—"
+  "a11y": {
+    "skipToContent": "Skip to content"
   },
   "nav": {
-    "logoAlt": "MB3R Lab Logo",
+    "logoAlt": "MB3R Lab logo",
+    "mobileToggleAria": "Toggle navigation",
     "links": {
-      "whatWeDo": "What we do",
-      "projects": "Projects",
-      "publications": "Publications",
+      "howItWorks": "How it works",
+      "products": "Products",
+      "whoFor": "Who it is for",
+      "start": "Quick start",
+      "observability": "Observability mode",
       "demo": "Demo-report",
-      "updates": "Updates",
       "roadmap": "Roadmap",
-      "contact": "Contact"
+      "publications": "Publications",
+      "research": "Research base"
     },
     "requestPilot": "Request a pilot",
-    "themeToggleAria": "Toggle light and dark mode",
-    "langToggleLabel": "RU",
-    "langToggleAria": "Switch to Russian"
+    "theme": "Theme",
+    "themeDark": "Dark",
+    "themeLight": "Light",
+    "switchToDarkAria": "Switch to dark theme",
+    "switchToLightAria": "Switch to light theme",
+    "github": "GitHub",
+    "langGroupAria": "Language switcher",
+    "switchToEnAria": "Switch to English",
+    "switchToRuAria": "Switch to Russian"
   },
-  "home": {
-    "subtitle": "Model-Based Robustness, Reliability & Resilience",
-    "description": "Research & Development in model discovery, simulation-based “what‑if” analysis, and formal causal inference.",
-    "cta": "Request pilot access",
-    "followLinkedIn": "Follow on LinkedIn",
-    "followTelegram": "Follow on Telegram",
-    "exploreGithub": "Explore code on GitHub"
+  "hero": {
+    "eyebrow": "Model-based resilience",
+    "title": "Model-based resilience from service-topology models",
+    "lead": "Bering discovers service topology and endpoint contracts, then publishes stable model artifacts. Sheaft consumes those artifacts to simulate failures, evaluate policy gates, and track posture over time.",
+    "note": "This is a model-based signal: fast, repeatable, and designed to complement live experiments.",
+    "cta": {
+      "pilot": "Request a pilot",
+      "github": "GitHub",
+      "docs": "Docs",
+      "example": "Try the example",
+      "learn": "How it works"
+    },
+    "panelAria": "Product role split",
+    "panel": {
+      "beringTitle": "Bering",
+      "beringText": "Discovery and publishing layer for topology and endpoint contracts.",
+      "sheaftTitle": "Sheaft",
+      "sheaftText": "Resilience posture engine for simulation, gating, and continuous monitoring."
+    }
   },
-  "whatWeDo": {
-    "title": "What we do",
-    "intro": "MB3R Lab is an R&D group working on automatic model discovery and simulation-driven resilience analysis for distributed systems (e.g., microservices).",
-    "items": {
-      "modelDiscovery": {
-        "title": "Model Discovery",
-        "text": "synthesize system dependency models from configuration, traces, and telemetry."
+  "how": {
+    "title": "How it works",
+    "intro": "The workflow is intentionally split: discovery upstream, evaluation downstream.",
+    "pipelineAria": "Resilience pipeline",
+    "steps": {
+      "discover": {
+        "title": "Bering discovers topology and endpoint contracts from traces / OTLP.",
+        "text": "Batch discovery works from trace files or topology inputs. Runtime mode accepts OTLP/HTTP and optional OTLP/gRPC."
       },
-      "whatIf": {
-        "title": "What‑if Simulation",
-        "text": "run Monte-Carlo failure scenarios on the discovered model without touching production."
+      "publish": {
+        "title": "Bering publishes stable model and snapshot artifacts.",
+        "text": "Artifacts become explicit handoff contracts for downstream tools and CI workflows."
       },
-      "causalResilience": {
-        "title": "Causal Resilience",
-        "text": "sheaf-theoretic analysis and Effective Information (EI) to identify macro-structures that improve predictability and control."
+      "evaluate": {
+        "title": "Sheaft consumes artifacts, simulates scenarios, evaluates gate policy, and can monitor posture continuously.",
+        "text": "Use batch mode for pull requests and release checks, then switch to watch/serve mode for posture tracking."
       }
     }
   },
-  "projects": {
-    "title": "Projects",
-    "cards": {
-      "bering": {
-        "title": "Bering — Model Discovery",
-        "text": "Automatically derive a live dependency model of your information system from configs and traces; run what‑if failure simulations offline."
-      },
-      "sheaft": {
-        "title": "Sheaft — Simulation-based chaos engineering & causal analysis",
-        "text": "Run simulation-first chaos experiments and quantify causal emergence with sheaf-theoretic EI to find resilient macro-structures."
+  "chaos": {
+    "title": "Why not chaos-first",
+    "intro": "Live chaos engineering remains valuable. The point is sequencing, not replacement.",
+    "points": [
+      "Live experiments are expensive to run frequently across many services and release branches.",
+      "A model-based gate is cheaper and can run regularly before release.",
+      "Use model-based results to narrow and prioritize where live experiments will matter most.",
+      "This adds a pre-release layer; it does not claim to replace production validation."
+    ]
+  },
+  "products": {
+    "title": "Two products, two roles",
+    "bering": {
+      "title": "Bering: discovery and publishing layer",
+      "summary": "Bering is responsible for producing topology/contracts artifacts and publishing them as stable inputs.",
+      "points": [
+        "Discovers service topology from traces, OTLP streams, or explicit topology input.",
+        "Builds endpoint contract and dependency artifacts for downstream consumers.",
+        "Supports deterministic batch mode and long-running runtime mode.",
+        "Does not own simulation, gating policy, or chaos execution."
+      ],
+      "links": {
+        "repo": "Bering on GitHub",
+        "docs": "Bering docs"
       }
     },
-    "links": {
-      "repoPrivate": "Repo",
-      "paper": "Paper",
-      "theory": "Theory article"
+    "sheaft": {
+      "title": "Sheaft: simulation, gating, and posture monitoring",
+      "summary": "Sheaft stays downstream of discovery and evaluates resilience posture from upstream model artifacts.",
+      "points": [
+        "Consumes published model/snapshot artifacts from Bering or compatible producers.",
+        "Runs simulation-based resilience analysis across CI/CD and adjacent engineering workflows.",
+        "Evaluates gate policy for release decisions.",
+        "Can run as a long-lived service for posture history, diffs, and metrics."
+      ],
+      "links": {
+        "repo": "Sheaft on GitHub",
+        "docs": "Sheaft CI gate docs"
+      }
     }
   },
-  "publications": {
-    "title": "Publications",
-    "items": {
-      "emergenceAsCode": {
-        "title": "Emergence-as-Code for Self-Governing Reliable Systems",
-        "text": "Introduces Emergence-as-Code (EmaC), a framework that makes user-journey reliability explicit and governable by connecting journey intent, SLO evidence, and control-plane policies in a Git-based workflow."
+  "audience": {
+    "title": "Who it is for",
+    "intro": "Teams that need a practical resilience signal before release, not a once-a-quarter exercise.",
+    "cards": {
+      "core": {
+        "title": "Core fit",
+        "points": [
+          "Platform, SRE, and DevOps teams responsible for delivery risk.",
+          "Microservice teams already collecting traces/OTLP or topology artifacts.",
+          "Organizations that want a low-cost pre-release resilience checkpoint."
+        ]
       },
-      "rasmussenSimplex": {
-        "title": "Toward Operationalizing Rasmussen: Drift Observability on the Simplex for Evolving Systems",
-        "text": "Proposes drift observability on the simplex with Aitchison geometry, enabling coordinate-invariant early-warning signals and boundary-proximity tracking for evolving socio-technical systems."
+      "smb": {
+        "title": "SMB / lean teams",
+        "points": [
+          "A cheaper entry path into resilience practice.",
+          "Run small, frequent checks in CI before spending on heavy live tests."
+        ]
       },
-      "asyncSemantics": {
-        "title": "Evaluating Asynchronous Semantics in Trace-Discovered Resilience Models: A Case Study on the OpenTelemetry Demo",
-        "text": "Extends the experimental validation of the model discovery concept to a new system (the OpenTelemetry Demo) and a new grain of complexity (asynchronous semantics), comparing the trace-derived model against live chaos experiments."
-      },
-      "uncertainty": {
-        "title": "Measuring Uncertainty in Transformer Circuits with Effective Information Consistency",
-        "text": "This paper introduces the Effective-Information Consistency Score to quantify uncertainty in Transformer Circuits. This white-box, single-pass metric helps attribute uncertainty to specific mechanisms within LLMs."
-      },
-      "modelDiscovery": {
-        "title": "Model Discovery and Graph Simulation: A Lightweight Gateway to Chaos Engineering",
-        "text": "Offline resilience estimation from a dependency graph; compares simulations to live failure injection on a microservice benchmark."
-      },
-      "sheaf": {
-        "title": "Sheaf-Theoretic Causal Emergence for Resilience Analysis in Distributed Systems",
-        "text": "Unifies sheaves, flow simulation, and EI for multi-level causal analysis."
+      "enterprise": {
+        "title": "Larger organizations",
+        "points": [
+          "Prioritize where costly live chaos experiments should run first.",
+          "Standardize artifact handoff between discovery and gate evaluation teams."
+        ]
       }
+    }
+  },
+  "start": {
+    "title": "Start in 5 minutes",
+    "steps": [
+      {
+        "title": "Install Bering and generate a first model artifact",
+        "text": "Use the install guide, then run discovery on sample traces or your own input.",
+        "linkLabel": "Bering install guide"
+      },
+      {
+        "title": "Publish or export the resulting model/snapshot artifact",
+        "text": "Use sample folders to understand expected artifact shape and handoff format.",
+        "linkLabel": "Bering examples"
+      },
+      {
+        "title": "Run Sheaft simulation and CI gate on that artifact",
+        "text": "Start with the CI gate doc and the example CI assets.",
+        "linkLabel": "Sheaft CI examples"
+      },
+      {
+        "title": "Move to continuous posture monitoring when needed",
+        "text": "When batch checks are stable, enable long-running posture tracking.",
+        "linkLabel": "Sheaft observability mode"
+      }
+    ]
+  },
+  "observability": {
+    "title": "Resilience posture in observability mode",
+    "intro": "After CI gate is in place, you can run Sheaft continuously to track posture drift instead of checking only at release time.",
+    "scenarioAria": "Observability posture scenario",
+    "steps": [
+      {
+        "title": "Bering keeps publishing rolling snapshots",
+        "text": "In runtime mode, Bering emits model/snapshot artifacts per time window from OTLP and trace input."
+      },
+      {
+        "title": "Sheaft serve/watch consumes each new artifact",
+        "text": "Every new artifact is re-evaluated against analysis rules and gate policy without waiting for the next release."
+      },
+      {
+        "title": "Posture history and diffs show what changed",
+        "text": "Teams can inspect when posture moved, what dependencies shifted, and which policies flipped state."
+      },
+      {
+        "title": "Use the signal for prioritization",
+        "text": "Prioritize incidents, hardening work, and expensive live chaos runs using the latest posture trend."
+      }
+    ],
+    "outputs": {
+      "title": "What teams get in practice",
+      "points": [
+        "Current posture status and when it last changed.",
+        "Diff/history context for topology and policy outcomes.",
+        "A cheaper continuous resilience signal between live experiments."
+      ]
+    },
+    "links": {
+      "docs": "Observability mode docs",
+      "examples": "Sheaft examples"
     }
   },
   "demo": {
-    "title": "Demo-report (How it could look like)",
+    "title": "Demo-report",
     "imageAlt": "Sheaft report screenshot"
-  },
-  "updates": {
-    "title": "Updates",
-    "items": {
-      "emergenceAsCode": {
-        "date": "February 2026",
-        "title": "Emergence-as-Code preprint",
-        "text": "Published the preprint “Emergence-as-Code for Self-Governing Reliable Systems” (arXiv:2602.05458), outlining a journey-level reliability governance model."
-      },
-      "rasmussenSimplex": {
-        "date": "February 2026",
-        "title": "Drift observability preprint",
-        "text": "Published “Toward Operationalizing Rasmussen: Drift Observability on the Simplex for Evolving Systems” (arXiv:2602.05483), introducing simplex-based drift monitoring under architectural churn."
-      },
-      "aina": {
-        "date": "January 2026",
-        "title": "Refining Resilience Model Discovery: A Case Study on the Limited Role of Asynchronous Edges in the OpenTelemetry Demo",
-        "text": "The incremental paper was accepted to the CORE B conference AINA 2026."
-      },
-      "asyncResilience": {
-        "date": "December 2025",
-        "title": "Async resilience preprint",
-        "text": "Extended our experimental validation of the model discovery concept to the OpenTelemetry Demo, incorporating asynchronous semantics as an additional complexity grain."
-      },
-      "icse": {
-        "date": "December 2025",
-        "title": "ICSE 2026 NIER acceptance",
-        "text": "Our paper “Model Discovery and Graph Simulation: A Lightweight Gateway to Chaos Engineering” was accepted to the ICSE 2026 NIER track, which recognizes our commitment to safer, simulation-driven resilience."
-      },
-      "causalAi": {
-        "date": "September 2025",
-        "title": "Causal AI publication",
-        "text": "Documented Effective-Information metrics for transformer circuits and published the results."
-      },
-      "landing": {
-        "date": "July 2025",
-        "title": "Public landing launched",
-        "text": "Released mb3r-lab.github.io with a pilot intake flow and project overview."
-      },
-      "benchmark": {
-        "date": "June 2025",
-        "title": "Bering benchmark",
-        "text": "Reproduced Bering simulations on a microservice benchmark to validate offline chaos runs."
-      },
-      "sheaft": {
-        "date": "March 2025",
-        "title": "Sheaft framework",
-        "text": "Introduced the theoretical foundation for sheaf-based causal analysis in distributed systems."
-      }
-    }
   },
   "roadmap": {
     "title": "Roadmap",
-    "iconAlt": "Roadmap icon",
-    "imageAlt": "MB3R Lab roadmap"
+    "intro": "Planned product milestones and research-to-product transition phases.",
+    "openFull": "Open full-size roadmap",
+    "imageAlt": "MB3R Lab roadmap by phases and milestones"
   },
-  "contact": {
-    "title": "Contact",
-    "github": "GitHub",
-    "linkedin": "LinkedIn",
-    "email": "contact@mb3r-lab.org"
+  "publications": {
+    "title": "Publications and preprints",
+    "intro": "Core papers behind the tooling and workflow.",
+    "openPreprint": "Read preprint",
+    "items": {
+      "emergenceAsCode": {
+        "title": "Emergence-as-Code for Self-Governing Reliable Systems",
+        "text": "Journey-level reliability governance with explicit intent, evidence, and control policies."
+      },
+      "rasmussenSimplex": {
+        "title": "Toward Operationalizing Rasmussen: Drift Observability on the Simplex for Evolving Systems",
+        "text": "A simplex-based way to monitor drift and boundary proximity in evolving systems."
+      },
+      "asyncSemantics": {
+        "title": "Evaluating Asynchronous Semantics in Trace-Discovered Resilience Models",
+        "text": "Validation on OpenTelemetry Demo with asynchronous semantics and live-chaos comparison."
+      },
+      "uncertainty": {
+        "title": "Measuring Uncertainty in Transformer Circuits with Effective Information Consistency",
+        "text": "A white-box metric for localizing uncertainty mechanisms in transformer circuits."
+      },
+      "modelDiscovery": {
+        "title": "Model Discovery and Graph Simulation: A Lightweight Gateway to Chaos Engineering",
+        "text": "Offline resilience estimation from discovered dependency graphs."
+      },
+      "sheaf": {
+        "title": "Sheaf-Theoretic Causal Emergence for Resilience Analysis in Distributed Systems",
+        "text": "Foundational model for multi-level causal resilience analysis."
+      }
+    }
   },
-  "footer": {
-    "copyright": "© 2026 MB3R Lab. All rights reserved."
-  },
-  "imageZoom": {
-    "closeAria": "Close zoomed image",
-    "alt": "Zoomed image"
+  "research": {
+    "title": "Built from research, packaged for engineering",
+    "text": "The approach is grounded in resilience research, but this site focuses on practical engineering workflow: discover artifacts upstream, gate posture downstream.",
+    "links": [
+      "Emergence-as-Code for Self-Governing Reliable Systems",
+      "Toward Operationalizing Rasmussen: Drift Observability on the Simplex for Evolving Systems",
+      "Evaluating Asynchronous Semantics in Trace-Discovered Resilience Models",
+      "Measuring Uncertainty in Transformer Circuits with Effective Information Consistency",
+      "Model Discovery and Graph Simulation: A Lightweight Gateway to Chaos Engineering",
+      "Sheaf-Theoretic Causal Emergence for Resilience Analysis in Distributed Systems"
+    ]
   },
   "modal": {
     "closeAria": "Close form",
@@ -205,19 +290,31 @@
       "sending": "Sending your request...",
       "success": "All set! We just confirmed via email.",
       "savedOffline": "No backend connection. Saved locally for now.",
-      "savedMissingEndpoint": "API endpoint missing. Saved locally for now.",
-      "submitFailed": "Unable to submit the request."
+      "savedMissingEndpoint": "API endpoint missing. Saved locally for now."
     },
     "errors": {
       "apiNotConfigured": "API endpoint is not configured.",
       "submitFailed": "Unable to submit the request."
     }
   },
+  "footer": {
+    "title": "MB3R Lab",
+    "description": "Research-backed tooling for model-based resilience in software delivery.",
+    "copyright": "MB3R Lab. All rights reserved.",
+    "links": {
+      "github": "GitHub organization",
+      "docs": "Docs",
+      "examples": "Examples"
+    }
+  },
+  "common": {
+    "placeholder": "-"
+  },
   "console": {
     "apiNotConfigured": "[mb3r] API endpoint is not configured. Set window.__MB3R_API_ENDPOINT__ (or __MB3R_API_BASE__)."
   },
   "admin": {
-    "pageTitle": "MB3R Lab — Pilot requests",
+    "pageTitle": "MB3R Lab - Pilot requests",
     "heading": "Pilot program requests",
     "description": "Monitor submissions collected on the landing page. Records persist in Supabase (Postgres).",
     "actions": {

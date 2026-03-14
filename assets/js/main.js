@@ -1,8 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
     const htmlElement = document.documentElement;
     const body = document.body;
-    const themeToggleButton = document.getElementById('theme-toggle');
-    const currentTheme = localStorage.getItem('theme');
+    const navToggle = document.querySelector('[data-nav-toggle]');
+    const navPanel = document.querySelector('[data-nav-panel]');
+    const navLinks = Array.from(document.querySelectorAll('a[href^="#"]'));
+    const themeToggleButton = document.querySelector('[data-theme-toggle]');
+    const pilotModal = document.getElementById('pilot-modal');
+    const applicationForm = document.getElementById('application-form');
+    const statusField = document.getElementById('application-status');
+    const submitButton = document.getElementById('application-submit');
     const storage = window.MB3RStorage;
     const getI18n = () => window.MB3RI18n;
     const t = (key) => (getI18n()?.t ? getI18n().t(key) : key);
@@ -16,18 +22,13 @@ document.addEventListener('DOMContentLoaded', () => {
             ? window.__MB3R_API_BASE__.trim().replace(/\/$/, '')
             : '';
     const isApiConfigured = Boolean(explicitEndpoint || apiBaseUrl);
+    const THEME_STORAGE_KEY = 'theme';
+    const currentYear = String(new Date().getFullYear());
+    let lastFocusedElement = null;
 
-    const createLocalRecord = (payload, source = 'local') => ({
-        id: `${source}-${Date.now()}`,
-        email: payload.email,
-        company: payload.company,
-        comment: payload.comment || '',
-        created_at: new Date().toISOString(),
-        source
+    document.querySelectorAll('[data-current-year]').forEach((element) => {
+        element.textContent = currentYear;
     });
-
-    const shouldFallbackToLocal = (status) =>
-        !status || status >= 500 || status === 404 || status === 405 || !isApiConfigured;
 
     const resolveEndpoint = (path) => {
         if (explicitEndpoint) {
@@ -39,165 +40,22 @@ document.addEventListener('DOMContentLoaded', () => {
         return null;
     };
 
-    whenI18nReady().then(() => {
-        if (!isApiConfigured) {
-            console.warn(t('console.apiNotConfigured'));
-        }
-    });
+    const shouldFallbackToLocal = (status) =>
+        !status || status >= 500 || status === 404 || status === 405 || !isApiConfigured;
 
-    if (currentTheme) {
-        htmlElement.setAttribute('data-theme', currentTheme);
-    } else {
-        htmlElement.setAttribute('data-theme', 'dark');
-        localStorage.setItem('theme', 'dark');
-    }
-
-    themeToggleButton?.addEventListener('click', () => {
-        let theme = htmlElement.getAttribute('data-theme');
-        if (theme === 'dark') {
-            htmlElement.removeAttribute('data-theme');
-            localStorage.removeItem('theme');
-        } else {
-            htmlElement.setAttribute('data-theme', 'dark');
-            localStorage.setItem('theme', 'dark');
-        }
-    });
-
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', function (event) {
-            event.preventDefault();
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-            targetElement?.scrollIntoView({ behavior: 'smooth' });
-        });
-    });
-
-    const zoomOverlay = document.querySelector('[data-zoom-overlay]');
-    const zoomTarget = zoomOverlay?.querySelector('[data-zoom-target]');
-
-    const modal = document.getElementById('pilot-modal');
-    const applicationForm = document.getElementById('application-form');
-    const statusField = document.getElementById('application-status');
-    const submitButton = document.getElementById('application-submit');
-    let lastFocusedElement = null;
-
-    if (modal) {
-        const openButtons = document.querySelectorAll('[data-modal-target="pilot-modal"]');
-        const closeElements = modal.querySelectorAll('[data-modal-close]');
-        const overlay = modal.querySelector('.modal-overlay');
-        const focusableSelectors = [
-            'a[href]',
-            'button:not([disabled])',
-            'input:not([disabled])',
-            'textarea:not([disabled])',
-            'select:not([disabled])',
-            '[tabindex]:not([tabindex="-1"])'
-        ].join(', ');
-
-        const getFocusableElements = () =>
-            Array.from(modal.querySelectorAll(focusableSelectors));
-
-        const handleKeydown = (event) => {
-            if (!modal.classList.contains('is-open')) {
-                return;
-            }
-
-            if (event.key === 'Escape') {
-                event.preventDefault();
-                closeModal();
-            }
-
-            if (event.key === 'Tab') {
-                const focusable = getFocusableElements();
-                if (!focusable.length) {
-                    return;
-                }
-
-                const firstEl = focusable[0];
-                const lastEl = focusable[focusable.length - 1];
-
-                if (event.shiftKey && document.activeElement === firstEl) {
-                    event.preventDefault();
-                    lastEl.focus();
-                } else if (!event.shiftKey && document.activeElement === lastEl) {
-                    event.preventDefault();
-                    firstEl.focus();
-                }
-            }
-        };
-
-        const openModal = () => {
-            lastFocusedElement = document.activeElement;
-            modal.classList.add('is-open');
-            modal.setAttribute('aria-hidden', 'false');
-            body.classList.add('no-scroll');
-            document.addEventListener('keydown', handleKeydown);
-            const firstInput = modal.querySelector('input, textarea, button');
-            firstInput?.focus();
-        };
-
-        const closeModal = () => {
-            modal.classList.remove('is-open');
-            modal.setAttribute('aria-hidden', 'true');
-            if (!zoomOverlay?.classList.contains('is-open')) {
-                body.classList.remove('no-scroll');
-            }
-            document.removeEventListener('keydown', handleKeydown);
-            if (lastFocusedElement) {
-                lastFocusedElement.focus();
-            }
-        };
-
-        openButtons.forEach(button => button.addEventListener('click', openModal));
-        closeElements.forEach(element => element.addEventListener('click', closeModal));
-        overlay?.addEventListener('click', closeModal);
-    }
-
-    const zoomSources = document.querySelectorAll('[data-zoom-source]');
-
-    const closeZoom = () => {
-        if (!zoomOverlay) return;
-        zoomOverlay.classList.remove('is-open');
-        zoomOverlay.setAttribute('aria-hidden', 'true');
-        if (zoomTarget) {
-            zoomTarget.src = '';
-        }
-        if (!modal?.classList.contains('is-open')) {
-            body.classList.remove('no-scroll');
-        }
-    };
-
-    const openZoom = (source) => {
-        if (!zoomOverlay || !zoomTarget) return;
-        zoomTarget.src = source.src;
-        zoomTarget.alt = source.alt || t('imageZoom.alt');
-        zoomOverlay.classList.add('is-open');
-        zoomOverlay.setAttribute('aria-hidden', 'false');
-        body.classList.add('no-scroll');
-    };
-
-    zoomSources.forEach(img => img.addEventListener('click', () => openZoom(img)));
-    zoomOverlay?.addEventListener('click', (event) => {
-        if (event.target === zoomOverlay) {
-            closeZoom();
-        }
-    });
-    zoomOverlay?.querySelectorAll('[data-zoom-close]').forEach(el =>
-        el.addEventListener('click', closeZoom)
-    );
-    document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && zoomOverlay?.classList.contains('is-open')) {
-            closeZoom();
-        }
+    const createLocalRecord = (payload, source = 'local') => ({
+        id: `${source}-${Date.now()}`,
+        email: payload.email,
+        company: payload.company,
+        comment: payload.comment || '',
+        country: null,
+        created_at: new Date().toISOString(),
+        source
     });
 
     const setStatus = (message, state) => {
-        if (!statusField) {
-            return;
-        }
-
+        if (!statusField) return;
         statusField.textContent = message || '';
-
         if (state) {
             statusField.dataset.state = state;
         } else {
@@ -205,9 +63,173 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    const applyTheme = (theme) => {
+        if (theme === 'dark') {
+            htmlElement.setAttribute('data-theme', 'dark');
+            return;
+        }
+        htmlElement.removeAttribute('data-theme');
+    };
+
+    const getCurrentTheme = () =>
+        htmlElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+
+    const syncThemeToggleButton = () => {
+        if (!themeToggleButton) return;
+        const isDark = getCurrentTheme() === 'dark';
+        themeToggleButton.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+        themeToggleButton.setAttribute(
+            'aria-label',
+            isDark ? t('nav.switchToLightAria') : t('nav.switchToDarkAria')
+        );
+    };
+
+    const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+    applyTheme(savedTheme === 'dark' ? 'dark' : 'light');
+    syncThemeToggleButton();
+
+    themeToggleButton?.addEventListener('click', () => {
+        const nextTheme = getCurrentTheme() === 'dark' ? 'light' : 'dark';
+        applyTheme(nextTheme);
+        if (nextTheme === 'dark') {
+            localStorage.setItem(THEME_STORAGE_KEY, 'dark');
+        } else {
+            localStorage.removeItem(THEME_STORAGE_KEY);
+        }
+        syncThemeToggleButton();
+    });
+
+    const isMenuOpen = () => navPanel?.classList.contains('is-open');
+    const isPilotModalOpen = () => pilotModal?.classList.contains('is-open');
+
+    const closeMenu = () => {
+        if (!navPanel || !navToggle) return;
+        navPanel.classList.remove('is-open');
+        navToggle.setAttribute('aria-expanded', 'false');
+        if (!isPilotModalOpen()) {
+            body.classList.remove('no-scroll');
+        }
+    };
+
+    const openMenu = () => {
+        if (!navPanel || !navToggle) return;
+        navPanel.classList.add('is-open');
+        navToggle.setAttribute('aria-expanded', 'true');
+        body.classList.add('no-scroll');
+    };
+
+    navToggle?.addEventListener('click', () => {
+        if (isMenuOpen()) {
+            closeMenu();
+        } else {
+            openMenu();
+        }
+    });
+
+    navLinks.forEach((link) => {
+        link.addEventListener('click', (event) => {
+            const href = link.getAttribute('href') || '';
+            if (!href.startsWith('#')) return;
+
+            const target = document.querySelector(href);
+            if (!target) return;
+
+            event.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            if (isMenuOpen()) {
+                closeMenu();
+            }
+        });
+    });
+
+    const openPilotModal = () => {
+        if (!pilotModal) return;
+        lastFocusedElement = document.activeElement;
+        pilotModal.classList.add('is-open');
+        pilotModal.setAttribute('aria-hidden', 'false');
+        body.classList.add('no-scroll');
+        setStatus('', '');
+        const firstInput = pilotModal.querySelector('input, textarea, button');
+        firstInput?.focus();
+    };
+
+    const closePilotModal = () => {
+        if (!pilotModal) return;
+        pilotModal.classList.remove('is-open');
+        pilotModal.setAttribute('aria-hidden', 'true');
+        if (!isMenuOpen()) {
+            body.classList.remove('no-scroll');
+        }
+        if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
+            lastFocusedElement.focus();
+        }
+    };
+
+    document.querySelectorAll('[data-modal-target="pilot-modal"]').forEach((button) => {
+        button.addEventListener('click', () => {
+            if (isMenuOpen()) {
+                closeMenu();
+            }
+            openPilotModal();
+        });
+    });
+
+    pilotModal?.querySelectorAll('[data-modal-close]').forEach((element) => {
+        element.addEventListener('click', closePilotModal);
+    });
+
+    document.addEventListener('click', (event) => {
+        if (!isMenuOpen() || !navPanel || !navToggle) return;
+
+        const clickInsidePanel = navPanel.contains(event.target);
+        const clickOnToggle = navToggle.contains(event.target);
+
+        if (!clickInsidePanel && !clickOnToggle) {
+            closeMenu();
+        }
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && isPilotModalOpen()) {
+            closePilotModal();
+            return;
+        }
+
+        if (event.key === 'Escape' && isMenuOpen()) {
+            closeMenu();
+            return;
+        }
+
+        if (event.key !== 'Tab' || !isPilotModalOpen() || !pilotModal) {
+            return;
+        }
+
+        const focusable = Array.from(
+            pilotModal.querySelectorAll(
+                'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+            )
+        );
+
+        if (!focusable.length) {
+            return;
+        }
+
+        const firstEl = focusable[0];
+        const lastEl = focusable[focusable.length - 1];
+
+        if (event.shiftKey && document.activeElement === firstEl) {
+            event.preventDefault();
+            lastEl.focus();
+        } else if (!event.shiftKey && document.activeElement === lastEl) {
+            event.preventDefault();
+            firstEl.focus();
+        }
+    });
+
     const persistRecord = (record) => {
         if (!record) return;
-        storage?.save(record);
+        storage?.save?.(record);
     };
 
     const submitRequest = async (payload) => {
@@ -240,14 +262,26 @@ document.addEventListener('DOMContentLoaded', () => {
             email: payload.email,
             company: payload.company,
             comment: payload.comment || '',
+            country: data.country || null,
             created_at: data.created_at || new Date().toISOString(),
             source: 'api'
         };
     };
 
+    whenI18nReady().then(() => {
+        syncThemeToggleButton();
+        getI18n()?.onChange?.(() => {
+            syncThemeToggleButton();
+        });
+        if (!isApiConfigured) {
+            console.warn(t('console.apiNotConfigured'));
+        }
+    });
+
     applicationForm?.addEventListener('submit', async (event) => {
         event.preventDefault();
         await whenI18nReady();
+
         if (!submitButton) {
             return;
         }
@@ -276,10 +310,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const localRecord = createLocalRecord(payload);
                 persistRecord(localRecord);
                 applicationForm.reset();
-                const suffix = isApiConfigured
+                const fallbackMessage = isApiConfigured
                     ? t('form.status.savedOffline')
                     : t('form.status.savedMissingEndpoint');
-                setStatus(suffix, 'success');
+                setStatus(fallbackMessage, 'success');
             } else {
                 setStatus(error.message || t('form.errors.submitFailed'), 'error');
             }

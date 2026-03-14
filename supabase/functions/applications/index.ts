@@ -150,7 +150,7 @@ const getCorsHeaders = (req: Request) => {
     return {
         'Access-Control-Allow-Origin': isAllowedOrigin(origin) ? origin : fallbackOrigin,
         'Access-Control-Allow-Headers': 'content-type, x-admin-pass',
-        'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
+        'Access-Control-Allow-Methods': 'GET,POST,DELETE,OPTIONS',
         Vary: 'Origin'
     };
 };
@@ -171,6 +171,10 @@ serve(async (req) => {
 
         if (req.method === 'GET') {
             return await handleGet(req);
+        }
+
+        if (req.method === 'DELETE') {
+            return await handleDelete(req);
         }
 
         return new Response('Method Not Allowed', {
@@ -240,6 +244,56 @@ async function handlePost(req: Request): Promise<Response> {
 }
 
 async function handleGet(req: Request): Promise<Response> {
+    const authError = await requireAdminAccess(req);
+    if (authError) {
+        return authError;
+    }
+
+    const { data, error } = await supabase
+        .from('applications')
+        .select('id, email, company, comment, country, created_at')
+        .order('created_at', { ascending: false });
+
+    if (error) {
+        console.error('[applications] select failed', error);
+        return jsonResponse(req, { message: 'Unable to load applications.' }, 500);
+    }
+
+    return jsonResponse(req, data || []);
+}
+
+async function handleDelete(req: Request): Promise<Response> {
+    const authError = await requireAdminAccess(req);
+    if (authError) {
+        return authError;
+    }
+
+    const payload = await req.json().catch(() => ({}));
+    const id = parseApplicationId(payload?.id);
+    if (!id) {
+        return jsonResponse(req, { message: 'Valid request ID is required.' }, 400);
+    }
+
+    const { data, error } = await supabase
+        .from('applications')
+        .delete()
+        .eq('id', id)
+        .select('id')
+        .maybeSingle();
+
+    if (error) {
+        console.error('[applications] delete failed', error);
+        return jsonResponse(req, { message: 'Unable to delete request.' }, 500);
+    }
+
+    if (!data) {
+        return jsonResponse(req, { message: 'Request not found.' }, 404);
+    }
+
+    return jsonResponse(req, { id: data.id, message: 'Request deleted.' });
+}
+
+async function requireAdminAccess(req: Request): Promise<Response | null> {
     const origin = getRequestOrigin(req);
     if (!isAllowedOrigin(origin)) {
         return jsonResponse(req, { message: 'Origin is not allowed.' }, 403);
@@ -271,18 +325,18 @@ async function handleGet(req: Request): Promise<Response> {
     }
 
     clearAuthFailure(authKey);
+    return null;
+}
 
-    const { data, error } = await supabase
-        .from('applications')
-        .select('id, email, company, comment, country, created_at')
-        .order('created_at', { ascending: false });
-
-    if (error) {
-        console.error('[applications] select failed', error);
-        return jsonResponse(req, { message: 'Unable to load applications.' }, 500);
+function parseApplicationId(value: unknown): number | null {
+    if (typeof value === 'number' && Number.isInteger(value) && value > 0) {
+        return value;
     }
-
-    return jsonResponse(req, data || []);
+    if (typeof value === 'string' && /^\d+$/.test(value.trim())) {
+        const parsed = Number(value.trim());
+        return Number.isInteger(parsed) && parsed > 0 ? parsed : null;
+    }
+    return null;
 }
 
 type OwnerNotificationPayload = {

@@ -74,7 +74,7 @@ Push the static site (e.g., to GitHub Pages). The landing page and `/admin.html`
 - **Supabase storage** — submissions persist in `public.applications`; schema (including `country` column) is auto-created on first call.
 - **Mailgun owner notifications** — the function posts to Mailgun so the owner mailbox receives every new lead.
 - **No auto-reply to requester** — submitters are not emailed automatically; follow-up is manual from the owner side.
-- **Admin dashboard** — `/admin.html` lists submissions. Access requires the password that you stored in the function secret (`x-admin-pass` header). If the function is offline, the dashboard shows the locally cached leads.
+- **Admin dashboard** — `/admin.html` lists submissions and supports deleting requests. Access requires the password that you stored in the function secret (`x-admin-pass` header). If the function is offline, the dashboard shows the locally cached leads.
 - **Offline fallback** — when the API is unreachable (or not configured) leads are saved in `localStorage`, so you can later recover them from `/admin`.
 
 ## Supabase function behavior
@@ -83,6 +83,7 @@ The deployed function handles:
 
 - `POST /database-access` — validate payload, insert into `applications`, send owner notification to `MAIL_NOTIFY_TO` (if configured), respond with the created ID.
 - `GET /database-access` — require `x-admin-pass` header, validate request `Origin` against `ALLOWED_ORIGINS`, apply per-client failed-login throttling (delay + temporary block), return ordered submissions.
+- `DELETE /database-access` — require `x-admin-pass`, accept `{ "id": <number> }`, delete one request by ID.
 - `OPTIONS` — CORS preflight for allowlisted origins (`content-type` + `x-admin-pass` headers).
 - **Schema requirement** — create the table once in Supabase (SQL editor):
   ```sql

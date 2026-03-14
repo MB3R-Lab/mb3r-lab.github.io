@@ -1072,6 +1072,21 @@ html:not([data-theme="dark"]) .theme-icon-sun {
     background: color-mix(in srgb, var(--surface-muted) 40%, var(--surface));
 }
 
+.admin-action-cell {
+    width: 1%;
+    white-space: nowrap;
+}
+
+.admin-delete-button {
+    color: #a93333;
+}
+
+.admin-delete-button:hover {
+    color: #fff;
+    border-color: #b43b3b;
+    background: #b43b3b;
+}
+
 .modal {
     position: fixed;
     inset: 0;

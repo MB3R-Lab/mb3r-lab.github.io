@@ -329,8 +329,13 @@
         "company": "Компания",
         "context": "Контекст",
         "country": "Страна",
-        "created": "Создано"
+        "created": "Создано",
+        "actions": "Действия"
       },
+      "actions": {
+        "delete": "Удалить"
+      },
+      "confirmDelete": "Удалить заявку",
       "empty": "Заявки ещё не загружены."
     },
     "modal": {
@@ -354,13 +359,17 @@
       "showingCached": "API недоступно. Показываем кэшированные заявки.",
       "validating": "Проверяем...",
       "accessGranted": "Доступ предоставлен.",
-      "apiNotConfiguredHint": "API-эндпоинт не настроен. Обновите assets/js/config.js."
+      "apiNotConfiguredHint": "API-эндпоинт не настроен. Обновите assets/js/config.js.",
+      "deleting": "Удаляем заявку...",
+      "deleted": "Заявка удалена."
     },
     "errors": {
       "passwordRequired": "Требуется пароль.",
       "apiNotConfigured": "API-эндпоинт не настроен.",
       "loadFailed": "Не удалось загрузить заявки.",
-      "backendUnreachable": "Бэкенд недоступен."
+      "backendUnreachable": "Бэкенд недоступен.",
+      "deleteFailed": "Не удалось удалить заявку.",
+      "invalidId": "Некорректный ID заявки."
     }
   }
 }

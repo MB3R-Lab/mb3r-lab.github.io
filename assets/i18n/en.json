@@ -329,8 +329,13 @@
         "company": "Company",
         "context": "Context",
         "country": "Country",
-        "created": "Created"
+        "created": "Created",
+        "actions": "Actions"
       },
+      "actions": {
+        "delete": "Delete"
+      },
+      "confirmDelete": "Delete this request",
       "empty": "Requests are not loaded yet."
     },
     "modal": {
@@ -354,13 +359,17 @@
       "showingCached": "API unavailable. Showing cached requests.",
       "validating": "Validating...",
       "accessGranted": "Access granted.",
-      "apiNotConfiguredHint": "API endpoint is not configured. Update assets/js/config.js."
+      "apiNotConfiguredHint": "API endpoint is not configured. Update assets/js/config.js.",
+      "deleting": "Deleting request...",
+      "deleted": "Request deleted."
     },
     "errors": {
       "passwordRequired": "Password is required.",
       "apiNotConfigured": "API endpoint is not configured.",
       "loadFailed": "Unable to load requests.",
-      "backendUnreachable": "Backend is unreachable."
+      "backendUnreachable": "Backend is unreachable.",
+      "deleteFailed": "Unable to delete request.",
+      "invalidId": "Invalid request ID."
     }
   }
 }

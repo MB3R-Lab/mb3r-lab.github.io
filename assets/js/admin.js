@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tableWrapper = document.querySelector('.table-wrapper');
     const refreshButton = document.getElementById('refresh-button');
     const storage = window.MB3RStorage;
+    const TABLE_COLUMN_COUNT = 7;
     const getI18n = () => window.MB3RI18n;
     const t = (key) => (getI18n()?.t ? getI18n().t(key) : key);
     const whenI18nReady = () => getI18n()?.ready || Promise.resolve();
@@ -35,6 +36,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         return null;
     };
+    const isDeletableId = (value) => Number.isInteger(Number(value)) && Number(value) > 0;
+    const parseDeleteId = (value) => (isDeletableId(value) ? Number(value) : null);
+
     let currentPassword = '';
     let hasRemoteSuccess = false;
 
@@ -88,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tableBody.innerHTML = '';
         const row = document.createElement('tr');
         const cell = document.createElement('td');
-        cell.colSpan = 6;
+        cell.colSpan = TABLE_COLUMN_COUNT;
         cell.textContent = message;
         row.appendChild(cell);
         tableBody.appendChild(row);
@@ -146,8 +150,46 @@ document.addEventListener('DOMContentLoaded', () => {
                 tr.appendChild(td);
             });
 
+            const actionTd = document.createElement('td');
+            actionTd.className = 'admin-action-cell';
+
+            if (isDeletableId(row.id)) {
+                const deleteButton = document.createElement('button');
+                deleteButton.type = 'button';
+                deleteButton.className = 'button button-ghost button-small admin-delete-button';
+                deleteButton.dataset.deleteId = String(row.id);
+                deleteButton.textContent = t('admin.table.actions.delete');
+                deleteButton.setAttribute(
+                    'aria-label',
+                    `${t('admin.table.actions.delete')} #${row.id}`
+                );
+                actionTd.appendChild(deleteButton);
+            } else {
+                actionTd.textContent = t('common.placeholder');
+            }
+
+            tr.appendChild(actionTd);
             tableBody.appendChild(tr);
         });
+    };
+
+    const handleAuthError = (error) => {
+        const isIncorrectPassword = /incorrect password/i.test(String(error.message || ''));
+        const isRateLimited = error.status === 429;
+        currentPassword = '';
+        lockTable();
+        setAuthStatus(
+            isRateLimited ? t('admin.status.tooManyAttempts') : error.message,
+            'error'
+        );
+        if (isRateLimited) {
+            setOverlayMessage(t('admin.status.tooManyAttempts'), 'admin.status.tooManyAttempts');
+        } else if (isIncorrectPassword) {
+            setOverlayMessage(t('admin.status.incorrectPassword'), 'admin.status.incorrectPassword');
+        } else {
+            setOverlayMessage(error.message || t('admin.errors.loadFailed'));
+        }
+        openModal();
     };
 
     const fetchApplications = async (password) => {
@@ -176,13 +218,53 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json().catch(() => ({}));
 
             if (!response.ok) {
-                if (response.status === 401 || response.status === 403) {
-                    const authError = new Error(data.message || t('admin.errors.loadFailed'));
-                    authError.status = response.status;
-                    throw authError;
-                }
-
                 const error = new Error(data.message || t('admin.errors.loadFailed'));
+                error.status = response.status;
+                throw error;
+            }
+
+            return data;
+        } catch (error) {
+            if (!error.status || isOfflineError(error.status)) {
+                const offlineError = new Error(error.message || t('admin.errors.backendUnreachable'));
+                offlineError.offline = true;
+                offlineError.status = error.status;
+                throw offlineError;
+            }
+            throw error;
+        }
+    };
+
+    const deleteApplication = async (id, password) => {
+        await whenI18nReady();
+
+        if (!password) {
+            const error = new Error(t('admin.errors.passwordRequired'));
+            error.status = 401;
+            throw error;
+        }
+
+        const endpoint = resolveEndpoint('/applications');
+        if (!endpoint) {
+            const configError = new Error(t('admin.errors.apiNotConfigured'));
+            configError.offline = true;
+            throw configError;
+        }
+
+        try {
+            const response = await fetch(endpoint, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-admin-pass': password
+                },
+                body: JSON.stringify({ id }),
+                cache: 'no-store'
+            });
+
+            const data = await response.json().catch(() => ({}));
+            if (!response.ok) {
+                const error = new Error(data.message || t('admin.errors.deleteFailed'));
                 error.status = response.status;
                 throw error;
             }
@@ -222,22 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         } catch (error) {
             if (error.status === 401 || error.status === 403 || error.status === 429) {
-                const isIncorrectPassword = /incorrect password/i.test(String(error.message || ''));
-                const isRateLimited = error.status === 429;
-                currentPassword = '';
-                lockTable();
-                setAuthStatus(
-                    isRateLimited ? t('admin.status.tooManyAttempts') : error.message,
-                    'error'
-                );
-                if (isRateLimited) {
-                    setOverlayMessage(t('admin.status.tooManyAttempts'), 'admin.status.tooManyAttempts');
-                } else if (isIncorrectPassword) {
-                    setOverlayMessage(t('admin.status.incorrectPassword'), 'admin.status.incorrectPassword');
-                } else {
-                    setOverlayMessage(error.message || t('admin.errors.loadFailed'));
-                }
-                openModal();
+                handleAuthError(error);
                 throw error;
             }
 
@@ -252,10 +319,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 if (!hasRemoteSuccess) {
-                    setAuthStatus(
-                        t('admin.status.apiUnavailable'),
-                        'error'
-                    );
+                    setAuthStatus(t('admin.status.apiUnavailable'), 'error');
                     currentPassword = '';
                     lockTable();
                     setOverlayMessage(t('admin.status.apiUnavailableLater'), 'admin.status.apiUnavailableLater');
@@ -293,6 +357,54 @@ document.addEventListener('DOMContentLoaded', () => {
             setAuthStatus(t('admin.status.accessGranted'), 'success');
         } catch {
             // Errors are surfaced inside loadApplications.
+        }
+    });
+
+    tableBody?.addEventListener('click', async (event) => {
+        const deleteButton = event.target.closest('[data-delete-id]');
+        if (!deleteButton) {
+            return;
+        }
+
+        await whenI18nReady();
+
+        if (!currentPassword) {
+            openModal();
+            return;
+        }
+
+        const applicationId = parseDeleteId(deleteButton.dataset.deleteId);
+        if (!applicationId) {
+            setAuthStatus(t('admin.errors.invalidId'), 'error');
+            return;
+        }
+
+        const confirmed = window.confirm(`${t('admin.table.confirmDelete')} #${applicationId}`);
+        if (!confirmed) {
+            return;
+        }
+
+        deleteButton.disabled = true;
+        setAuthStatus(t('admin.status.deleting'), '');
+
+        try {
+            await deleteApplication(applicationId, currentPassword);
+            setAuthStatus(t('admin.status.deleted'), 'success');
+            await loadApplications({ silent: true });
+        } catch (error) {
+            if (error.status === 401 || error.status === 403 || error.status === 429) {
+                handleAuthError(error);
+                return;
+            }
+
+            if (error.offline) {
+                setAuthStatus(t('admin.status.apiUnavailableLater'), 'error');
+                return;
+            }
+
+            setAuthStatus(error.message || t('admin.errors.deleteFailed'), 'error');
+        } finally {
+            deleteButton.disabled = false;
         }
     });
 

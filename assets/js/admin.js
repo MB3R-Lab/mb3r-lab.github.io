@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const tableBody = document.getElementById('applications-body');
     const tableWrapper = document.querySelector('.table-wrapper');
     const refreshButton = document.getElementById('refresh-button');
-    const ADMIN_PASS_STORAGE_KEY = 'mb3r-admin-pass';
     const storage = window.MB3RStorage;
     const getI18n = () => window.MB3RI18n;
     const t = (key) => (getI18n()?.t ? getI18n().t(key) : key);
@@ -36,7 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         return null;
     };
-    sessionStorage.removeItem(ADMIN_PASS_STORAGE_KEY);
     let currentPassword = '';
     let hasRemoteSuccess = false;
 
@@ -171,7 +169,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             const response = await fetch(endpoint, {
-                headers: { 'x-admin-pass': password }
+                headers: { 'x-admin-pass': password },
+                cache: 'no-store'
             });
 
             const data = await response.json().catch(() => ({}));
@@ -215,7 +214,6 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const rows = await fetchApplications(password);
             currentPassword = password;
-            sessionStorage.setItem(ADMIN_PASS_STORAGE_KEY, password);
             renderTable(rows);
             unlockTable();
             closeModal();
@@ -223,23 +221,41 @@ document.addEventListener('DOMContentLoaded', () => {
             setOverlayMessage(t('admin.table.overlayLocked'), 'admin.table.overlayLocked');
             return;
         } catch (error) {
-            if (error.status === 401 || error.status === 403) {
-                sessionStorage.removeItem(ADMIN_PASS_STORAGE_KEY);
+            if (error.status === 401 || error.status === 403 || error.status === 429) {
+                const isIncorrectPassword = /incorrect password/i.test(String(error.message || ''));
+                const isRateLimited = error.status === 429;
                 currentPassword = '';
                 lockTable();
-                setAuthStatus(error.message, 'error');
-                setOverlayMessage(t('admin.status.incorrectPassword'), 'admin.status.incorrectPassword');
+                setAuthStatus(
+                    isRateLimited ? t('admin.status.tooManyAttempts') : error.message,
+                    'error'
+                );
+                if (isRateLimited) {
+                    setOverlayMessage(t('admin.status.tooManyAttempts'), 'admin.status.tooManyAttempts');
+                } else if (isIncorrectPassword) {
+                    setOverlayMessage(t('admin.status.incorrectPassword'), 'admin.status.incorrectPassword');
+                } else {
+                    setOverlayMessage(error.message || t('admin.errors.loadFailed'));
+                }
                 openModal();
                 throw error;
             }
 
             if (error.offline) {
+                const cached = storage?.list?.() || [];
+                if (cached.length) {
+                    renderTable(cached);
+                    unlockTable();
+                    closeModal();
+                    setAuthStatus(t('admin.status.showingCached'), 'error');
+                    return;
+                }
+
                 if (!hasRemoteSuccess) {
                     setAuthStatus(
                         t('admin.status.apiUnavailable'),
                         'error'
                     );
-                    sessionStorage.removeItem(ADMIN_PASS_STORAGE_KEY);
                     currentPassword = '';
                     lockTable();
                     setOverlayMessage(t('admin.status.apiUnavailableLater'), 'admin.status.apiUnavailableLater');
@@ -247,11 +263,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     throw error;
                 }
 
-                const cached = storage?.list?.() || [];
-                renderTable(cached);
                 unlockTable();
                 closeModal();
-                setAuthStatus(t('admin.status.showingCached'), 'error');
+                setAuthStatus(t('admin.status.apiUnavailableLater'), 'error');
                 return;
             }
 
@@ -291,15 +305,49 @@ document.addEventListener('DOMContentLoaded', () => {
         loadApplications({ silent: true }).catch(() => {});
     });
 
+    const isModalOpen = () => modal?.classList.contains('is-open');
+
+    document.addEventListener('keydown', (event) => {
+        if (!isModalOpen()) {
+            return;
+        }
+
+        if (event.key === 'Escape') {
+            closeModal();
+            return;
+        }
+
+        if (event.key !== 'Tab' || !modal) {
+            return;
+        }
+
+        const focusable = Array.from(
+            modal.querySelectorAll(
+                'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+            )
+        );
+
+        if (!focusable.length) {
+            return;
+        }
+
+        const firstEl = focusable[0];
+        const lastEl = focusable[focusable.length - 1];
+
+        if (event.shiftKey && document.activeElement === firstEl) {
+            event.preventDefault();
+            lastEl.focus();
+        } else if (!event.shiftKey && document.activeElement === lastEl) {
+            event.preventDefault();
+            firstEl.focus();
+        }
+    });
+
     if (!isApiConfigured) {
         whenI18nReady().then(() => {
             setTableMessage(t('admin.status.apiNotConfiguredHint'));
         });
     }
 
-    if (currentPassword && isApiConfigured) {
-        loadApplications({ silent: true }).catch(() => {});
-    } else {
-        openModal();
-    }
+    openModal();
 });

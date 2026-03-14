@@ -160,7 +160,7 @@
     }
   },
   "start": {
-    "title": "Start in 5 minutes",
+    "title": "Quick start",
     "steps": [
       {
         "title": "Install Bering and generate a first model artifact",
@@ -348,6 +348,7 @@
       "enterPassword": "Enter the password.",
       "refreshing": "Refreshing request list...",
       "incorrectPassword": "Incorrect password. Try again.",
+      "tooManyAttempts": "Too many failed attempts. Try again later.",
       "apiUnavailable": "API unavailable. Unable to load requests right now.",
       "apiUnavailableLater": "API unavailable. Try again later.",
       "showingCached": "API unavailable. Showing cached requests.",

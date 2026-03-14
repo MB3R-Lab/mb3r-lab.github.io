@@ -9,6 +9,42 @@ const MAILGUN_API_KEY = Deno.env.get('MAILGUN_API_KEY') ?? '';
 const MAILGUN_DOMAIN = Deno.env.get('MAILGUN_DOMAIN') ?? '';
 const MAILGUN_API_BASE_URL =
     Deno.env.get('MAILGUN_API_BASE_URL') ?? 'https://api.mailgun.net/v3';
+const DEFAULT_ALLOWED_ORIGINS = [
+    'https://mb3r-lab.github.io',
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+    'http://localhost:5500',
+    'http://127.0.0.1:5500'
+];
+const ALLOWED_ORIGINS = (
+    Deno.env.get('ALLOWED_ORIGINS') ?? DEFAULT_ALLOWED_ORIGINS.join(',')
+)
+    .split(',')
+    .map((value) => value.trim())
+    .filter(Boolean);
+const ALLOWED_ORIGINS_SET = new Set(ALLOWED_ORIGINS);
+const parsePositiveIntEnv = (name: string, fallback: number) => {
+    const rawValue = Deno.env.get(name);
+    const parsed = Number(rawValue);
+    if (!Number.isFinite(parsed) || parsed <= 0) {
+        return fallback;
+    }
+    return Math.floor(parsed);
+};
+const ADMIN_MAX_FAILED_ATTEMPTS = parsePositiveIntEnv('ADMIN_MAX_FAILED_ATTEMPTS', 8);
+const ADMIN_ATTEMPT_WINDOW_MS = parsePositiveIntEnv('ADMIN_ATTEMPT_WINDOW_MS', 10 * 60 * 1000);
+const ADMIN_BLOCK_MS = parsePositiveIntEnv('ADMIN_BLOCK_MS', 10 * 60 * 1000);
+const ADMIN_BASE_DELAY_MS = parsePositiveIntEnv('ADMIN_BASE_DELAY_MS', 400);
+const ADMIN_MAX_DELAY_MS = parsePositiveIntEnv('ADMIN_MAX_DELAY_MS', 5000);
+type AuthFailureState = {
+    failures: number;
+    windowStartedAt: number;
+    lastFailureAt: number;
+    blockedUntil: number;
+};
+const authFailuresByClient = new Map<string, AuthFailureState>();
 
 if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
     throw new Error('SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set as secrets.');
@@ -23,15 +59,108 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
     global: { fetch }
 });
 
-const corsHeaders = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'content-type, x-admin-pass',
-    'Access-Control-Allow-Methods': 'GET,POST,OPTIONS'
+const getRequestOrigin = (req: Request) => (req.headers.get('origin') ?? '').trim();
+const isAllowedOrigin = (origin: string) => Boolean(origin) && ALLOWED_ORIGINS_SET.has(origin);
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+const getClientIp = (req: Request) => {
+    const xff = req.headers.get('x-forwarded-for');
+    const firstXff = xff
+        ?.split(',')
+        .map((part) => part.trim())
+        .find(Boolean);
+    return (
+        req.headers.get('cf-connecting-ip') ??
+        firstXff ??
+        req.headers.get('x-real-ip') ??
+        req.headers.get('x-client-ip') ??
+        'unknown'
+    ).trim();
+};
+const getAuthClientKey = (req: Request) => {
+    const origin = getRequestOrigin(req) || 'no-origin';
+    return `${getClientIp(req)}|${origin}`;
+};
+const pruneAuthFailureMap = (now: number) => {
+    for (const [key, state] of authFailuresByClient.entries()) {
+        const isStale = state.blockedUntil <= now && now - state.lastFailureAt > ADMIN_ATTEMPT_WINDOW_MS;
+        if (isStale) {
+            authFailuresByClient.delete(key);
+        }
+    }
+};
+const getAuthFailureState = (key: string, now: number) => {
+    const state = authFailuresByClient.get(key);
+    if (!state) {
+        return null;
+    }
+
+    if (now - state.windowStartedAt > ADMIN_ATTEMPT_WINDOW_MS && state.blockedUntil <= now) {
+        authFailuresByClient.delete(key);
+        return null;
+    }
+
+    return state;
+};
+const getFailureDelayMs = (failures: number) =>
+    Math.min(ADMIN_MAX_DELAY_MS, ADMIN_BASE_DELAY_MS * 2 ** Math.max(0, failures - 1));
+const getRetryAfterSeconds = (remainingMs: number) => String(Math.max(1, Math.ceil(remainingMs / 1000)));
+const rateLimitResponse = (req: Request, remainingMs: number) =>
+    jsonResponse(
+        req,
+        { message: 'Too many failed attempts. Try again later.' },
+        429,
+        { 'Retry-After': getRetryAfterSeconds(remainingMs) }
+    );
+const registerAuthFailure = (key: string, now: number) => {
+    let state = getAuthFailureState(key, now);
+    if (!state) {
+        state = {
+            failures: 0,
+            windowStartedAt: now,
+            lastFailureAt: now,
+            blockedUntil: 0
+        };
+        authFailuresByClient.set(key, state);
+    }
+
+    if (now - state.windowStartedAt > ADMIN_ATTEMPT_WINDOW_MS) {
+        state.failures = 0;
+        state.windowStartedAt = now;
+    }
+
+    state.failures += 1;
+    state.lastFailureAt = now;
+
+    if (state.failures >= ADMIN_MAX_FAILED_ATTEMPTS) {
+        state.blockedUntil = Math.max(state.blockedUntil, now + ADMIN_BLOCK_MS);
+    }
+
+    return {
+        delayMs: getFailureDelayMs(state.failures),
+        blockedMs: Math.max(0, state.blockedUntil - now)
+    };
+};
+const clearAuthFailure = (key: string) => {
+    authFailuresByClient.delete(key);
+};
+const getCorsHeaders = (req: Request) => {
+    const origin = getRequestOrigin(req);
+    const fallbackOrigin = ALLOWED_ORIGINS[0] ?? '*';
+    return {
+        'Access-Control-Allow-Origin': isAllowedOrigin(origin) ? origin : fallbackOrigin,
+        'Access-Control-Allow-Headers': 'content-type, x-admin-pass',
+        'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
+        Vary: 'Origin'
+    };
 };
 
 serve(async (req) => {
     if (req.method === 'OPTIONS') {
-        return new Response('ok', { headers: corsHeaders });
+        const origin = getRequestOrigin(req);
+        if (origin && !isAllowedOrigin(origin)) {
+            return jsonResponse(req, { message: 'Origin is not allowed.' }, 403);
+        }
+        return new Response('ok', { headers: getCorsHeaders(req) });
     }
 
     try {
@@ -45,11 +174,11 @@ serve(async (req) => {
 
         return new Response('Method Not Allowed', {
             status: 405,
-            headers: corsHeaders
+            headers: getCorsHeaders(req)
         });
     } catch (error) {
         console.error('[applications] unhandled error', error);
-        return jsonResponse({ message: 'Internal server error.' }, 500);
+        return jsonResponse(req, { message: 'Internal server error.' }, 500);
     }
 });
 
@@ -60,11 +189,11 @@ async function handlePost(req: Request): Promise<Response> {
     const comment = typeof payload.comment === 'string' ? payload.comment.trim() : null;
 
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        return jsonResponse({ message: 'Please provide a valid email address.' }, 400);
+        return jsonResponse(req, { message: 'Please provide a valid email address.' }, 400);
     }
 
     if (!company) {
-        return jsonResponse({ message: 'Company is required.' }, 400);
+        return jsonResponse(req, { message: 'Company is required.' }, 400);
     }
 
     const country = detectCountry(req) ?? null;
@@ -77,7 +206,7 @@ async function handlePost(req: Request): Promise<Response> {
 
     if (error) {
         console.error('[applications] insert failed', error);
-        return jsonResponse({ message: 'Unable to save your request.' }, 500);
+        return jsonResponse(req, { message: 'Unable to save your request.' }, 500);
     }
 
     try {
@@ -87,6 +216,7 @@ async function handlePost(req: Request): Promise<Response> {
     }
 
     return jsonResponse(
+        req,
         {
             id: data?.id,
             created_at: data?.created_at,
@@ -98,14 +228,37 @@ async function handlePost(req: Request): Promise<Response> {
 }
 
 async function handleGet(req: Request): Promise<Response> {
+    const origin = getRequestOrigin(req);
+    if (!isAllowedOrigin(origin)) {
+        return jsonResponse(req, { message: 'Origin is not allowed.' }, 403);
+    }
+
+    const now = Date.now();
+    pruneAuthFailureMap(now);
+    const authKey = getAuthClientKey(req);
+    const existingState = getAuthFailureState(authKey, now);
+    const activeBlockMs = existingState ? Math.max(0, existingState.blockedUntil - now) : 0;
+    if (activeBlockMs > 0) {
+        return rateLimitResponse(req, activeBlockMs);
+    }
+
     const providedPassword = req.headers.get('x-admin-pass');
     if (!providedPassword) {
-        return jsonResponse({ message: 'Administrator password required.' }, 401);
+        return jsonResponse(req, { message: 'Administrator password required.' }, 401);
     }
 
     if (providedPassword !== ADMIN_PASSWORD) {
-        return jsonResponse({ message: 'Incorrect password.' }, 403);
+        const failure = registerAuthFailure(authKey, now);
+        if (failure.delayMs > 0) {
+            await sleep(failure.delayMs);
+        }
+        if (failure.blockedMs > 0) {
+            return rateLimitResponse(req, failure.blockedMs);
+        }
+        return jsonResponse(req, { message: 'Incorrect password.' }, 403);
     }
+
+    clearAuthFailure(authKey);
 
     const { data, error } = await supabase
         .from('applications')
@@ -114,10 +267,10 @@ async function handleGet(req: Request): Promise<Response> {
 
     if (error) {
         console.error('[applications] select failed', error);
-        return jsonResponse({ message: 'Unable to load applications.' }, 500);
+        return jsonResponse(req, { message: 'Unable to load applications.' }, 500);
     }
 
-    return jsonResponse(data || []);
+    return jsonResponse(req, data || []);
 }
 
 async function sendConfirmation(to: string, company: string) {
@@ -167,11 +320,17 @@ async function sendConfirmation(to: string, company: string) {
     }
 }
 
-function jsonResponse(body: unknown, status = 200): Response {
+function jsonResponse(
+    req: Request,
+    body: unknown,
+    status = 200,
+    extraHeaders: Record<string, string> = {}
+): Response {
     return new Response(JSON.stringify(body), {
         status,
         headers: {
-            ...corsHeaders,
+            ...getCorsHeaders(req),
+            ...extraHeaders,
             'Content-Type': 'application/json'
         }
     });

@@ -7,7 +7,7 @@ Static landing page + Supabase Edge Function backend for pilot onboarding. The U
 ```
 Visitor ─► GitHub Pages (index.html, admin.html)
                 │
-        fetch https://<project>.functions.supabase.co/applications
+        fetch https://<project>.functions.supabase.co/functions/v1/applications
                 │
          Supabase Edge Function
                 │
@@ -27,27 +27,34 @@ If the function is unreachable, the UI falls back to localStorage so leads are n
    ```
 2. Configure secrets (service role key, admin password, Mailgun, etc.):
    ```bash
-   supabase secrets set \
-     ADMIN_PASSWORD="set-a-strong-password" \
-     SUPABASE_URL="https://YOUR_PROJECT.supabase.co" \
-     SUPABASE_SERVICE_ROLE_KEY="service-role-key" \
-     MAIL_FROM="MB3R Lab <noreply@mb3r-lab.org>" \
-     MAILGUN_API_KEY="key-..." \
-     MAILGUN_DOMAIN="mg.example.com"
-   # Optional: MAILGUN_API_BASE_URL=https://api.eu.mailgun.net/v3
+    supabase secrets set \
+      ADMIN_PASSWORD="set-a-strong-password" \
+      SUPABASE_URL="https://YOUR_PROJECT.supabase.co" \
+      SUPABASE_SERVICE_ROLE_KEY="service-role-key" \
+      MAIL_FROM="MB3R Lab <noreply@mb3r-lab.org>" \
+      MAILGUN_API_KEY="key-..." \
+      MAILGUN_DOMAIN="mg.example.com" \
+      ALLOWED_ORIGINS="https://mb3r-lab.github.io,http://localhost:5500"
+    # Optional: MAILGUN_API_BASE_URL=https://api.eu.mailgun.net/v3
+    # Optional admin brute-force controls:
+    # ADMIN_MAX_FAILED_ATTEMPTS=8
+    # ADMIN_ATTEMPT_WINDOW_MS=600000
+    # ADMIN_BLOCK_MS=600000
+    # ADMIN_BASE_DELAY_MS=400
+    # ADMIN_MAX_DELAY_MS=5000
    ```
 3. Deploy the function:
    ```bash
    supabase functions deploy applications --project-ref YOUR_PROJECT_REF
    ```
-   The function ensures the `public.applications` table exists, so no manual migration is required.
+   The function expects an existing `public.applications` table (see SQL below).
 
 ### 2. Point the frontend at the function
 
 Edit `assets/js/config.js` and set the function URL (no trailing slash):
 
 ```js
-window.__MB3R_API_BASE__ = 'https://YOUR_PROJECT_ID.functions.supabase.co';
+window.__MB3R_API_BASE__ = 'https://YOUR_PROJECT_ID.functions.supabase.co/functions/v1';
 ```
 
 Push the static site (e.g., to GitHub Pages). The landing page and `/admin.html` will now send all API calls to the Supabase function.
@@ -65,8 +72,8 @@ Push the static site (e.g., to GitHub Pages). The landing page and `/admin.html`
 The deployed function handles:
 
 - `POST /applications` — validate payload, insert into `applications`, trigger Mailgun email, respond with the created ID.
-- `GET /applications` — require `x-admin-pass` header, return ordered submissions.
-- `OPTIONS` — CORS preflight (`*` origin, `content-type` + `x-admin-pass` headers).
+- `GET /applications` — require `x-admin-pass` header, validate request `Origin` against `ALLOWED_ORIGINS`, apply per-client failed-login throttling (delay + temporary block), return ordered submissions.
+- `OPTIONS` — CORS preflight for allowlisted origins (`content-type` + `x-admin-pass` headers).
 - **Schema requirement** — create the table once in Supabase (SQL editor):
   ```sql
   create table if not exists public.applications (
@@ -87,6 +94,6 @@ The deployed function handles:
    ```bash
    supabase functions serve applications --env-file .env.functions
    ```
-3. Update `assets/js/config.js` to point at the local URL printed by the CLI (e.g., `http://127.0.0.1:54321/functions/v1`), then open `index.html` directly and test the flow.
+3. Update `assets/js/config.js` to point at the local URL printed by the CLI (e.g., `http://127.0.0.1:54321/functions/v1`), run a local static server (for example `python -m http.server 5500`), and test via `http://localhost:5500/index.html`.
 
 Remember to switch `config.js` back to the production URL before committing.

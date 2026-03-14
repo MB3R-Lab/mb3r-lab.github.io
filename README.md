@@ -1,6 +1,6 @@
 # MB3R Lab Landing
 
-Static landing page + Supabase Edge Function backend for pilot onboarding. The UI lives on any static host (GitHub Pages), while a Supabase function receives submissions, stores them (with Geo-IP country) in Postgres, and triggers Mailgun emails.
+Static landing page + Supabase Edge Function backend for pilot onboarding. The UI lives on any static host (GitHub Pages), while a Supabase function receives submissions, stores them (with Geo-IP country) in Postgres, and sends owner notifications via Mailgun.
 
 ## Architecture
 
@@ -34,6 +34,7 @@ If the function is unreachable, the UI falls back to localStorage so leads are n
       MAIL_FROM="MB3R Lab <noreply@mb3r-lab.org>" \
       MAILGUN_API_KEY="key-..." \
       MAILGUN_DOMAIN="mg.example.com" \
+      MAIL_NOTIFY_TO="owner@company.com" \
       ALLOWED_ORIGINS="https://mb3r-lab.github.io,http://localhost:5500"
     # Optional: MAILGUN_API_BASE_URL=https://api.eu.mailgun.net/v3
     # Optional admin brute-force controls:
@@ -46,6 +47,10 @@ If the function is unreachable, the UI falls back to localStorage so leads are n
 3. Deploy the function:
    ```bash
    supabase functions deploy applications --project-ref YOUR_PROJECT_REF
+   ```
+   If production still uses the legacy endpoint name, deploy the same code as:
+   ```bash
+   supabase functions deploy database-access --project-ref YOUR_PROJECT_REF
    ```
    The function expects an existing `public.applications` table (see SQL below).
 
@@ -67,7 +72,8 @@ Push the static site (e.g., to GitHub Pages). The landing page and `/admin.html`
 
 - **CTA + modal form** — collects email/company/context and sends the payload to the Supabase function.
 - **Supabase storage** — submissions persist in `public.applications`; schema (including `country` column) is auto-created on first call.
-- **Mailgun confirmations** — the function posts to Mailgun so every lead receives an acknowledgement email.
+- **Mailgun owner notifications** — the function posts to Mailgun so the owner mailbox receives every new lead.
+- **No auto-reply to requester** — submitters are not emailed automatically; follow-up is manual from the owner side.
 - **Admin dashboard** — `/admin.html` lists submissions. Access requires the password that you stored in the function secret (`x-admin-pass` header). If the function is offline, the dashboard shows the locally cached leads.
 - **Offline fallback** — when the API is unreachable (or not configured) leads are saved in `localStorage`, so you can later recover them from `/admin`.
 
@@ -75,7 +81,7 @@ Push the static site (e.g., to GitHub Pages). The landing page and `/admin.html`
 
 The deployed function handles:
 
-- `POST /database-access` — validate payload, insert into `applications`, trigger Mailgun email, respond with the created ID.
+- `POST /database-access` — validate payload, insert into `applications`, send owner notification to `MAIL_NOTIFY_TO` (if configured), respond with the created ID.
 - `GET /database-access` — require `x-admin-pass` header, validate request `Origin` against `ALLOWED_ORIGINS`, apply per-client failed-login throttling (delay + temporary block), return ordered submissions.
 - `OPTIONS` — CORS preflight for allowlisted origins (`content-type` + `x-admin-pass` headers).
 - **Schema requirement** — create the table once in Supabase (SQL editor):

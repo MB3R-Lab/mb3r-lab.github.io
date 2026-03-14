@@ -7,6 +7,7 @@ const ADMIN_PASSWORD = Deno.env.get('ADMIN_PASSWORD') ?? '';
 const MAIL_FROM = Deno.env.get('MAIL_FROM') ?? 'MB3R Lab <noreply@mb3r-lab.org>';
 const MAILGUN_API_KEY = Deno.env.get('MAILGUN_API_KEY') ?? '';
 const MAILGUN_DOMAIN = Deno.env.get('MAILGUN_DOMAIN') ?? '';
+const MAIL_NOTIFY_TO = Deno.env.get('MAIL_NOTIFY_TO') ?? '';
 const MAILGUN_API_BASE_URL =
     Deno.env.get('MAILGUN_API_BASE_URL') ?? 'https://api.mailgun.net/v3';
 const DEFAULT_ALLOWED_ORIGINS = [
@@ -209,10 +210,20 @@ async function handlePost(req: Request): Promise<Response> {
         return jsonResponse(req, { message: 'Unable to save your request.' }, 500);
     }
 
+    let ownerNotificationStatus: 'sent' | 'skipped' | 'failed' = 'skipped';
     try {
-        await sendConfirmation(email, company);
+        ownerNotificationStatus = await sendOwnerNotification({
+            id: data?.id,
+            createdAt: data?.created_at,
+            applicantEmail: email,
+            company,
+            comment,
+            country,
+            clientIp: getClientIp(req)
+        });
     } catch (mailError) {
-        console.error('[applications] mailgun error', mailError);
+        ownerNotificationStatus = 'failed';
+        console.error('[applications] mailgun notify error', mailError);
     }
 
     return jsonResponse(
@@ -221,7 +232,8 @@ async function handlePost(req: Request): Promise<Response> {
             id: data?.id,
             created_at: data?.created_at,
             country: data?.country,
-            message: 'Request received.'
+            message: 'Request received.',
+            owner_notification_status: ownerNotificationStatus
         },
         201
     );
@@ -273,35 +285,42 @@ async function handleGet(req: Request): Promise<Response> {
     return jsonResponse(req, data || []);
 }
 
-async function sendConfirmation(to: string, company: string) {
-    if (!to || !MAILGUN_API_KEY || !MAILGUN_DOMAIN) {
-        return;
+type OwnerNotificationPayload = {
+    id: number | null | undefined;
+    createdAt: string | null | undefined;
+    applicantEmail: string;
+    company: string;
+    comment: string | null;
+    country: string | null;
+    clientIp: string;
+};
+
+async function sendOwnerNotification(payload: OwnerNotificationPayload): Promise<'sent' | 'skipped'> {
+    if (!MAIL_NOTIFY_TO || !MAILGUN_API_KEY || !MAILGUN_DOMAIN) {
+        return 'skipped';
     }
 
-    const subject = 'MB3R Lab — pilot request received';
+    const subject = 'MB3R Lab — new pilot request';
     const plainText = [
-        'Hi there,',
+        'New pilot request received:',
         '',
-        'Thanks for your interest in running a pilot with MB3R Lab.',
-        `Company: ${company || '—'}`,
+        `ID: ${payload.id ?? '—'}`,
+        `Created at: ${payload.createdAt ?? '—'}`,
+        `Email: ${payload.applicantEmail || '—'}`,
+        `Company: ${payload.company || '—'}`,
+        `Comment: ${payload.comment || '—'}`,
+        `Country: ${payload.country || '—'}`,
+        `Client IP: ${payload.clientIp || '—'}`,
         '',
-        'Our team will follow up shortly with next steps.',
-        '',
-        '— MB3R Lab'
+        'Open admin page to review full details.'
     ].join('\n');
-
-    const html = plainText
-        .split('\n')
-        .map((line) => (line ? `<p>${line}</p>` : '<br>'))
-        .join('');
 
     const endpoint = `${MAILGUN_API_BASE_URL.replace(/\/$/, '')}/${MAILGUN_DOMAIN}/messages`;
     const params = new URLSearchParams();
     params.append('from', MAIL_FROM);
-    params.append('to', to);
+    params.append('to', MAIL_NOTIFY_TO);
     params.append('subject', subject);
     params.append('text', plainText);
-    params.append('html', html);
 
     const authHeader = `Basic ${btoa(`api:${MAILGUN_API_KEY}`)}`;
 
@@ -318,6 +337,8 @@ async function sendConfirmation(to: string, company: string) {
         const body = await response.text();
         throw new Error(`Mailgun request failed: ${body}`);
     }
+
+    return 'sent';
 }
 
 function jsonResponse(

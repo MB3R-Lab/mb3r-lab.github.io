@@ -284,11 +284,11 @@
     "companyPlaceholder": "Company name",
     "commentLabel": "Context (optional)",
     "commentPlaceholder": "Key systems, desired outcomes, timelines",
-    "note": "We will send a confirmation email after the request is delivered.",
+    "note": "After we receive your request, we will contact you by work email.",
     "submit": "Submit request",
     "status": {
       "sending": "Sending your request...",
-      "success": "All set! We just confirmed via email.",
+      "success": "All set! Your request was received. We will contact you soon.",
       "savedOffline": "No backend connection. Saved locally for now.",
       "savedMissingEndpoint": "API endpoint missing. Saved locally for now."
     },

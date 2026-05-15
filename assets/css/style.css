@@ -584,7 +584,7 @@ html:not([data-theme="dark"]) .theme-icon-sun {
 }
 
 .proof-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .pilot-grid,
@@ -605,9 +605,9 @@ html:not([data-theme="dark"]) .theme-icon-sun {
     min-width: 0;
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: var(--radius);
+    border-radius: var(--radius-sm);
     padding: 1rem;
-    box-shadow: var(--shadow);
+    box-shadow: 0 10px 24px rgba(12, 36, 64, 0.08);
 }
 
 .use-case-card,
@@ -616,6 +616,11 @@ html:not([data-theme="dark"]) .theme-icon-sun {
 .research-card {
     display: flex;
     flex-direction: column;
+}
+
+.use-case-card,
+.proof-card {
+    gap: 0.75rem;
 }
 
 .abstraction-card h3,
@@ -654,6 +659,11 @@ html:not([data-theme="dark"]) .theme-icon-sun {
     color: var(--text-muted);
 }
 
+.use-case-card > p,
+.proof-card p {
+    margin-top: 0;
+}
+
 .card-badge {
     align-self: flex-start;
     display: inline-flex;
@@ -666,15 +676,16 @@ html:not([data-theme="dark"]) .theme-icon-sun {
     font-size: 0.76rem;
     line-height: 1.2;
     padding: 0.34rem 0.58rem;
-    margin-bottom: 0.8rem;
+    margin-bottom: 0;
 }
 
 .io-grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.9rem;
-    margin-top: auto;
-    padding-top: 1rem;
+    grid-template-columns: 1fr;
+    gap: 0.78rem;
+    margin-top: 0.2rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--border);
 }
 
 .io-grid h4 {
@@ -685,13 +696,36 @@ html:not([data-theme="dark"]) .theme-icon-sun {
     color: var(--text-muted);
 }
 
+.use-case-card .io-grid .bullet-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 0.55rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.38rem;
+}
+
+.use-case-card .io-grid .bullet-list li {
+    margin: 0;
+    border: 1px solid color-mix(in srgb, var(--primary) 18%, var(--border));
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--primary) 7%, var(--surface-muted));
+    padding: 0.28rem 0.5rem;
+    font-size: 0.82rem;
+    line-height: 1.25;
+}
+
 .supporting-note {
-    font-size: 0.92rem;
+    border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--border));
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--accent) 7%, var(--surface));
+    padding: 0.72rem 0.78rem;
+    font-size: 0.88rem;
 }
 
 .supporting-note a {
-    display: inline-flex;
-    margin-left: 0.28rem;
+    display: inline;
+    margin-left: 0.16rem;
     font-weight: 700;
 }
 

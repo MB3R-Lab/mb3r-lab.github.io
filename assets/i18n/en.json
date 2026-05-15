@@ -128,7 +128,7 @@
       "title": "SRE and digital infrastructure",
       "text": "Sheaft evaluates resilience of software systems before release and between releases. It builds service graphs from traces or topology artifacts, simulates dependency failures, and returns a gate or posture verdict for critical user journeys.",
       "inputs": [
-        "Traces / OTLP",
+        "Traces/OTLP",
         "Service topology",
         "Endpoint contracts",
         "CI/CD artifacts",
@@ -232,13 +232,11 @@
       },
       "deathstar": {
         "title": "DeathStarBench experiments",
-        "text": "Graph-discovered resilience models were evaluated against live fault-injection outcomes on a distributed benchmark.",
-        "link": "Read the preprint"
+        "text": "Graph-discovered resilience models were evaluated against live fault-injection outcomes on a distributed benchmark."
       },
       "otel": {
         "title": "OpenTelemetry Demo experiments",
-        "text": "The model-discovery and simulation pipeline was tested on the OpenTelemetry Demo, including trace-derived dependencies and endpoint-level success predicates.",
-        "link": "Read the validation work"
+        "text": "The model-discovery and simulation pipeline was tested on the OpenTelemetry Demo, including trace-derived dependencies and endpoint-level success predicates."
       },
       "mvp": {
         "title": "Public MVP",
@@ -261,7 +259,7 @@
         "text": "Corridor graph, missing observations, affected mobility journeys, disruption propagation."
       },
       "science": {
-        "title": "Chemistry / biology report template",
+        "title": "Chemistry/biology report template",
         "text": "Reaction/pathway graph, critical intermediates, perturbation-sensitive modules, alternative routes."
       }
     }
@@ -278,7 +276,7 @@
         "text": "Bring topology and telemetry for one corridor, tolling domain, parking/payment flow or sensorized mobility area. Sheaft identifies fragile components, missing observations and affected mobility journeys."
       },
       "science": {
-        "title": "Chemistry / biology research pilot",
+        "title": "Chemistry/biology research pilot",
         "text": "Bring a reaction network, biological interaction graph or pathway model with perturbation scenarios. Sheaft identifies critical intermediates, fragile modules and robustness hypotheses."
       }
     }
@@ -302,10 +300,10 @@
       "asyncSemantics": "Evaluating Asynchronous Semantics in Trace-Discovered Resilience Models",
       "emergence": "Emergence-as-Code",
       "sheaf": "Sheaf-Theoretic Causal Emergence",
-      "rasmussen": "Rasmussen / Drift Observability"
+      "rasmussen": "Rasmussen/Drift Observability"
     },
     "extensions": [
-      "Chemistry / biology network resilience",
+      "Chemistry/biology network resilience",
       "Traffic corridor resilience"
     ]
   },
@@ -321,9 +319,9 @@
     "companyPlaceholder": "Company name",
     "contextLabel": "Pilot context",
     "contextOptions": {
-      "sre": "Digital infrastructure / SRE",
-      "mobility": "Smart mobility / traffic",
-      "science": "Chemistry / biology",
+      "sre": "Digital infrastructure/SRE",
+      "mobility": "Smart mobility/traffic",
+      "science": "Chemistry/biology",
       "other": "Other graph-structured system"
     },
     "commentLabel": "Context (optional)",

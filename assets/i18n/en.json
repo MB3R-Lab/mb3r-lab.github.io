@@ -1,13 +1,13 @@
 {
   "meta": {
-    "title": "MB3R Lab | Model-based resilience from service-topology models",
-    "description": "Model-based resilience tooling: Bering discovers and publishes topology artifacts; Sheaft simulates failures, evaluates policy gates, and monitors posture over time.",
-    "ogTitle": "MB3R Lab | Model-based resilience from service-topology models",
-    "ogDescription": "Bering discovers and publishes model artifacts. Sheaft consumes them for resilience simulation, policy evaluation, and posture monitoring.",
-    "twitterTitle": "MB3R Lab | Model-based resilience from service-topology models",
-    "twitterDescription": "Model-based resilience for engineering and observability workflows.",
-    "ogImageAlt": "MB3R Lab model-based resilience workflow",
-    "twitterImageAlt": "MB3R Lab model-based resilience workflow",
+    "title": "MB3R Lab | Sheaft resilience intelligence for networked systems",
+    "description": "Sheaft turns telemetry, topology and domain constraints into live attributed graphs for resilience assessment of networked systems.",
+    "ogTitle": "MB3R Lab | Sheaft resilience intelligence for networked systems",
+    "ogDescription": "Resilience intelligence for software infrastructure, smart mobility, and scientific reaction or interaction networks.",
+    "twitterTitle": "MB3R Lab | Sheaft resilience intelligence for networked systems",
+    "twitterDescription": "Model-based resilience intelligence for graph-structured networked systems.",
+    "ogImageAlt": "MB3R Lab networked systems resilience workflow",
+    "twitterImageAlt": "MB3R Lab networked systems resilience workflow",
     "locale": "en-US",
     "ogLocale": "en_US"
   },
@@ -16,7 +16,7 @@
     "@type": "WebSite",
     "name": "MB3R Lab",
     "url": "https://mb3r-lab.github.io/",
-    "description": "Model-based resilience from service-topology models",
+    "description": "Resilience intelligence for networked systems",
     "inLanguage": "en-US"
   },
   "brand": {
@@ -31,14 +31,11 @@
     "mobileToggleAria": "Toggle navigation",
     "links": {
       "howItWorks": "How it works",
+      "useCases": "Use cases",
       "products": "Products",
-      "whoFor": "Who it is for",
-      "start": "Quick start",
-      "observability": "Observability mode",
-      "demo": "Demo-report",
-      "roadmap": "Roadmap",
-      "publications": "Publications",
-      "research": "Research base"
+      "proof": "Proof",
+      "pilot": "Pilot",
+      "research": "Research"
     },
     "requestPilot": "Request a pilot",
     "theme": "Theme",
@@ -52,64 +49,158 @@
     "switchToRuAria": "Switch to Russian"
   },
   "hero": {
-    "eyebrow": "Model-based resilience",
-    "title": "Model-based resilience from service-topology models",
-    "lead": "Bering discovers service topology and endpoint contracts, then publishes stable model artifacts. Sheaft consumes those artifacts to simulate failures, evaluate policy gates, and track posture over time.",
-    "note": "This is a model-based signal: fast, repeatable, and designed to complement live experiments.",
+    "eyebrow": "Sheaft",
+    "title": "Resilience intelligence for networked systems",
+    "lead": "Sheaft turns telemetry, topology and domain constraints into a live attributed graph, stress-tests disruption scenarios, and shows which critical operations are fragile before failures propagate.",
+    "note": "Built for graph-structured systems: software infrastructure, smart mobility, and scientific reaction or interaction networks.",
     "cta": {
       "pilot": "Request a pilot",
-      "github": "GitHub",
-      "docs": "Docs",
-      "example": "Try the example",
-      "learn": "How it works"
+      "github": "View GitHub",
+      "useCases": "See use cases"
     },
-    "panelAria": "Product role split",
+    "panelAria": "Networked systems resilience model",
     "panel": {
-      "beringTitle": "Bering",
-      "beringText": "Discovery and publishing layer for topology and endpoint contracts.",
-      "sheaftTitle": "Sheaft",
-      "sheaftText": "Resilience posture engine for simulation, gating, and continuous monitoring."
+      "logicTitle": "Different domains. Same failure logic.",
+      "logicText": "Components interact. Dependencies shift. Signals go missing. Failures propagate.",
+      "graphTitle": "Attributed graph model",
+      "graphText": "Sheaft models the system as nodes, edges, constraints, telemetry, stressors and critical operations."
     }
   },
-  "how": {
-    "title": "How it works",
-    "intro": "The workflow is intentionally split: discovery upstream, evaluation downstream.",
-    "pipelineAria": "Resilience pipeline",
-    "steps": {
-      "discover": {
-        "title": "Bering discovers topology and endpoint contracts from traces / OTLP.",
-        "text": "Batch discovery works from trace files or topology inputs. Runtime mode accepts OTLP/HTTP and optional OTLP/gRPC."
+  "abstraction": {
+    "title": "One resilience model for graph-structured systems",
+    "intro": "Sheaft represents a system as an attributed graph: nodes, edges, constraints, telemetry, stressors and critical operations. The domain changes; the resilience question stays the same: what breaks, how far it propagates, and which operations are affected.",
+    "cards": {
+      "nodes": {
+        "title": "Nodes",
+        "text": "Services, road segments, toll gates, sensors, proteins, metabolites, reactants."
       },
-      "publish": {
-        "title": "Bering publishes stable model and snapshot artifacts.",
-        "text": "Artifacts become explicit handoff contracts for downstream tools and CI workflows."
+      "edges": {
+        "title": "Edges",
+        "text": "Calls, flows, roads, reactions, interactions."
       },
-      "evaluate": {
-        "title": "Sheaft consumes artifacts, simulates scenarios, evaluates gate policy, and can monitor posture continuously.",
-        "text": "Use batch mode for pull requests and release checks, then switch to watch/serve mode for posture tracking."
+      "attributes": {
+        "title": "Attributes",
+        "text": "Latency, capacity, speed, confidence, energy, rate, state."
+      },
+      "constraints": {
+        "title": "Constraints",
+        "text": "Domain contracts, signal rules, conservation laws, biological priors."
+      },
+      "stressors": {
+        "title": "Stressors",
+        "text": "Crashes, demand surges, missing observations, perturbations."
+      },
+      "verdict": {
+        "title": "Verdict",
+        "text": "Fragile paths, blast radius, affected operations, resilience posture."
       }
     }
   },
-  "chaos": {
-    "title": "Why not chaos-first",
-    "intro": "Live chaos engineering remains valuable. The point is sequencing, not replacement.",
-    "points": [
-      "Live experiments are expensive to run frequently across many services and release branches.",
-      "A model-based gate is cheaper and can run regularly before release.",
-      "Use model-based results to narrow and prioritize where live experiments will matter most.",
-      "This adds a pre-release layer; it does not claim to replace production validation."
-    ]
+  "how": {
+    "title": "How Sheaft works",
+    "intro": "Bering creates explicit graph artifacts. Sheaft evaluates disruption scenarios and produces resilience verdicts for critical operations.",
+    "pipelineAria": "Resilience assessment pipeline",
+    "steps": {
+      "discover": {
+        "title": "Discover the system graph",
+        "text": "Bering ingests telemetry, topology files, traces, event streams or explicit graph descriptions and builds a typed system model."
+      },
+      "contracts": {
+        "title": "Attach domain contracts",
+        "text": "Critical operations, constraints and success predicates are attached to the graph: service journeys, corridor operations, reaction routes or biological pathways."
+      },
+      "stress": {
+        "title": "Stress-test disruption scenarios",
+        "text": "Sheaft simulates failures, missing observations, degraded components, demand spikes or perturbations without breaking the real system."
+      },
+      "verdict": {
+        "title": "Produce a resilience verdict",
+        "text": "The result is a graph-level report: fragile components, affected operations, blast radius, posture trend and recommended validation targets."
+      }
+    }
+  },
+  "useCases": {
+    "title": "Three high-value domains. One resilience engine.",
+    "inputsTitle": "Inputs",
+    "outputsTitle": "Outputs",
+    "sre": {
+      "badge": "Most mature: public MVP + experiments",
+      "title": "SRE and digital infrastructure",
+      "text": "Sheaft evaluates resilience of software systems before release and between releases. It builds service graphs from traces or topology artifacts, simulates dependency failures, and returns a gate or posture verdict for critical user journeys.",
+      "inputs": [
+        "Traces / OTLP",
+        "Service topology",
+        "Endpoint contracts",
+        "CI/CD artifacts",
+        "Incident history"
+      ],
+      "outputs": [
+        "Release-risk verdict",
+        "Fragile dependencies",
+        "Affected endpoints",
+        "Chaos-test priorities",
+        "Posture history"
+      ]
+    },
+    "mobility": {
+      "badge": "Pilot-ready",
+      "title": "Smart mobility and traffic corridors",
+      "text": "Sheaft evaluates resilience of smart mobility infrastructure represented as a live attributed graph: road segments, intersections, toll gates, sensors, signal controllers, payment systems and operations centers.",
+      "support": "Smart mobility is cyber-physical infrastructure. Road networks, tolling, sensors and digital services form one distributed operational graph.",
+      "links": {
+        "nist": "NIST CPS context",
+        "sumo": "SUMO road graph"
+      },
+      "inputs": [
+        "Road topology",
+        "Traffic/toll events",
+        "Sensor observations",
+        "Signal timings",
+        "Incident logs"
+      ],
+      "outputs": [
+        "Fragile corridors",
+        "Missing observations",
+        "Incident propagation",
+        "Affected mobility journeys",
+        "Operator resilience verdict"
+      ]
+    },
+    "science": {
+      "badge": "Research and partner pilots",
+      "title": "Chemistry and biology networks",
+      "text": "Sheaft supports resilience analysis of scientific networks: chemical reaction networks, biological interaction networks, metabolic pathways and bioprocess graphs. It helps identify fragile routes, critical intermediates, missing observations and perturbation-sensitive modules.",
+      "support": "Chemical and biological systems are routinely modeled as graphs: reaction networks connect reactants, intermediates and products through reactions; biological networks connect proteins, genes, metabolites and signaling interactions.",
+      "links": {
+        "ebi": "EMBL-EBI biological networks",
+        "rsc": "RSC reaction networks"
+      },
+      "inputs": [
+        "Reaction networks",
+        "Biological interaction graphs",
+        "Pathway models",
+        "Experimental observations",
+        "Domain constraints"
+      ],
+      "outputs": [
+        "Critical intermediates",
+        "Alternative routes",
+        "Fragile modules",
+        "Perturbation blast radius",
+        "Robustness hypotheses"
+      ]
+    }
   },
   "products": {
-    "title": "Two products, two roles",
+    "title": "Two layers: model discovery and resilience assessment",
     "bering": {
-      "title": "Bering: discovery and publishing layer",
-      "summary": "Bering is responsible for producing topology/contracts artifacts and publishing them as stable inputs.",
+      "title": "Bering: system-graph discovery and artifact publishing",
+      "summary": "Bering builds typed graph artifacts from telemetry, topology inputs, traces, event streams or explicit domain models. It publishes stable model and snapshot artifacts for downstream resilience analysis.",
       "points": [
-        "Discovers service topology from traces, OTLP streams, or explicit topology input.",
-        "Builds endpoint contract and dependency artifacts for downstream consumers.",
-        "Supports deterministic batch mode and long-running runtime mode.",
-        "Does not own simulation, gating policy, or chaos execution."
+        "Discovers typed graph structure from traces, OTLP, event streams or explicit topology.",
+        "Normalizes nodes, edges, attributes and domain contracts.",
+        "Publishes stable model/snapshot artifacts.",
+        "Keeps provenance so teams can inspect where each part of the model came from."
       ],
       "links": {
         "repo": "Bering on GitHub",
@@ -117,159 +208,105 @@
       }
     },
     "sheaft": {
-      "title": "Sheaft: simulation, gating, and posture monitoring",
-      "summary": "Sheaft stays downstream of discovery and evaluates resilience posture from upstream model artifacts.",
+      "title": "Sheaft: resilience simulation, verdicts and posture history",
+      "summary": "Sheaft consumes graph artifacts, stress-tests disruption scenarios, evaluates domain policies and tracks resilience posture over time.",
       "points": [
-        "Consumes published model/snapshot artifacts from Bering or compatible producers.",
-        "Runs simulation-based resilience analysis across CI/CD and adjacent engineering workflows.",
-        "Evaluates gate policy for release decisions.",
-        "Can run as a long-lived service for posture history, diffs, and metrics."
+        "Runs simulation-based resilience analysis on graph artifacts.",
+        "Evaluates policy rules for critical operations.",
+        "Reports fragile components, affected operations and blast radius.",
+        "Supports batch checks and continuous posture tracking."
       ],
       "links": {
         "repo": "Sheaft on GitHub",
-        "docs": "Sheaft CI gate docs"
+        "docs": "Sheaft docs"
       }
     }
   },
-  "audience": {
-    "title": "Who it is for",
-    "intro": "Teams that need a practical resilience signal before release, not a once-a-quarter exercise.",
+  "proof": {
+    "title": "Validated on distributed systems, designed for broader networked infrastructure",
     "cards": {
-      "core": {
-        "title": "Core fit",
-        "points": [
-          "Platform, SRE, and DevOps teams responsible for delivery risk.",
-          "Microservice teams already collecting traces/OTLP or topology artifacts.",
-          "Organizations that want a low-cost pre-release resilience checkpoint."
-        ]
+      "icse": {
+        "title": "ICSE 2026 Distinguished Paper Award",
+        "text": "Model Discovery and Graph Simulation was recognized in ICSE 2026 NIER with a Distinguished Paper Award.",
+        "link": "Official ICSE page"
       },
-      "smb": {
-        "title": "SMB / lean teams",
-        "points": [
-          "A cheaper entry path into resilience practice.",
-          "Run small, frequent checks in CI before spending on heavy live tests."
-        ]
+      "deathstar": {
+        "title": "DeathStarBench experiments",
+        "text": "Graph-discovered resilience models were evaluated against live fault-injection outcomes on a distributed benchmark.",
+        "link": "Read the preprint"
       },
-      "enterprise": {
-        "title": "Larger organizations",
-        "points": [
-          "Prioritize where costly live chaos experiments should run first.",
-          "Standardize artifact handoff between discovery and gate evaluation teams."
-        ]
+      "otel": {
+        "title": "OpenTelemetry Demo experiments",
+        "text": "The model-discovery and simulation pipeline was tested on the OpenTelemetry Demo, including trace-derived dependencies and endpoint-level success predicates.",
+        "link": "Read the validation work"
+      },
+      "mvp": {
+        "title": "Public MVP",
+        "text": "Bering and Sheaft are available as public tools for graph discovery, simulation, verdicts and posture monitoring.",
+        "link": "View GitHub organization"
       }
-    }
-  },
-  "start": {
-    "title": "Quick start",
-    "steps": [
-      {
-        "title": "Install Bering and generate a first model artifact",
-        "text": "Use the install guide, then run discovery on sample traces or your own input.",
-        "linkLabel": "Bering install guide"
-      },
-      {
-        "title": "Publish or export the resulting model/snapshot artifact",
-        "text": "Use sample folders to understand expected artifact shape and handoff format.",
-        "linkLabel": "Bering examples"
-      },
-      {
-        "title": "Run Sheaft simulation and CI gate on that artifact",
-        "text": "Start with the CI gate doc and the example CI assets.",
-        "linkLabel": "Sheaft CI examples"
-      },
-      {
-        "title": "Move to continuous posture monitoring when needed",
-        "text": "When batch checks are stable, enable long-running posture tracking.",
-        "linkLabel": "Sheaft observability mode"
-      }
-    ]
-  },
-  "observability": {
-    "title": "Resilience posture in observability mode",
-    "intro": "After CI gate is in place, you can run Sheaft continuously to track posture drift instead of checking only at release time.",
-    "scenarioAria": "Observability posture scenario",
-    "steps": [
-      {
-        "title": "Bering keeps publishing rolling snapshots",
-        "text": "In runtime mode, Bering emits model/snapshot artifacts per time window from OTLP and trace input."
-      },
-      {
-        "title": "Sheaft serve/watch consumes each new artifact",
-        "text": "Every new artifact is re-evaluated against analysis rules and gate policy without waiting for the next release."
-      },
-      {
-        "title": "Posture history and diffs show what changed",
-        "text": "Teams can inspect when posture moved, what dependencies shifted, and which policies flipped state."
-      },
-      {
-        "title": "Use the signal for prioritization",
-        "text": "Prioritize incidents, hardening work, and expensive live chaos runs using the latest posture trend."
-      }
-    ],
-    "outputs": {
-      "title": "What teams get in practice",
-      "points": [
-        "Current posture status and when it last changed.",
-        "Diff/history context for topology and policy outcomes.",
-        "A cheaper continuous resilience signal between live experiments."
-      ]
     },
-    "links": {
-      "docs": "Observability mode docs",
-      "examples": "Sheaft examples"
+    "takeaway": {
+      "title": "What this proves",
+      "text": "Sheaft can turn passive telemetry into an explicit model and produce useful resilience signals without running broad live experiments every time."
     }
   },
   "demo": {
-    "title": "Demo-report",
-    "imageAlt": "Sheaft report screenshot"
+    "title": "Demo report: digital infrastructure use case",
+    "text": "The current public report shows the most mature software-infrastructure workflow. The same report pattern extends to mobility and scientific-network pilots.",
+    "imageAlt": "Sheaft digital infrastructure report screenshot",
+    "templates": {
+      "mobility": {
+        "title": "Smart mobility report template",
+        "text": "Corridor graph, missing observations, affected mobility journeys, disruption propagation."
+      },
+      "science": {
+        "title": "Chemistry / biology report template",
+        "text": "Reaction/pathway graph, critical intermediates, perturbation-sensitive modules, alternative routes."
+      }
+    }
   },
-  "roadmap": {
-    "title": "Roadmap",
-    "intro": "Planned product milestones and research-to-product transition phases.",
-    "openFull": "Open full-size roadmap",
-    "imageAlt": "MB3R Lab roadmap by phases and milestones"
-  },
-  "publications": {
-    "title": "Publications and preprints",
-    "intro": "Core papers behind the tooling and workflow.",
-    "openPreprint": "Read preprint",
-    "items": {
-      "emergenceAsCode": {
-        "title": "Emergence-as-Code for Self-Governing Reliable Systems",
-        "text": "Journey-level reliability governance with explicit intent, evidence, and control policies."
+  "pilot": {
+    "title": "Start with one graph, one critical operation, one historical period",
+    "cards": {
+      "sre": {
+        "title": "SRE pilot",
+        "text": "Bring traces/topology and incident history for one service domain. Sheaft builds a model, runs failure scenarios, and compares the result with known incidents or release risks."
       },
-      "rasmussenSimplex": {
-        "title": "Toward Operationalizing Rasmussen: Drift Observability on the Simplex for Evolving Systems",
-        "text": "A simplex-based way to monitor drift and boundary proximity in evolving systems."
+      "mobility": {
+        "title": "Smart mobility pilot",
+        "text": "Bring topology and telemetry for one corridor, tolling domain, parking/payment flow or sensorized mobility area. Sheaft identifies fragile components, missing observations and affected mobility journeys."
       },
-      "asyncSemantics": {
-        "title": "Evaluating Asynchronous Semantics in Trace-Discovered Resilience Models",
-        "text": "Validation on OpenTelemetry Demo with asynchronous semantics and live-chaos comparison."
-      },
-      "uncertainty": {
-        "title": "Measuring Uncertainty in Transformer Circuits with Effective Information Consistency",
-        "text": "A white-box metric for localizing uncertainty mechanisms in transformer circuits."
-      },
-      "modelDiscovery": {
-        "title": "Model Discovery and Graph Simulation: A Lightweight Gateway to Chaos Engineering",
-        "text": "Offline resilience estimation from discovered dependency graphs."
-      },
-      "sheaf": {
-        "title": "Sheaf-Theoretic Causal Emergence for Resilience Analysis in Distributed Systems",
-        "text": "Foundational model for multi-level causal resilience analysis."
+      "science": {
+        "title": "Chemistry / biology research pilot",
+        "text": "Bring a reaction network, biological interaction graph or pathway model with perturbation scenarios. Sheaft identifies critical intermediates, fragile modules and robustness hypotheses."
       }
     }
   },
   "research": {
-    "title": "Built from research, packaged for engineering",
-    "text": "The approach is grounded in resilience research, but this site focuses on practical engineering workflow: discover artifacts upstream, gate posture downstream.",
-    "links": [
-      "Emergence-as-Code for Self-Governing Reliable Systems",
-      "Toward Operationalizing Rasmussen: Drift Observability on the Simplex for Evolving Systems",
-      "Evaluating Asynchronous Semantics in Trace-Discovered Resilience Models",
-      "Measuring Uncertainty in Transformer Circuits with Effective Information Consistency",
-      "Model Discovery and Graph Simulation: A Lightweight Gateway to Chaos Engineering",
-      "Sheaf-Theoretic Causal Emergence for Resilience Analysis in Distributed Systems"
+    "title": "Research base: graph models, resilience and emergence",
+    "text": "Sheaft is grounded in model discovery, graph simulation, sheaf-theoretic consistency, causal emergence and resilience monitoring. The product packages these ideas into practical workflows for networked systems.",
+    "groups": {
+      "core": {
+        "title": "Core engine"
+      },
+      "emergence": {
+        "title": "Emergence and self-governance"
+      },
+      "extensions": {
+        "title": "Scientific network extensions"
+      }
+    },
+    "links": {
+      "modelDiscovery": "Model Discovery and Graph Simulation",
+      "asyncSemantics": "Evaluating Asynchronous Semantics in Trace-Discovered Resilience Models",
+      "emergence": "Emergence-as-Code",
+      "sheaf": "Sheaf-Theoretic Causal Emergence",
+      "rasmussen": "Rasmussen / Drift Observability"
+    },
+    "extensions": [
+      "Chemistry / biology network resilience",
+      "Traffic corridor resilience"
     ]
   },
   "modal": {
@@ -282,8 +319,15 @@
     "emailPlaceholder": "you@company.com",
     "companyLabel": "Company *",
     "companyPlaceholder": "Company name",
+    "contextLabel": "Pilot context",
+    "contextOptions": {
+      "sre": "Digital infrastructure / SRE",
+      "mobility": "Smart mobility / traffic",
+      "science": "Chemistry / biology",
+      "other": "Other graph-structured system"
+    },
     "commentLabel": "Context (optional)",
-    "commentPlaceholder": "Key systems, desired outcomes, timelines",
+    "commentPlaceholder": "Describe the graph, critical operation and data you can share.",
     "note": "After we receive your request, we will contact you by work email.",
     "submit": "Submit request",
     "status": {
@@ -299,12 +343,12 @@
   },
   "footer": {
     "title": "MB3R Lab",
-    "description": "Research-backed tooling for model-based resilience in software delivery.",
+    "description": "Research-backed tooling for model-based resilience in networked systems.",
     "copyright": "MB3R Lab. All rights reserved.",
     "links": {
       "github": "GitHub organization",
       "docs": "Docs",
-      "examples": "Examples"
+      "examples": "Try digital-infrastructure example"
     }
   },
   "common": {

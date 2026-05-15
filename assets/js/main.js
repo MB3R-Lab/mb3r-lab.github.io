@@ -150,8 +150,8 @@ document.addEventListener('DOMContentLoaded', () => {
         pilotModal.setAttribute('aria-hidden', 'false');
         body.classList.add('no-scroll');
         setStatus('', '');
-        const firstInput = pilotModal.querySelector('input, textarea, button');
-        firstInput?.focus();
+        const firstInput = pilotModal.querySelector('input, select, textarea');
+        requestAnimationFrame(() => firstInput?.focus());
     };
 
     const closePilotModal = () => {

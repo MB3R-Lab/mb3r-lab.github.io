@@ -5,7 +5,7 @@
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#007bff",
-    "description": "MB3R Lab — исследовательская группа, фокусирующаяся на разработке методики и инструментов Model Discovery, симуляционном what‑if анализе и причинной резилентности для распределённых систем.",
+    "description": "MB3R Lab builds Sheaft resilience intelligence for graph-structured networked systems: software infrastructure, smart mobility, and scientific networks.",
     "icons": [
         {
             "src": "assets/img/apple-touch-icon.png",

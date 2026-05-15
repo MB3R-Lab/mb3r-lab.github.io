@@ -269,15 +269,15 @@
     "cards": {
       "sre": {
         "title": "SRE pilot",
-        "text": "Bring traces/topology and incident history for one service domain. Sheaft builds a model, runs failure scenarios, and compares the result with known incidents or release risks."
+        "text": "Start from trace data, topology and incident history for one service domain. Sheaft builds a model, runs failure scenarios, and compares the result with known incidents or release risks."
       },
       "mobility": {
         "title": "Smart mobility pilot",
-        "text": "Bring topology and telemetry for one corridor, tolling domain, parking/payment flow or sensorized mobility area. Sheaft identifies fragile components, missing observations and affected mobility journeys."
+        "text": "Use topology and telemetry from one corridor, tolling domain, parking/payment flow or sensorized mobility area. Sheaft identifies fragile components, missing observations and affected mobility journeys."
       },
       "science": {
         "title": "Chemistry/biology research pilot",
-        "text": "Bring a reaction network, biological interaction graph or pathway model with perturbation scenarios. Sheaft identifies critical intermediates, fragile modules and robustness hypotheses."
+        "text": "Use a reaction network, biological interaction graph or pathway model with perturbation scenarios. Sheaft identifies critical intermediates, fragile modules and robustness hypotheses."
       }
     }
   },

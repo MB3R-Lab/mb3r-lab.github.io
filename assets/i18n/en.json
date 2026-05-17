@@ -241,7 +241,7 @@
       "mvp": {
         "title": "Public MVP",
         "text": "Bering and Sheaft are available as public tools for graph discovery, simulation, verdicts and posture monitoring.",
-        "link": "View GitHub organization"
+        "link": "GitHub"
       }
     },
     "takeaway": {
@@ -344,7 +344,7 @@
     "description": "Research-backed tooling for model-based resilience in networked systems.",
     "copyright": "MB3R Lab. All rights reserved.",
     "links": {
-      "github": "GitHub organization",
+      "github": "GitHub",
       "docs": "Docs",
       "examples": "Try digital-infrastructure example"
     }

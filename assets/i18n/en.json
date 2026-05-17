@@ -183,15 +183,13 @@
         "Reaction networks",
         "Biological interaction graphs",
         "Pathway models",
-        "Experimental observations",
-        "Domain constraints"
+        "Experimental observations"
       ],
       "outputs": [
         "Critical intermediates",
         "Alternative routes",
         "Fragile modules",
-        "Perturbation blast radius",
-        "Robustness hypotheses"
+        "Perturbation blast radius"
       ]
     }
   },

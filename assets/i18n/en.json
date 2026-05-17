@@ -173,8 +173,8 @@
     "science": {
       "badge": "Research and partner pilots",
       "title": "Chemistry and biology networks",
-      "text": "Sheaft supports resilience analysis of scientific networks: chemical reaction networks, biological interaction networks, metabolic pathways and bioprocess graphs. It helps identify fragile routes, critical intermediates, missing observations and perturbation-sensitive modules.",
-      "support": "Chemical and biological systems are routinely modeled as graphs: reaction networks connect reactants, intermediates and products through reactions; biological networks connect proteins, genes, metabolites and signaling interactions.",
+      "text": "Sheaft analyzes chemical reaction networks, biological interaction networks, metabolic pathways and bioprocess graphs to find fragile routes, critical intermediates, observation gaps and perturbation-sensitive modules.",
+      "support": "These systems are routinely modeled as graphs: reactions connect reactants, intermediates and products; biological networks connect proteins, genes, metabolites and signaling interactions.",
       "links": {
         "ebi": "EMBL-EBI biological networks",
         "rsc": "RSC reaction networks"
@@ -352,6 +352,11 @@
       "docs": "Docs",
       "examples": "Try digital-infrastructure example"
     }
+  },
+  "grant": {
+    "logoAlt": "Foundation for Assistance to Small Innovative Enterprises",
+    "title": "This project is implemented with grant support from Фонд содействия инновациям.",
+    "text": "The link opens the official website of the Fund."
   },
   "common": {
     "placeholder": "-"

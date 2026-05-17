@@ -126,7 +126,11 @@
     "sre": {
       "badge": "Most mature: public MVP + experiments",
       "title": "SRE and digital infrastructure",
-      "text": "Sheaft evaluates resilience of software systems before release and between releases. It builds service graphs from traces or topology artifacts, simulates dependency failures, and returns a gate or posture verdict for critical user journeys.",
+      "text": "Sheaft evaluates resilience of software systems before release and between releases. It builds service graphs from trace data or topology artifacts, simulates dependency failures, and returns a gate or posture verdict for critical user journeys.",
+      "support": "Digital infrastructure is graph-structured operational infrastructure. Services, APIs, queues, databases, replicas, release policies and user operations form one dependency graph.",
+      "links": {
+        "proof": "Validation evidence"
+      },
       "inputs": [
         "Traces/OTLP",
         "Service topology",

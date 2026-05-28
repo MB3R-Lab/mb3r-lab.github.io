@@ -19,7 +19,6 @@ jobs:
             --retry-delay 10 \
             --output /dev/null \
             --header "apikey: ${SUPABASE_KEEPALIVE_TOKEN}" \
-            --header "Authorization: Bearer ${SUPABASE_KEEPALIVE_TOKEN}" \
             "${SUPABASE_URL}/rest/v1/applications?select=id&limit=1"
         env:
           SUPABASE_KEEPALIVE_TOKEN: ${{ secrets.SUPABASE_KEEPALIVE_TOKEN }}

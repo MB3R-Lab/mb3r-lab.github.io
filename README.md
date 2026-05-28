@@ -70,13 +70,13 @@ Push the static site (e.g., to GitHub Pages). The landing page and `/admin.html`
 
 ### 3. Optional: keep Supabase active from GitHub Actions
 
-The `.github/workflows/supabase-keepalive.yml` workflow pings Supabase REST API every 12 hours with a lightweight `select id limit 1` against the existing `public.applications` table. This does not require deploying the Supabase function.
+The `.github/workflows/keepalive.yml` workflow pings Supabase REST API every 12 hours with a lightweight `select id limit 1` against the existing `public.applications` table. This does not require deploying the Supabase function.
 
 1. Add a Supabase API key as a GitHub Actions repository secret:
    ```text
    SUPABASE_KEEPALIVE_APIKEY=your-supabase-api-key
    ```
-2. If the project URL changes, update `SUPABASE_URL` in `.github/workflows/supabase-keepalive.yml`.
+2. If the project URL changes, update `SUPABASE_URL` in `.github/workflows/keepalive.yml`.
 
 ## Features
 

@@ -13,12 +13,23 @@ jobs:
     steps:
       - name: Ping Supabase REST API
         run: |
-          curl --fail --show-error --silent \
-            --max-time 30 \
-            --retry 3 \
-            --retry-delay 10 \
-            --output /dev/null \
-            --header "apikey: ${SUPABASE_KEEPALIVE_APIKEY}" \
-            "${SUPABASE_URL}/rest/v1/applications?select=id&limit=1"
+          response_file="$(mktemp)"
+          status_code="$(
+            curl --silent --show-error \
+              --max-time 30 \
+              --retry 3 \
+              --retry-delay 10 \
+              --output "$response_file" \
+              --write-out "%{http_code}" \
+              --header "apikey: ${SUPABASE_KEEPALIVE_APIKEY}" \
+              "${SUPABASE_URL}/rest/v1/applications?select=id&limit=1"
+          )"
+          echo "Supabase HTTP status: ${status_code}"
+          echo "Supabase response body:"
+          cat "$response_file"
+          echo
+          if [ "$status_code" -lt 200 ] || [ "$status_code" -ge 300 ]; then
+            exit 1
+          fi
         env:
           SUPABASE_KEEPALIVE_APIKEY: ${{ secrets.SUPABASE_KEEPALIVE_APIKEY }}

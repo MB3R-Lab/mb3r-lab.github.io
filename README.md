@@ -37,8 +37,6 @@ If the function is unreachable, the UI falls back to localStorage so leads are n
       MAIL_NOTIFY_TO="owner@company.com" \
       ALLOWED_ORIGINS="https://mb3r-lab.github.io,http://localhost:5500"
     # Optional: MAILGUN_API_BASE_URL=https://api.eu.mailgun.net/v3
-    # Optional keepalive token for GitHub Actions:
-    # KEEPALIVE_TOKEN=generate-a-long-random-token
     # Optional admin brute-force controls:
     # ADMIN_MAX_FAILED_ATTEMPTS=8
     # ADMIN_ATTEMPT_WINDOW_MS=600000
@@ -72,17 +70,13 @@ Push the static site (e.g., to GitHub Pages). The landing page and `/admin.html`
 
 ### 3. Optional: keep Supabase active from GitHub Actions
 
-The `.github/workflows/supabase-keepalive.yml` workflow pings the deployed Supabase function every 12 hours. The function then performs a lightweight `select id limit 1` against the existing `public.applications` table.
+The `.github/workflows/supabase-keepalive.yml` workflow pings Supabase REST API every 12 hours with a lightweight `select id limit 1` against the existing `public.applications` table. This does not require deploying the Supabase function.
 
-1. Store the keepalive token in Supabase:
-   ```bash
-   supabase secrets set KEEPALIVE_TOKEN="your-long-random-token" --project-ref YOUR_PROJECT_REF
-   ```
-2. Add the same value as a GitHub Actions repository secret:
+1. Add a Supabase API key as a GitHub Actions repository secret:
    ```text
-   SUPABASE_KEEPALIVE_TOKEN=your-long-random-token
+   SUPABASE_KEEPALIVE_TOKEN=your-supabase-api-key
    ```
-3. If the production function URL changes, update `SUPABASE_KEEPALIVE_URL` in `.github/workflows/supabase-keepalive.yml`.
+2. If the project URL changes, update `SUPABASE_URL` in `.github/workflows/supabase-keepalive.yml`.
 
 ## Features
 
@@ -98,7 +92,6 @@ The `.github/workflows/supabase-keepalive.yml` workflow pings the deployed Supab
 The deployed function handles:
 
 - `POST /database-access` — validate payload, insert into `applications`, send owner notification to `MAIL_NOTIFY_TO` (if configured), respond with the created ID.
-- `GET /database-access?keepalive=1` — require `x-keepalive-token`, run a lightweight `applications` select, return no application data.
 - `GET /database-access` — require `x-admin-pass` header, validate request `Origin` against `ALLOWED_ORIGINS`, apply per-client failed-login throttling (delay + temporary block), return ordered submissions.
 - `DELETE /database-access` — require `x-admin-pass`, accept `{ "id": <number> }`, delete one request by ID.
 - `OPTIONS` — CORS preflight for allowlisted origins (`content-type` + `x-admin-pass` headers).

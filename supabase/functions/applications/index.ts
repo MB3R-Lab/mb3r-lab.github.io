@@ -4,7 +4,6 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.2';
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
 const ADMIN_PASSWORD = Deno.env.get('ADMIN_PASSWORD') ?? '';
-const KEEPALIVE_TOKEN = Deno.env.get('KEEPALIVE_TOKEN') ?? '';
 const MAIL_FROM = Deno.env.get('MAIL_FROM') ?? 'MB3R Lab <noreply@mb3r-lab.org>';
 const MAILGUN_API_KEY = Deno.env.get('MAILGUN_API_KEY') ?? '';
 const MAILGUN_DOMAIN = Deno.env.get('MAILGUN_DOMAIN') ?? '';
@@ -150,7 +149,7 @@ const getCorsHeaders = (req: Request) => {
     const fallbackOrigin = ALLOWED_ORIGINS[0] ?? '*';
     return {
         'Access-Control-Allow-Origin': isAllowedOrigin(origin) ? origin : fallbackOrigin,
-        'Access-Control-Allow-Headers': 'content-type, x-admin-pass, x-keepalive-token',
+        'Access-Control-Allow-Headers': 'content-type, x-admin-pass',
         'Access-Control-Allow-Methods': 'GET,POST,DELETE,OPTIONS',
         Vary: 'Origin'
     };
@@ -171,9 +170,6 @@ serve(async (req) => {
         }
 
         if (req.method === 'GET') {
-            if (isKeepaliveRequest(req)) {
-                return await handleKeepalive(req);
-            }
             return await handleGet(req);
         }
 
@@ -190,32 +186,6 @@ serve(async (req) => {
         return jsonResponse(req, { message: 'Internal server error.' }, 500);
     }
 });
-
-function isKeepaliveRequest(req: Request): boolean {
-    return new URL(req.url).searchParams.get('keepalive') === '1';
-}
-
-async function handleKeepalive(req: Request): Promise<Response> {
-    if (!KEEPALIVE_TOKEN) {
-        return jsonResponse(req, { message: 'Keepalive is not configured.' }, 503);
-    }
-
-    if (req.headers.get('x-keepalive-token') !== KEEPALIVE_TOKEN) {
-        return jsonResponse(req, { message: 'Unauthorized.' }, 401);
-    }
-
-    const { error } = await supabase
-        .from('applications')
-        .select('id')
-        .limit(1);
-
-    if (error) {
-        console.error('[applications] keepalive failed', error);
-        return jsonResponse(req, { message: 'Keepalive failed.' }, 500);
-    }
-
-    return jsonResponse(req, { ok: true, checked_at: new Date().toISOString() });
-}
 
 async function handlePost(req: Request): Promise<Response> {
     const payload = await req.json().catch(() => ({}));

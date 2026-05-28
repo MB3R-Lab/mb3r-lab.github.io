@@ -9,16 +9,17 @@ jobs:
   ping:
     runs-on: ubuntu-latest
     env:
-      SUPABASE_KEEPALIVE_URL: https://nkphoglftmnfikxzuyqr.supabase.co/functions/v1/database-access
+      SUPABASE_URL: https://nkphoglftmnfikxzuyqr.supabase.co
     steps:
-      - name: Ping Supabase applications table
+      - name: Ping Supabase REST API
         run: |
           curl --fail --show-error --silent \
             --max-time 30 \
             --retry 3 \
             --retry-delay 10 \
             --output /dev/null \
-            --header "x-keepalive-token: ${SUPABASE_KEEPALIVE_TOKEN}" \
-            "${SUPABASE_KEEPALIVE_URL}?keepalive=1"
+            --header "apikey: ${SUPABASE_KEEPALIVE_TOKEN}" \
+            --header "Authorization: Bearer ${SUPABASE_KEEPALIVE_TOKEN}" \
+            "${SUPABASE_URL}/rest/v1/applications?select=id&limit=1"
         env:
           SUPABASE_KEEPALIVE_TOKEN: ${{ secrets.SUPABASE_KEEPALIVE_TOKEN }}

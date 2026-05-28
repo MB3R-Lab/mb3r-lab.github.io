@@ -1,5 +1,3 @@
 [functions]
   [functions.applications]
   verify_jwt = false
-  [functions.database-access]
-  verify_jwt = false

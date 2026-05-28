@@ -74,7 +74,7 @@ The `.github/workflows/supabase-keepalive.yml` workflow pings Supabase REST API 
 
 1. Add a Supabase API key as a GitHub Actions repository secret:
    ```text
-   SUPABASE_KEEPALIVE_TOKEN=your-supabase-api-key
+   SUPABASE_KEEPALIVE_APIKEY=your-supabase-api-key
    ```
 2. If the project URL changes, update `SUPABASE_URL` in `.github/workflows/supabase-keepalive.yml`.
 

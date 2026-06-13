@@ -591,12 +591,12 @@ html:not([data-theme="dark"]) .theme-icon-sun {
     grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.research-grid {
+.report-template-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.report-template-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+.research-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .abstraction-card,

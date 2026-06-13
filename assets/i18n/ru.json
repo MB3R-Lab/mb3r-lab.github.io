@@ -329,6 +329,9 @@
       "emergence": {
         "title": "Эмерджентность и самоуправление"
       },
+      "aiFoundations": {
+        "title": "AI foundations и world models"
+      },
       "extensions": {
         "title": "Исследовательские расширения"
       }
@@ -338,7 +341,9 @@
       "asyncSemantics": "Evaluating Asynchronous Semantics in Trace-Discovered Resilience Models",
       "emergence": "Emergence-as-Code",
       "sheaf": "Sheaf-Theoretic Causal Emergence",
-      "rasmussen": "Rasmussen/Drift Observability"
+      "rasmussen": "Rasmussen/Drift Observability",
+      "transformerUncertainty": "Measuring Uncertainty in Transformer Circuits with Effective Information Consistency",
+      "worldModelAdvantage": "When Ideal Models Contradict Finite Reality: Causal World-Model Advantage over Empirical Traces"
     },
     "extensions": [
       "Устойчивость химических/биологических сетей",

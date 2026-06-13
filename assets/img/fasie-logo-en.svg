@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 874 451.37" role="img" aria-labelledby="title">
+    <title id="title">Innovation Assistance Fund</title>
+    <style>
+        .text {
+            fill: #55565b;
+            font-family: "Arial Narrow", "Roboto Condensed", Arial, sans-serif;
+            font-size: 78px;
+            font-weight: 800;
+            letter-spacing: 12px;
+        }
+
+        .text-small {
+            font-size: 64px;
+            letter-spacing: 10px;
+        }
+
+        .red {
+            fill: #ef2b2d;
+        }
+
+        .blue {
+            fill: #00a0dc;
+        }
+    </style>
+    <g>
+        <text class="text" x="96" y="118">INNOVATION</text>
+        <text class="text text-small" x="96" y="194">ASSISTANCE</text>
+        <text class="text" x="96" y="274">FUND</text>
+    </g>
+    <path class="red" d="M138 292h-72c99 103 239 142 356 147 118 5 270-20 382-147-178 174-532 144-666 0z"/>
+    <path class="blue" d="M803 292c-176 97-371 94-502 0h-75c151 123 407 132 577 0z"/>
+</svg>

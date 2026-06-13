@@ -390,8 +390,9 @@
     }
   },
   "grant": {
+    "logoSrc": "assets/img/fasie-logo-en.svg",
     "logoAlt": "Foundation for Assistance to Small Innovative Enterprises",
-    "title": "This project is implemented with grant support from Фонд содействия инновациям.",
+    "title": "This project is implemented with grant support from the Foundation for Assistance to Small Innovative Enterprises.",
     "text": "The link opens the official website of the Fund."
   },
   "common": {

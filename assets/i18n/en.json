@@ -1,13 +1,13 @@
 {
   "meta": {
-    "title": "MB3R Lab | Sheaft resilience intelligence for networked systems",
-    "description": "Sheaft turns telemetry, topology and domain constraints into live attributed graphs for resilience assessment of networked systems.",
-    "ogTitle": "MB3R Lab | Sheaft resilience intelligence for networked systems",
-    "ogDescription": "Resilience intelligence for software infrastructure, smart mobility, and scientific reaction or interaction networks.",
-    "twitterTitle": "MB3R Lab | Sheaft resilience intelligence for networked systems",
-    "twitterDescription": "Model-based resilience intelligence for graph-structured networked systems.",
-    "ogImageAlt": "MB3R Lab networked systems resilience workflow",
-    "twitterImageAlt": "MB3R Lab networked systems resilience workflow",
+    "title": "MB3R Lab | Sheaft resilience intelligence for networked and agent systems",
+    "description": "Sheaft turns telemetry, traces, topology and domain constraints into live reliability models for networked and agent systems.",
+    "ogTitle": "MB3R Lab | Sheaft resilience intelligence for networked and agent systems",
+    "ogDescription": "Resilience intelligence for software infrastructure, agent harnesses, smart mobility, and scientific reaction or interaction networks.",
+    "twitterTitle": "MB3R Lab | Sheaft resilience intelligence for networked and agent systems",
+    "twitterDescription": "Model-based resilience intelligence for graph-structured networked and agent systems.",
+    "ogImageAlt": "MB3R Lab networked and agent systems resilience workflow",
+    "twitterImageAlt": "MB3R Lab networked and agent systems resilience workflow",
     "locale": "en-US",
     "ogLocale": "en_US"
   },
@@ -16,7 +16,7 @@
     "@type": "WebSite",
     "name": "MB3R Lab",
     "url": "https://mb3r-lab.github.io/",
-    "description": "Resilience intelligence for networked systems",
+    "description": "Resilience intelligence for networked and agent systems",
     "inLanguage": "en-US"
   },
   "brand": {
@@ -50,68 +50,68 @@
   },
   "hero": {
     "eyebrow": "Sheaft",
-    "title": "Resilience intelligence for networked systems",
-    "lead": "Sheaft turns telemetry, topology and domain constraints into a live attributed graph, stress-tests disruption scenarios, and shows which critical operations are fragile before failures propagate.",
-    "note": "Built for graph-structured systems: software infrastructure, smart mobility, and scientific reaction or interaction networks.",
+    "title": "Resilience intelligence for networked and agent systems",
+    "lead": "Sheaft turns telemetry, execution traces, topology and domain constraints into a live reliability model, stress-tests disruption scenarios, and shows which critical operations or agent workflows are fragile before failures propagate.",
+    "note": "Built for graph-structured systems: software infrastructure, agent harnesses, smart mobility, and scientific reaction or interaction networks.",
     "cta": {
       "pilot": "Request a pilot",
       "github": "View GitHub",
       "useCases": "See use cases"
     },
-    "panelAria": "Networked systems resilience model",
+    "panelAria": "Networked and agent systems resilience model",
     "panel": {
       "logicTitle": "Different domains. Same failure logic.",
-      "logicText": "Components interact. Dependencies shift. Signals go missing. Failures propagate.",
+      "logicText": "Components interact. Dependencies shift. Signals go missing. Tool and policy boundaries fail.",
       "graphTitle": "Attributed graph model",
-      "graphText": "Sheaft models the system as nodes, edges, constraints, telemetry, stressors and critical operations."
+      "graphText": "Sheaft models the system as nodes, edges, constraints, telemetry, traces, stressors, fallback paths and critical operations."
     }
   },
   "abstraction": {
-    "title": "One resilience model for graph-structured systems",
-    "intro": "Sheaft represents a system as an attributed graph: nodes, edges, constraints, telemetry, stressors and critical operations. The domain changes; the resilience question stays the same: what breaks, how far it propagates, and which operations are affected.",
+    "title": "One resilience model for graph-structured and agent systems",
+    "intro": "Sheaft represents a system as an attributed graph: nodes, edges, constraints, telemetry, execution traces, stressors and critical operations. The domain changes; the resilience question stays the same: what breaks, how far it propagates, and which operations or workflows are affected.",
     "cards": {
       "nodes": {
         "title": "Nodes",
-        "text": "Services, road segments, toll gates, sensors, proteins, metabolites, reactants."
+        "text": "Services, agent steps, tools, road segments, sensors, proteins, metabolites, reactants."
       },
       "edges": {
         "title": "Edges",
-        "text": "Calls, flows, roads, reactions, interactions."
+        "text": "Calls, tool invocations, state reads/writes, flows, roads, reactions, interactions."
       },
       "attributes": {
         "title": "Attributes",
-        "text": "Latency, capacity, speed, confidence, energy, rate, state."
+        "text": "Latency, capacity, confidence, permission state, retrieval age, energy, rate, state."
       },
       "constraints": {
         "title": "Constraints",
-        "text": "Domain contracts, signal rules, conservation laws, biological priors."
+        "text": "Domain contracts, policy checks, evaluator gates, signal rules, conservation laws, biological priors."
       },
       "stressors": {
         "title": "Stressors",
-        "text": "Crashes, demand surges, missing observations, perturbations."
+        "text": "Crashes, tool timeouts, schema drift, stale retrieval, missing observations, perturbations."
       },
       "verdict": {
         "title": "Verdict",
-        "text": "Fragile paths, blast radius, affected operations, resilience posture."
+        "text": "Fragile paths, blast radius, affected operations or workflows, green/yellow/red posture."
       }
     }
   },
   "how": {
     "title": "How Sheaft works",
-    "intro": "Bering creates explicit graph artifacts. Sheaft evaluates disruption scenarios and produces resilience verdicts for critical operations.",
+    "intro": "Bering creates explicit graph artifacts from telemetry, topology and execution traces. Sheaft evaluates disruption scenarios and produces resilience verdicts for critical operations and agent workflows.",
     "pipelineAria": "Resilience assessment pipeline",
     "steps": {
       "discover": {
         "title": "Discover the system graph",
-        "text": "Bering ingests telemetry, topology files, traces, event streams or explicit graph descriptions and builds a typed system model."
+        "text": "Bering ingests telemetry, topology files, execution traces, event streams or explicit graph descriptions and builds a typed system model."
       },
       "contracts": {
         "title": "Attach domain contracts",
-        "text": "Critical operations, constraints and success predicates are attached to the graph: service journeys, corridor operations, reaction routes or biological pathways."
+        "text": "Critical operations, constraints and success predicates are attached to the graph: service journeys, agent workflows, corridor operations, reaction routes or biological pathways."
       },
       "stress": {
         "title": "Stress-test disruption scenarios",
-        "text": "Sheaft simulates failures, missing observations, degraded components, demand spikes or perturbations without breaking the real system."
+        "text": "Sheaft simulates failures, missing observations, degraded components, tool timeouts, schema drift, stale retrieval, demand spikes or perturbations without breaking the real system."
       },
       "verdict": {
         "title": "Produce a resilience verdict",
@@ -120,7 +120,7 @@
     }
   },
   "useCases": {
-    "title": "Three high-value domains. One resilience engine.",
+    "title": "Four high-value domains. One resilience engine.",
     "inputsTitle": "Inputs",
     "outputsTitle": "Outputs",
     "sre": {
@@ -144,6 +144,30 @@
         "Affected endpoints",
         "Chaos-test priorities",
         "Posture history"
+      ]
+    },
+    "agent": {
+      "badge": "Engineering research line",
+      "title": "Agent reliability and AI harnesses",
+      "text": "Sheaft builds a reliability model from agent harness execution traces: LLM calls, tools, retrieval, memory, policy checks, evaluators, permissions, retries, fallback paths and human gates.",
+      "support": "Single-run task success and average pass rate miss boundary failures. Real incidents appear between the model, tools, retrieval, state, guardrails and release gates.",
+      "links": {
+        "genai": "OpenTelemetry GenAI conventions",
+        "agentSpans": "Agent spans"
+      },
+      "inputs": [
+        "Execution traces / GenAI spans",
+        "Tool calls",
+        "Retrieval and memory reads/writes",
+        "Policy/evaluator/human-gate events",
+        "Retry/fallback history"
+      ],
+      "outputs": [
+        "Reliability graph",
+        "Virtual chaos scenarios",
+        "Fragile boundaries",
+        "Green/yellow/red release verdict",
+        "Test priorities"
       ]
     },
     "mobility": {
@@ -197,10 +221,10 @@
     "title": "Two layers: model discovery and resilience assessment",
     "bering": {
       "title": "Bering: system-graph discovery and artifact publishing",
-      "summary": "Bering builds typed graph artifacts from telemetry, topology inputs, traces, event streams or explicit domain models. It publishes stable model and snapshot artifacts for downstream resilience analysis.",
+      "summary": "Bering builds typed graph artifacts from telemetry, topology inputs, execution traces, event streams or explicit domain models. It publishes stable model and snapshot artifacts for downstream resilience analysis.",
       "points": [
-        "Discovers typed graph structure from traces, OTLP, event streams or explicit topology.",
-        "Normalizes nodes, edges, attributes and domain contracts.",
+        "Discovers typed graph structure from traces, OTLP, GenAI spans, event streams or explicit topology.",
+        "Normalizes nodes, edges, attributes, state reads/writes and domain contracts.",
         "Publishes stable model/snapshot artifacts.",
         "Keeps provenance so teams can inspect where each part of the model came from."
       ],
@@ -211,10 +235,10 @@
     },
     "sheaft": {
       "title": "Sheaft: resilience simulation, verdicts and posture history",
-      "summary": "Sheaft consumes graph artifacts, stress-tests disruption scenarios, evaluates domain policies and tracks resilience posture over time.",
+      "summary": "Sheaft consumes graph artifacts, stress-tests disruption scenarios, evaluates domain policies and tracks resilience posture or release verdicts over time.",
       "points": [
         "Runs simulation-based resilience analysis on graph artifacts.",
-        "Evaluates policy rules for critical operations.",
+        "Evaluates policy rules for critical operations and agent workflows.",
         "Reports fragile components, affected operations and blast radius.",
         "Supports batch checks and continuous posture tracking."
       ],
@@ -225,7 +249,7 @@
     }
   },
   "proof": {
-    "title": "Validated on distributed systems, designed for broader networked infrastructure",
+    "title": "Validated on distributed systems, extending to agent harnesses and broader infrastructure",
     "cards": {
       "icse": {
         "title": "ICSE 2026 Distinguished Paper Award",
@@ -237,8 +261,12 @@
         "text": "Graph-discovered resilience models were evaluated against live fault-injection outcomes on a distributed benchmark."
       },
       "otel": {
-        "title": "OpenTelemetry Demo experiments",
-        "text": "The model-discovery and simulation pipeline was tested on the OpenTelemetry Demo, including trace-derived dependencies and endpoint-level success predicates."
+        "title": "OpenTelemetry GenAI/agent semantics",
+        "text": "OpenTelemetry is forming GenAI, agent and tool-span semantics, which makes trace-derived reliability models a portable research abstraction rather than a local log format.",
+        "links": {
+          "genai": "GenAI conventions",
+          "agentSpans": "Agent spans"
+        }
       },
       "mvp": {
         "title": "Public MVP",
@@ -248,12 +276,12 @@
     },
     "takeaway": {
       "title": "What this proves",
-      "text": "Sheaft can turn passive telemetry into an explicit model and produce useful resilience signals without running broad live experiments every time."
+      "text": "Sheaft can turn passive telemetry and execution traces into an explicit model and produce useful resilience signals without running broad live experiments every time."
     }
   },
   "demo": {
     "title": "Demo report: digital infrastructure use case",
-    "text": "The current public report shows the most mature software-infrastructure workflow. The same report pattern extends to mobility and scientific-network pilots.",
+    "text": "The current public report shows the most mature software-infrastructure workflow. The same report pattern extends to agent harnesses, mobility and scientific-network pilots.",
     "imageAlt": "Sheaft digital infrastructure report screenshot",
     "templates": {
       "mobility": {
@@ -263,6 +291,10 @@
       "science": {
         "title": "Chemistry/biology report template",
         "text": "Reaction/pathway graph, critical intermediates, perturbation-sensitive modules, alternative routes."
+      },
+      "agent": {
+        "title": "Agent harness report template",
+        "text": "Trace-derived call graph, stale retrieval, tool timeout, schema drift, permission denial, release verdict."
       }
     }
   },
@@ -272,6 +304,10 @@
       "sre": {
         "title": "SRE pilot",
         "text": "Start from trace data, topology and incident history for one service domain. Sheaft builds a model, runs failure scenarios, and compares the result with known incidents or release risks."
+      },
+      "agent": {
+        "title": "Agent reliability research pilot",
+        "text": "Start from one agent workflow and one set of historical execution traces. Sheaft builds the harness reliability graph, simulates virtual chaos scenarios, and returns a green/yellow/red release verdict."
       },
       "mobility": {
         "title": "Smart mobility pilot",
@@ -285,7 +321,7 @@
   },
   "research": {
     "title": "Research base: graph models, resilience and emergence",
-    "text": "Sheaft is grounded in model discovery, graph simulation, sheaf-theoretic consistency, causal emergence and resilience monitoring. The product packages these ideas into practical workflows for networked systems.",
+    "text": "Sheaft is grounded in model discovery, graph simulation, sheaf-theoretic consistency, causal emergence and resilience monitoring. The product packages these ideas into practical workflows for networked and agent systems.",
     "groups": {
       "core": {
         "title": "Core engine"
@@ -294,7 +330,7 @@
         "title": "Emergence and self-governance"
       },
       "extensions": {
-        "title": "Scientific network extensions"
+        "title": "Research extensions"
       }
     },
     "links": {
@@ -306,7 +342,8 @@
     },
     "extensions": [
       "Chemistry/biology network resilience",
-      "Traffic corridor resilience"
+      "Traffic corridor resilience",
+      "Agent harness reliability and virtual chaos simulation"
     ]
   },
   "modal": {
@@ -322,12 +359,13 @@
     "contextLabel": "Pilot context",
     "contextOptions": {
       "sre": "Digital infrastructure/SRE",
+      "agent": "Agent reliability/AI harness",
       "mobility": "Smart mobility/traffic",
       "science": "Chemistry/biology",
       "other": "Other graph-structured system"
     },
     "commentLabel": "Context (optional)",
-    "commentPlaceholder": "Describe the graph, critical operation and data you can share.",
+    "commentPlaceholder": "Describe the graph, agent workflow, critical operation and data you can share.",
     "note": "After we receive your request, we will contact you by work email.",
     "submit": "Submit request",
     "status": {
@@ -343,7 +381,7 @@
   },
   "footer": {
     "title": "MB3R Lab",
-    "description": "Research-backed tooling for model-based resilience in networked systems.",
+    "description": "Research-backed tooling for model-based resilience in networked and agent systems.",
     "copyright": "MB3R Lab. All rights reserved.",
     "links": {
       "github": "GitHub",

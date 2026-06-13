@@ -287,10 +287,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const formData = new FormData(applicationForm);
+        const selectedContext = formData.get('context')?.toString().trim() || '';
+        const rawComment = formData.get('comment')?.toString().trim() || '';
+        const commentParts = [];
+        if (selectedContext) {
+            commentParts.push(`Context: ${selectedContext}`);
+        }
+        if (rawComment) {
+            commentParts.push(rawComment);
+        }
+
         const payload = {
             email: formData.get('email')?.toString().trim() || '',
             company: formData.get('company')?.toString().trim() || '',
-            comment: formData.get('comment')?.toString().trim() || ''
+            comment: commentParts.join('\n\n')
         };
 
         if (!payload.comment) {
